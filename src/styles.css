@@ -1,0 +1,42 @@
+body {
+    background-color: $backgroundColor$;
+}
+h1 {
+    text-align: center;
+    font-size: 16px;
+    font-family: "Avenir, Helvetica Neue, Arial, sans-serif";
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: $fontColor$;
+    margin-bottom: 40px;
+    margin-top: 160px;
+}
+
+#container {
+    max-width: $width$px;
+    margin: 0 auto;
+}
+
+.author {
+    font: 20px "Adobe Text Pro, Times New Roman, Georgia, serif";
+    text-align: center;
+    margin-bottom: 140px;
+    font-style: italic;
+}
+
+.smallcaps {
+    font-variant-caps: small-caps;
+    -moz-font-feature-settings: "smcp";
+    -webkit-font-feature-settings: "smcp";
+    font-feature-settings: "smcp";
+    font-style: normal;
+}
+
+article {
+    margin: 40px auto;
+    max-width: $width$px;
+    font: 16px/24px "Avenir, Helvetica Neue, Arial, sans-serif";
+    font-weight: Regular;
+    color: $fontColor$;
+}
