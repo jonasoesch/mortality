@@ -2,37 +2,6 @@ import * as d3 from "d3";
 import * as glob from "./globals.json"
 let l = console.log
 
-interface Data {
-    date: Date;
-    MortalityEveryone: number;
-    MortalityFemales: number;
-    MortalityMales: number;
-    popshare55_64: number;
-    popshare65_74: number;
-    popshare75_85: number;
-    Rate85up: number;
-    Rate75_84: number;
-    Rate65_74: number;
-    Rate55_64: number;
-    Rate45_54: number;
-    Rate25_44: number;
-    Rate_25: number;
-    Normalized85up: number;
-    Normalized75_84: number;
-    Normalized65_74: number;
-    Normalized55_64: number;
-    Normalized45_54: number;
-    Normalized25_44: number;
-    Normalized_25: number;
-    Share_25: number;
-    Share25_44: number;
-    Share45_54: number;
-    Share55_64: number;
-    Share65_74: number;
-    Share75_84: number;
-    Share85up: number;
-}
-
 export function draw() {
 d3.csv("/data/mortality-rate.csv").then((csv: any) => {
     let data = csv.map((d) => {
@@ -74,7 +43,7 @@ d3.csv("/data/mortality-rate.csv").then((csv: any) => {
 
 
 
-function graph(data:Data[]) {
+function graph(data:MortalityData[]) {
     let chart = d3.select("#decrease")
         .append("svg")
     
