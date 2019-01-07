@@ -8,7 +8,10 @@ interface MortalityData {
     MortalityEveryone: number;
     MortalityFemales: number;
     MortalityMales: number;
-    popshare_54: number;
+    popshare_25: number;
+    popshare25_34: number;	
+    popshare35_44: number;	
+    popshare44_54: number;
     popshare55_64: number;
     popshare65_74: number;
     popshare75_85: number;
@@ -33,4 +36,41 @@ interface MortalityData {
     Share65_74: number;
     Share75_84: number;
     Share85up: number;
+}
+
+
+interface CausesData {
+    date: Date;
+    Cancer: number;
+    Heart: number;
+    LiverKidneyPancreas: number;
+    Suicide: number;
+    Vehicle: number;
+    Drug_induced: number; 
+    Homicide: number;
+    Respiratory: number;
+    AIDS: number;
+    Other: number;
+    Heart45: number;
+    Cancer45: number;
+    LiverKidneyPancreas45: number;
+    Respiratory45: number;
+    Vehicle45: number;
+    Suicide45: number;
+    Homicide45: number;
+    Drug_induced45: number;
+    AIDS45: number;
+    Other45: number;
+    VehicleAll: number;
+    Drug_inducedAll: number;
+    FirearmAll: number;
+    SuicideAll: number;
+    AccidentalFirearmAll: number;
+    Heart75: number;
+    Cancer75: number;
+    Respiratory75: number;
+    LiverKidneyPancreas75: number;
+    Alzheimer75: number;
+    Falls75: number;
+    Other75: number;
 }
