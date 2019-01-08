@@ -26,6 +26,7 @@ export function graph() {
         let graph = new OlderGraph("older")
         graph.setScales(d3.extent(data, d => d.date), [0, 1])
         graph.setDescription("Composition of the population by age groups")
+
         graph.setClasses([
             "popshare25",
             "popshare25_44",

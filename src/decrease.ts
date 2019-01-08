@@ -18,7 +18,7 @@ export function graph() {
         let graph = new DecreaseGraph("decrease")
         graph.setDescription("Evolution of the mortality rate (per 100'000) since 1968")
         graph.setScales(d3.extent(data, d => d.date), [0, d3.max(data, d => d["MortalityMales"])])
-        graph.setColors([
+       graph.setColors([
             "rgb(135, 145, 155)",
             "rgb(204, 51, 153)",
             "rgb(27, 122, 199)",

@@ -3,8 +3,11 @@
     "devDependencies": {
         "@types/d3": "^5.0.0",
         "@types/es6-promise": "^3.3.0",
+        "@types/jest": "^23.3.12",
         "@types/lodash": "^4.14.116",
         "es6-promise": "^4.2.4",
+        "jest": "^23.6.0",
+        "ts-jest": "^23.10.5",
         "ts-loader": "^4.4.2",
         "typescript": "^3.0.1",
         "webpack": "^4.16.5",
@@ -18,6 +21,8 @@
     },
     "scripts": {
         "start": "python3 build.py && webpack-dev-server --open",
-        "build": "python3 build.py && webpack && cp -r static/* dist/"
+        "build": "python3 build.py && webpack && cp -r static/* dist/",
+        "test": "jest",
+        "testWatch": "jest --watch"
     }
 }

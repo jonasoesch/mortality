@@ -74,6 +74,8 @@ export class Graph {
     }
 
     setData(data) {
+        if(data === null) {throw new Error("You passed no data")}
+        this.data = data
         this.setClasses(data) 
         this.pathGenerators()
     }
@@ -89,19 +91,18 @@ export class Graph {
     pathGenerators() {
         this.classes.forEach( klass => {
             this.paths.push(
-                d3.line()
-                .y(d => this.yScale(d[klass]))
+                d3.area()
                 .x(d => this.xScale(d["date"]))
+                .y1(d => this.yScale(d[klass]))
+                .y0(d => this.yScale(d[klass]))
             )
         })
     }
 
     draw() {
-        if(!this.data) {
-            throw new Error("There is no data yet")
-        }
+        if(!this.data) {throw new Error("There is no data yet")}
         this.drawAxes()
-        this.drawPaths(this.data)
+        this.drawPaths()
         this.drawLabels(this.data)
         if(this.description) { this.drawDescription() }
     }
@@ -140,16 +141,31 @@ export class Graph {
         } )
     }
 
-    drawPaths(data) {
+    drawPaths() {
         let paths = this.chart.append("g").attr("class", "paths")
-
-        this.paths.forEach( (generator, i) => {
-            paths.append('path')
-                .datum(data)
-                .attr("class", this.classes[i])
-                .attr("d", d => generator(<any>d))
-                .attr("stroke", this.colors[i])
+        this.classes.forEach( (klass) => {
+            this.drawPath(paths, klass)
         })        
+    }
+
+
+    drawPath(container:d3.Selection<any,any,any,any>, klass:string) {
+            container.append('path')
+                .attr("class", klass)
+                .attr("d", d => this.getPathFor(klass))
+                .attr("stroke", this.getColorForClass(klass))
+    }
+
+
+    getColorForClass(klass) {
+        return this.colors[this.classes.indexOf(klass)]
+    }
+
+
+    getPathFor(klass) {
+        let i = this.classes.indexOf(klass)
+        let ret = this.paths[i](this.data)
+        return ret
     }
 
 
@@ -246,6 +262,7 @@ export class StackedGraph extends Graph {
 
 
     setData(data) {
+        if(data === null) {throw new Error("You passed no data")}
         this.data = data
         this.pathGenerators()
         this.stacks = (d3.stack()
@@ -267,15 +284,24 @@ export class StackedGraph extends Graph {
 
      drawPaths() {
         let paths = this.chart.append("g").attr("class", "paths")
+         this.classes.forEach( (klass) => {
+             this.drawPath(paths, klass)    
+         })
 
-        this.paths.forEach( (generator, i) => {
-            paths.append('path')
-                .datum(this.stacks[i])
-                .attr("d", d => generator(d))
-                .attr("fill", this.colors[i])
-        })        
     }
 
+    drawPath(container, klass) {
+            container.append('path')
+                .attr("d", d => this.getPathFor(klass))
+                .attr("fill", this.getColorForClass(klass))
+    }
+
+
+    getPathFor(klass) {
+        let i = this.classes.indexOf(klass)
+        let ret = this.paths[i](this.stacks[i])
+        return ret
+    }
 
 
     setClasses(classes) {
