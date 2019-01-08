@@ -11,8 +11,7 @@ graphPromises.push(uptick.graph())
 graphPromises.push(aids.graph())
 
 Promise.all(graphPromises).then( (graphs) => {
-
+console.log(graphs)
 graphs.forEach( graph => graph.draw() )
-
 
 })

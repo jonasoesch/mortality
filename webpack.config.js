@@ -1,5 +1,4 @@
 const path = require('path');
-const jsonImporter = require('node-sass-json-importer');
 
 module.exports = {
     entry: './src/index.ts',
@@ -12,24 +11,9 @@ module.exports = {
                 test: /\.ts$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
-            },
-            {
-                test: /\.scss$/,
-                use: [{
-                    loader: "style-loader"
-                }, {
-                    loader: "css-loader", options: {
-                        sourceMap: true
-                    }
-                }, {
-                    loader: "sass-loader", options: {
-                        sourceMap: true,
-                        importer: jsonImporter(),
-                    }
-                }],
-                exclude: /node_modules/
             }
         ]
+
     },
     resolve: {
         extensions: [ '.ts', '.js' ]

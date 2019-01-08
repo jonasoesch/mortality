@@ -98,7 +98,7 @@ export class Graph {
 
     draw() {
         if(!this.data) {
-            throw "There is no data yet"
+            throw new Error("There is no data yet")
         }
         this.drawAxes()
         this.drawPaths(this.data)
