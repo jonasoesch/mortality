@@ -4,8 +4,8 @@ let l = console.log
 
 class DecreaseGraph extends Graph {}
 
-export function draw() {
-    d3.csv("data/mortality-rate.csv").then((csv: any) => {
+export function graph() {
+    return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d) => {
             return {
                 date: new Date(Date.parse(d["date"])),
@@ -34,6 +34,6 @@ export function draw() {
             [0, 15],
             [0, -15],
         ])
-        graph.draw(data)
+        return graph
     })
 }

@@ -5,6 +5,7 @@ export class Graph {
 
     name:string
     description:string
+    data:any = null
     chart:d3.Selection<any, any, any, any>
     h:number = glob["height"]
     w:number = glob["width"]
@@ -19,6 +20,7 @@ export class Graph {
     classes:string[] = []
     labels:string[] = []
     labelOffsets:number[][] = null
+    animated:d3.Selection<any, any, any, any>[]
 
     constructor(name) {
         this.name = name
@@ -94,10 +96,13 @@ export class Graph {
         })
     }
 
-    draw(data) {
+    draw() {
+        if(!this.data) {
+            throw "There is no data yet"
+        }
         this.drawAxes()
-        this.drawPaths(data)
-        this.drawLabels(data)
+        this.drawPaths(this.data)
+        this.drawLabels(this.data)
         if(this.description) { this.drawDescription() }
     }
 
@@ -141,6 +146,7 @@ export class Graph {
         this.paths.forEach( (generator, i) => {
             paths.append('path')
                 .datum(data)
+                .attr("class", this.classes[i])
                 .attr("d", d => generator(<any>d))
                 .attr("stroke", this.colors[i])
         })        
@@ -184,6 +190,13 @@ export class Graph {
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.description)
+    }
+
+    setAnimated(list) {
+        this.animated =
+            list.map( (selector) => {
+            return this.chart.select(`.${selector}`)
+        })         
     }
 
     setLabelOffsets(labelOffsets:number[][]) {
@@ -233,6 +246,7 @@ export class StackedGraph extends Graph {
 
 
     setData(data) {
+        this.data = data
         this.pathGenerators()
         this.stacks = (d3.stack()
             .keys(this.classes))(<any>data)
@@ -277,7 +291,6 @@ export class StackedGraph extends Graph {
             + offset 
             + (this.labelOffsets ? this.labelOffsets[this.classes.indexOf(klass)][1] : 0)
     }
-
 
 
 

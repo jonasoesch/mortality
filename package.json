@@ -1,5 +1,5 @@
 {
-    "name": "OpenDataStory",
+    "name": "Mortality",
     "devDependencies": {
         "@types/d3": "^5.0.0",
         "@types/es6-promise": "^3.3.0",
@@ -13,10 +13,11 @@
     },
     "dependencies": {
         "d3": "^5.5.0",
+        "d3-interpolate-path": "^2.0.1",
         "loadash": "^1.0.0"
     },
     "scripts": {
-        "start": "webpack-dev-server --open",
-        "build": "webpack && cp -r static/* dist/"
+        "start": "python3 build.py && webpack-dev-server --open",
+        "build": "python3 build.py && webpack && cp -r static/* dist/"
     }
 }

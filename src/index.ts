@@ -4,7 +4,15 @@ import * as older from './older';
 import * as uptick from './uptick';
 import * as aids from './aids';
 
-decrease.draw()
-older.draw()
-uptick.draw()
-aids.draw()
+let graphPromises = []
+graphPromises.push(decrease.graph())
+graphPromises.push(older.graph())
+graphPromises.push(uptick.graph())
+graphPromises.push(aids.graph())
+
+Promise.all(graphPromises).then( (graphs) => {
+
+graphs.forEach( graph => graph.draw() )
+
+
+})
