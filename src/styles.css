@@ -13,6 +13,12 @@ h1 {
     margin-top: 160px;
 }
 
+
+#decrease {
+    position:fixed;
+    top: 100px;
+}
+
 #container {
     max-width: $width$px;
     margin: 0 auto;

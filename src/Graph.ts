@@ -108,10 +108,15 @@ export class Graph {
     }
 
 
-    drawAxes() {
+    private drawAxes() {
+
+        this.chart.select(".axes").remove()
+        let axesGroup = this.chart.append("g").attr("class", "axes")
+
+
         let axes = []
         axes.push(
-            this.chart.append("g")
+            axesGroup.append("g")
             .attr("class", "axisLeft")
             .attr("transform", `translate(${this.margin}, 0)`)
             .call(this.axisLeft(this.xScale, this.w))
@@ -119,7 +124,7 @@ export class Graph {
 
 
         axes.push(
-            this.chart.append("g")
+            axesGroup.append("g")
             .attr("class", "axisBottom")
             .attr("transform", `translate(0, ${this.h-this.margin})`)
             .call(this.axisBottom(this.yScale, this.h))
@@ -141,7 +146,8 @@ export class Graph {
         } )
     }
 
-    drawPaths() {
+    protected drawPaths() {
+        this.chart.select(".paths").remove()
         let paths = this.chart.append("g").attr("class", "paths")
         this.classes.forEach( (klass) => {
             this.drawPath(paths, klass)
@@ -149,30 +155,38 @@ export class Graph {
     }
 
 
-    drawPath(container:d3.Selection<any,any,any,any>, klass:string) {
+    protected drawPath(container:d3.Selection<any,any,any,any>, klass:string) {
             container.append('path')
                 .attr("class", klass)
                 .attr("d", d => this.getPathFor(klass))
-                .attr("stroke", this.getColorForClass(klass))
+                .attr("stroke", this.getColorFor(klass))
     }
 
 
-    getColorForClass(klass) {
+    getColorFor(klass) {
         return this.colors[this.classes.indexOf(klass)]
     }
 
 
-    getPathFor(klass) {
+    public getPathFor(klass) {
+        if(this.data == null) {throw new Error("There is no data yet")}
+        if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
+
         let i = this.classes.indexOf(klass)
+        
+        if(i === -1) {throw new Error(`There is no class with name ${klass} in ${this.name}`)}
         let ret = this.paths[i](this.data)
         return ret
     }
 
 
-    drawLabels(data) {
-        let paths = this.chart.select(".paths")
+    protected drawLabels(data) {
+
+        this.chart.select(".labels").remove()
+        let labels = this.chart.append("g").attr("class", "labels")
+
         this.classes.forEach( (klass, i) => {
-            paths.append("rect")
+            labels.append("rect")
                 .datum(data)
                 .attr("y", d => this.labelYPosition(d, klass, i, -15))
                 .attr("x", this.labelXPosition(klass))
@@ -182,7 +196,7 @@ export class Graph {
                 .style("font-family", this.font)
 
 
-            paths.append("text")
+            labels.append("text")
                 .datum(data)
                 .text(this.labels[i])
                 .attr("y", d =>  this.labelYPosition(d, klass, i, 0))
@@ -196,9 +210,10 @@ export class Graph {
     }
 
 
-    drawDescription() {
+    protected drawDescription() {
         this.chart
             .append("text")
+            .attr("class", "description")
             .attr("x", this.margin + 10)
             .attr("y", 30)
             .attr("fill", "white")
@@ -293,7 +308,7 @@ export class StackedGraph extends Graph {
     drawPath(container, klass) {
             container.append('path')
                 .attr("d", d => this.getPathFor(klass))
-                .attr("fill", this.getColorForClass(klass))
+                .attr("fill", this.getColorFor(klass))
     }
 
 

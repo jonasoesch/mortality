@@ -52,7 +52,16 @@ function decasteljau(points, t) {
  * @return {Object} A command object representing the segment.
  */
 function pointsToCommand(points) {
-  const command = {};
+interface CMD {
+    type:string
+    x:number
+    y:number
+    x1:number
+    y1:number
+    x2:number
+    y2:number
+}
+  const command:CMD = {x1:null, x2:null, y1:null, y2:null,x:null, y:null, type:null};
 
   if (points.length === 4) {
     command.x2 = points[2][0];
