@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import {Graph} from './Graph'
-import {MorphingGraph} from './Actor'
+import {MorphingGraph} from './MorphingGraph'
 
 export class Director {
     name:string

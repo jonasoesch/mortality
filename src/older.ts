@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import {Graph, StackedGraph} from './Graph';
+import {StackedGraph} from './StackedGraph';
 let l = console.log
 
 

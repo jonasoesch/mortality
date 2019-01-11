@@ -3,11 +3,7 @@ import * as decrease from './decrease';
 import * as older from './older';
 import * as uptick from './uptick';
 import * as aids from './aids';
-import {Graph} from './Graph'
-import {MorphingGraph} from './Actor'
 import {Director} from './Director'
-import * as d3 from 'd3';
-import interpolatePath from './interpolate-path';
 
 
 let start = 200
