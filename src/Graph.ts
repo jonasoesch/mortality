@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import * as glob from "./globals.json"
 
+
 export class Graph {
 
     name:string
@@ -9,7 +10,7 @@ export class Graph {
     chart:d3.Selection<any, any, any, any>
     h:number = glob["height"]
     w:number = glob["width"]
-    color:string = glob["fontColor"]
+    fontColor:string = glob["fontColor"]
     font:string = glob["fontFamily"]
     lineWeight = 3
     margin = 80
@@ -22,9 +23,21 @@ export class Graph {
     labelOffsets:number[][] = null
     animated:d3.Selection<any, any, any, any>[]
 
+
+    /*
+        let graph = new Graph("name")
+        graph.setDescription()
+        graph.setScales()
+        graph.setColors()
+        graph.setLabels()
+        graph.setLabelOffsets()
+        graph.setData()
+        graph.draw()
+    */
+
     constructor(name) {
         this.name = name
-        this.setStage()
+        this.initStage()
     }
 
 
@@ -32,34 +45,35 @@ export class Graph {
         this.description = description 
     }
 
-    setStage() {
+    initStage() {
         this.insertChart()
         this.setDimensions()
     }
 
-    insertChart() {
+    private insertChart() {
         this.chart = d3.select(`#${this.name}`)
             .append("svg")
     }
 
-    setDimensions() {
+    private setDimensions() {
         this.chart
             .attr("width", this.w)
             .attr("height", this.h)
     }
 
+    
     setScales(x:[Date, Date], y:[number, number]) {
         this.setYScale(y) 
         this.setXScale(x) 
     }
 
-    private setXScale(domain:[Date, Date]) {
+    protected setXScale(domain:[Date, Date]) {
         this.xScale = d3.scaleTime()
             .domain(domain)
             .range([this.margin, this.w-this.margin])
     }
 
-    private setYScale(domain:[number, number]) {
+    protected setYScale(domain:[number, number]) {
         this.yScale = d3.scaleLinear()
             .domain(domain)
             .range([this.h-this.margin, this.margin])
@@ -103,12 +117,12 @@ export class Graph {
         if(!this.data) {throw new Error("There is no data yet")}
         this.drawAxes()
         this.drawPaths()
-        this.drawLabels(this.data)
+        this.drawLabels()
         if(this.description) { this.drawDescription() }
     }
 
 
-    private drawAxes() {
+    protected drawAxes() {
 
         this.chart.select(".axes").remove()
         let axesGroup = this.chart.append("g").attr("class", "axes")
@@ -132,11 +146,11 @@ export class Graph {
 
         axes.forEach( axis => {
             axis.selectAll("line")
-                .attr("stroke", d3.color(this.color).darker(4).toString())
+                .attr("stroke", d3.color(this.fontColor).darker(4).toString())
                 .style("stroke-width",  this.lineWeight)
 
             axis.selectAll("text")
-                .attr("fill", d3.color(this.color).darker(1).toString())
+                .attr("fill", d3.color(this.fontColor).darker(1).toString())
                 .style("font-size", "16px")
                 .style("font-family", this.font)
                 .style("font-weight", "bold")
@@ -160,10 +174,11 @@ export class Graph {
                 .attr("class", klass)
                 .attr("d", d => this.getPathFor(klass))
                 .attr("stroke", this.getColorFor(klass))
+                .attr("fill", this.getColorFor(klass))
     }
 
 
-    getColorFor(klass) {
+    public getColorFor(klass) {
         return this.colors[this.classes.indexOf(klass)]
     }
 
@@ -180,14 +195,13 @@ export class Graph {
     }
 
 
-    protected drawLabels(data) {
-
+    protected drawLabels() {
         this.chart.select(".labels").remove()
         let labels = this.chart.append("g").attr("class", "labels")
 
         this.classes.forEach( (klass, i) => {
             labels.append("rect")
-                .datum(data)
+                .datum(this.data)
                 .attr("y", d => this.labelYPosition(d, klass, i, -15))
                 .attr("x", this.labelXPosition(klass))
                 .attr("width", this.labelXWidth(klass))
@@ -197,7 +211,7 @@ export class Graph {
 
 
             labels.append("text")
-                .datum(data)
+                .datum(this.data)
                 .text(this.labels[i])
                 .attr("y", d =>  this.labelYPosition(d, klass, i, 0))
                 .attr("x", this.labelXPosition(klass, 5))
@@ -210,7 +224,10 @@ export class Graph {
     }
 
 
+
+
     protected drawDescription() {
+        this.chart.select("description")
         this.chart
             .append("text")
             .attr("class", "description")
@@ -223,12 +240,20 @@ export class Graph {
             .text(this.description)
     }
 
-    setAnimated(list) {
-        this.animated =
-            list.map( (selector) => {
-            return this.chart.select(`.${selector}`)
-        })         
+    fadeOut() {
+        this.chart.select(".paths")
+            .transition()
+            .style("opacity", 0)
+        
+        this.chart.select(".label")
+            .transition()
+            .style("opacity", 0)
+
+        this.chart.select(".description").style("display", "none")
+            .transition()
+            .style("opacity", 0)
     }
+
 
     setLabelOffsets(labelOffsets:number[][]) {
         this.labelOffsets = labelOffsets 

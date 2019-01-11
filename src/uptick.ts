@@ -51,7 +51,6 @@ export function graph() {
             [0, 3],
             [0, 5],
         ])
-        graph.setAnimated(["Rate25_44"])
         graph.setData(data)
         return graph
     })

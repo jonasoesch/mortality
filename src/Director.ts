@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
 import {Graph} from './Graph'
-import {Actor} from './Actor'
+import {MorphingGraph} from './Actor'
 
 export class Director {
     name:string
     initial:Graph
     final:Graph
-    actors:Actor[] = []
+    actor:MorphingGraph
     stage:d3.Selection<any, any, any, any>
     start= 200
     end = 400
@@ -26,8 +26,8 @@ export class Director {
         document.addEventListener('scroll', (evt) => this.scrolling(evt))
     }
 
-    addActor(a:Actor) {
-        this.actors.push(a) 
+    setActor(a:MorphingGraph) {
+        this.actor  =a
     }
 
     scrolling(evt) {
@@ -49,23 +49,17 @@ export class Director {
 
 
     transition(howFar:number) {
-        this.actors.forEach( (actor) => {
-            actor.draw(howFar) 
-        }) 
+        this.actor.atPoint(howFar).draw() 
+        //this.initial.fadeOut()
     }
 
     setAnimatedProperties(properties:string[][]) {
+        let a =  new MorphingGraph("First") 
+        a.setOrigin(this.initial)
+        a.setTarget(this.final)
         properties.forEach( (pair:string[]) => {
-            this.actors.push(this.actor(pair[0], pair[1]))
+            a.addTransition(pair[0], pair[1])
         }) 
+        this.setActor(a)
     }
-
-    protected actor(from:string, to:string) {
-        let a = new Actor(`${from}-${to}`) 
-        a.setOrigin(this.initial, from)
-        a.setTarget(this.final, to)
-        a.setStage(this.stage)
-        return a
-    }
-
 }

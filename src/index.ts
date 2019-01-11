@@ -4,7 +4,7 @@ import * as older from './older';
 import * as uptick from './uptick';
 import * as aids from './aids';
 import {Graph} from './Graph'
-import {Actor, AxisActor} from './Actor'
+import {MorphingGraph} from './Actor'
 import {Director} from './Director'
 import * as d3 from 'd3';
 import interpolatePath from './interpolate-path';
@@ -23,13 +23,6 @@ Promise.all(graphPromises).then( (graphs) => {
 
     let d = new Director("Ferdinand")
     d.setFromTo(graphs[0], graphs[1])
-
-    let axis = new AxisActor("Axis")
-    axis.setOrigin(graphs[0])
-    axis.setTarget(graphs[1])
-    axis.setStage(graphs[0].chart)
-    d.addActor(axis)
-
     d.setAnimatedProperties(
         m(`
 MortalityEveryone -> popshare25

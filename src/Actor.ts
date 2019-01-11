@@ -2,95 +2,98 @@ import * as d3 from 'd3';
 import {Graph} from './graph';
 import interpolatePath from './interpolate-path';
 
-export class Actor {
+export class MorphingGraph extends Graph {
     name:string
     originGraph:Graph
-    originProperty:string
+    originDomain:number[]
 
     targetGraph:Graph
-    targetProperty:string
+    targetDomain:number[]
+
+    howFar:number
 
     stage:d3.Selection<any, any, any, any>
-        _pathInterpolator:Function
+        transitions:string[][]
+    _pathInterpolators:Function[]
+
+
+
+    /*
+     * This chart needs no data but is based on two existing graphs
+     * mg = new MorpingGraph("name")
+     * mg.setOrigin(g1)
+     * mg.setTarget(g2)
+     * mg.addTransition("a", "b")
+     * mg.atPoint(0.5).draw()
+     */
 
     constructor(name) {
+        super(name)
         this.name = name 
     }
 
-    public setOrigin(graph:Graph, property:string) {
+    public setOrigin(graph:Graph) {
         this.originGraph = graph     
-        this.originProperty = property
+        this.originDomain = graph.yScale.domain()
+
+        // Initialize everything with the origin graph
+        this.setScales(graph.xScale.domain(), (graph.yScale.domain() as [number, number]))
+        this.setColors(graph.colors)
+        this.setLabels(graph.labels)
+        this.setLabelOffsets(graph.labelOffsets)
+        this.setData(graph.data)
     }
 
 
-    public setTarget(graph:Graph, property:string) {
+    setClasses() {}
+    drawLabels() {}
+
+
+    public setTarget(graph:Graph) {
         this.targetGraph = graph
-        this.targetProperty = property
+        this.targetDomain = graph.yScale.domain()
     }
 
 
-    public setStage(svg:d3.Selection<any, any, any, any>) {
-        this.stage = svg 
+    addTransition(from, to) {
+        this.classes.push(`${from}---${to}`)
+        console.log(this.classes)
     }
 
 
-    public draw(howFar:number) {
-        this.stage.select(`.${this.name}`).remove()
-        this.stage
-            .append("g")
-            .attr("class", this.name)
-            .append("path")
-            .attr("d", this.path(howFar))
-            .attr("fill", this.color(howFar)) 
+    public atPoint(howFar:number) {
+        this.howFar = howFar 
+        return this
     }
 
 
-    protected pathInterpolator() {
-        if(this._pathInterpolator == null) {
-            let path1 = this.originGraph.getPathFor(this.originProperty)
-            let path2 = this.targetGraph.getPathFor(this.targetProperty)
-            console.log(path1 == path2)
-            this._pathInterpolator = interpolatePath(path1, path2, null)
-        }
-        return  this._pathInterpolator
-    }
-
-    protected colorInterpolator() {
-        let color1 = this.originGraph.getColorFor(this.originProperty)
-        let color2 = this.targetGraph.getColorFor(this.targetProperty)
-        return d3.interpolateHsl(color1, color2) 
-    }
-
-    protected path(howFar:number) {
-        return this.pathInterpolator()(howFar)
-    }
-
-    protected color(howFar:number) {
-        return this.colorInterpolator()(howFar)
-    }
-
-}
+    getPathFor(klass) {
+        let from = this.fromToClasses(klass).from
+        let to = this.fromToClasses(klass).to
 
 
-export class AxisActor extends Actor {
-    draw(howFar:number) {
-        this.originGraph.setScales(
-            this.originGraph.xScale.domain(),
-            this.axis(howFar)
-        )
-        this.originGraph.draw()
+        let path1 = this.originGraph.getPathFor(from)
+        let path2 = this.targetGraph.getPathFor(to)
+
+        return interpolatePath(path1, path2, null)(this.howFar)
     }
 
 
-     public setOrigin(graph:Graph, property:string="origin axis") {
-        this.originGraph = graph     
-        this.originProperty = property
+    getColorFor(klass) {
+        let from = this.fromToClasses(klass).from
+        let to = this.fromToClasses(klass).to
+
+
+        let color1 = this.originGraph.getColorFor(from)
+        let color2 = this.targetGraph.getColorFor(to)
+        console.log(color1, color2)
+        return d3.interpolateHsl(color1, color2)(this.howFar)
     }
 
-
-    public setTarget(graph:Graph, property:string="target axis") {
-        this.targetGraph = graph
-        this.targetProperty = property
+    private fromToClasses(klass) {
+        let pair = klass.split("---") 
+        if(pair.length !== 2) {throw new Error("Need two properties to interpolate between")}
+        return {from: pair[0], to: pair[1]}
     }
 
 
@@ -99,8 +102,9 @@ export class AxisActor extends Actor {
     }
 
     protected axisInterpolator() {
-        let domain0 = this.originGraph.yScale.domain()
-        let domain1 = this.targetGraph.yScale.domain()
-        return d3.interpolate(domain0, domain1);
+        return d3.interpolate(this.originDomain, this.targetDomain);
     }
+
 }
+
+
