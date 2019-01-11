@@ -57,7 +57,6 @@ export class MorphingGraph extends Graph {
 
     addTransition(from, to) {
         this.classes.push(`${from}---${to}`)
-        console.log(this.classes)
     }
 
 
@@ -86,7 +85,6 @@ export class MorphingGraph extends Graph {
 
         let color1 = this.originGraph.getColorFor(from)
         let color2 = this.targetGraph.getColorFor(to)
-        console.log(color1, color2)
         return d3.interpolateHsl(color1, color2)(this.howFar)
     }
 

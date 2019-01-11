@@ -1,7 +1,7 @@
 import 'jest'
 import {Director} from './Director'
 import {Graph} from './Graph'
-import {Actor} from './Actor'
+import {MorphingGraph} from './MorphingGraph'
 import * as d3 from 'd3'
 
 
@@ -36,11 +36,10 @@ g2.setScales(
 g2.setData(d2)
 g2.setClasses(d2)
 
-let a:Actor = new Actor("a-b")
-a.setOrigin(g1, "a")
-a.setTarget(g2, "b")
-a.setStage(g1.chart)
-
+let a:MorphingGraph = new MorphingGraph("a-b")
+a.setOrigin(g1)
+a.setTarget(g2)
+a.addTransition("a", "b")
 
 
 let d = new Director("Ferdinand")
@@ -68,31 +67,8 @@ describe("initialize director", () => {
         expect(d.end).toBeTruthy
     })
 
-
-    it("should have actors", () => {
-        expect(d.actors.length).toEqual(2) 
-    })
-
-
-    it("should create an actor for each animateable property", () => {
-        expect(d.actors[0]).toMatchObject(a)
-    })
 })
 
 
 describe("scrolling behavior", () => {
-    it("should create an actor when scrolling far enough", () => {
-        g1.draw()
-        d.scrolling({pageY: 300})
-        expect(d.stage.select(".a-b").node()).toBeTruthy()
-    })
-
-    it("should redraw the actors on scroll", () => {
-        g1.draw()
-        d.scrolling({pageY: 300})
-        let before = d.stage.select(".a-b").node()
-        d.scrolling({pageY: 350})
-        expect(d.stage.select(".a-b").node()).not.toEqual(before)
-    })
 })
-

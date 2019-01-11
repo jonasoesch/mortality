@@ -1,8 +1,12 @@
 import 'jest';
 import * as d3 from 'd3';
-import {Actor} from './Actor';
+import {MorphingGraph} from './MorphingGraph';
 import {Graph} from './Graph'
 
+
+let name = "Jonas"
+let pathSelector = `body #Jonas .paths path`
+d3.select(document).select("body").append("div").attr("id", name)
 
 // First Graph
 let d1 = [
@@ -32,58 +36,52 @@ g2.setScales(
 g2.setData(d2)
 g2.setClasses(d2)
 
-let a = new Actor("Jonas")
-a.setOrigin(g1, "a")
-a.setTarget(g2, "b")
-a.setStage(d3.select(document).select("body").append("svg"))
+let a = new MorphingGraph("Jonas")
+a.setOrigin(g1)
+a.setTarget(g2)
+a.addTransition("a", "b")
 
 describe("initialize", () => {
     it("is an Actor object", () => {
-        expect(a).toBeInstanceOf(Actor)
+        expect(a).toBeInstanceOf(MorphingGraph)
     })
 
-    it("sets the origin correctly", () => {
-        expect(a.originGraph).toEqual(g1)
-        expect(a.originProperty).toEqual("a")
-    })
-
-    it("sets the target correctly", () => {
-        expect(a.targetGraph).toEqual(g2)
-        expect(a.targetProperty).toEqual("b")
-    })
 })
 
 
 describe( "path drawing", () => {
+
+    a.atPoint(0.5).draw()
+
     it("draws a path", () => {
-        a.draw(0.5)
-        let doc = d3.select(document).select("body svg .Jonas path")
+        a.atPoint(0.5).draw()
+        let doc = d3.select(document).select(pathSelector)
         expect(doc.size()).toEqual(1)
     })
 
     it("draws the correct path", () => {
-        a.draw(0.5)
-        let doc = d3.select(document).select("body svg .Jonas path")
+        a.atPoint(0.5).draw()
+        let doc = d3.select(document).select(pathSelector)
         //expect(doc.attr("d")).toEqual("M80,640L1200,80L1200,80L80,640Z")
     })
 
     it("draws the correct starting path", () => {
-        a.draw(0)
-        let doc = d3.select(document).select("body svg .Jonas path")
+        a.atPoint(0).draw()
+        let doc = d3.select(document).select(pathSelector)
         expect(doc.attr("d")).toEqual(g1.getPathFor("a"))
     })
 
     it("draws the correct final path", () => {
-        a.draw(1)
-        let doc = d3.select(document).select("body svg .Jonas path")
+        a.atPoint(1).draw()
+        let doc = d3.select(document).select(pathSelector)
         expect(doc.attr("d")).toEqual(g2.getPathFor("b"))
     })
     
     it("the starting path and the final path should not be the same", () => {
-        a.draw(0)
-        let doc1 = d3.select(document).select("body svg .Jonas path")
-        a.draw(1)
-        let doc2 = d3.select(document).select("body svg .Jonas path")
+        a.atPoint(0).draw()
+        let doc1 = d3.select(document).select(pathSelector)
+        a.atPoint(1).draw()
+        let doc2 = d3.select(document).select(pathSelector)
         expect(doc1.attr("d")).not.toEqual(doc2.attr("d"))
     })
     
@@ -94,8 +92,8 @@ describe("other interpolations", () => {
     g2.setColors(["black"])
 
     it("interpolates between colors", () => {
-        a.draw(0.5)     
-        let path = d3.select(document).select("body svg .Jonas path")
+        a.atPoint(0.5).draw()     
+        let path = d3.select(document).select(pathSelector)
         expect(path.attr("fill")).toEqual("rgb(128, 128, 128)")
     })
 })
