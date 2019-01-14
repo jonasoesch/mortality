@@ -25,13 +25,13 @@ export function graph() {
         graph.setDescription("The evolution of the mortality rate since 1968 by age group")
         graph.setScales(d3.extent(data, d => d.date), [0, 100])
         graph.setColors([
-            "rgb(117, 212, 156)",
-            "rgb(60, 190, 203)",
-            "rgb(26, 130, 140)",
-            "rgb(38, 148, 222)",
-            "rgb(47, 105, 160)",
-            "rgb(154, 129, 232)",
             "rgb(125, 75, 186)",
+            "rgb(154, 129, 232)",
+            "rgb(47, 105, 160)",
+            "rgb(38, 148, 222)",
+            "rgb(26, 130, 140)",
+            "rgb(60, 190, 203)",
+            "rgb(117, 212, 156)",
         ])
         graph.setLabels([
             "Over 85",

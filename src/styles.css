@@ -14,7 +14,7 @@ h1 {
 }
 
 
-#decrease, #decrease-older, #older, #older-uptick, #uptick {
+#decrease, #decrease-older, #older, #older-uptick, #uptick, #uptick-aids, #aids {
     position:fixed;
     top: 100px;
 }
