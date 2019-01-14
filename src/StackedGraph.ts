@@ -80,3 +80,6 @@ export class StackedGraph extends Graph {
             + this.getPropertyFor(klass).labelOffsets[1]
     }
 }
+
+
+

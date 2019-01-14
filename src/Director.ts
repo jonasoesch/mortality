@@ -3,43 +3,31 @@ import {Graph} from './Graph'
 import {MorphingGraph} from './MorphingGraph'
 
 export class Director {
-    name:string
-    initial:Graph
-    final:Graph
-    actor:MorphingGraph
-    stage:d3.Selection<any, any, any, any>
-    start= 200
-    end = 400
+    storyboard:Step[] = []
 
-    constructor(name:string) {
-        this.name = name 
-    }
-
-    protected setStage() {
-        this.stage = this.initial.chart
-    }
-
-    setFromTo(initial:Graph, final:Graph) {
-        this.initial = initial 
-        this.final = final
-        this.setStage()
+    constructor() {
         document.addEventListener('scroll', (evt) => this.scrolling(evt))
-    }
-
-    setActor(a:MorphingGraph) {
-        this.actor  =a
     }
 
     scrolling(evt:any) {
         let offset = evt.pageY
-        if (offset > this.start && offset < this.end) {
-            this.transition(this.howFar(offset)) 
-        }
+        this.storyboard.forEach( (step) => {
+            if (offset > step.start && offset < step.end) {
+                this.transition(step.graph, this.howFar(step, offset)) 
+            } else {
+               this.hide(step.graph) 
+            }
+        })
     }
 
-    protected howFar(offset:number) {
-        let total = this.end-this.start
-        let position = offset - this.start
+
+    addStep(start:number, end:number, graph:Graph) {
+        this.storyboard.push(new Step(start, end, graph))
+    }
+
+    protected howFar(step:Step, offset:number) {
+        let total = step.end-step.start
+        let position = offset - step.start
 
         if(total < 0) {throw new Error("End is before start")}
         if(position < 0) {throw new Error("Position is not between end and start")}
@@ -48,18 +36,41 @@ export class Director {
     }
 
 
-    transition(howFar:number) {
-        this.actor.atPoint(howFar).draw() 
-        //this.initial.fadeOut()
+    transition(graph:Graph, howFar:number) {
+        if(graph instanceof MorphingGraph) {
+            graph.atPoint(howFar).draw() 
+        } else {
+            graph.draw() 
+        }
     }
 
-    setAnimatedProperties(properties:string[][]) {
-        let a =  new MorphingGraph("First") 
-        a.setOrigin(this.initial)
-        a.setTarget(this.final)
-        properties.forEach( (pair:string[]) => {
-            a.addTransition(pair[0], pair[1])
-        }) 
-        this.setActor(a)
+    hide(graph:Graph) {
+        graph.hide() 
+    }
+
+
+    toString():string {
+        let out = ""
+        this.storyboard.forEach(step => {
+            out = out + step.start + "–"
+            out = out + step.end + ": "
+            out = out + step.graph.name + "\n"
+        })
+        return out
+    }
+
+}
+
+
+class Step {
+    start:number
+    end:number
+    graph:Graph
+
+    constructor(f:number, t:number, g:Graph) {
+        this.start = f
+        this.end = t
+        this.graph = g
+        return this
     }
 }

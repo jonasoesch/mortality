@@ -14,7 +14,7 @@ h1 {
 }
 
 
-#decrease, #First {
+#decrease, #decrease-older, #older, #older-uptick, #uptick {
     position:fixed;
     top: 100px;
 }

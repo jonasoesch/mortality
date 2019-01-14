@@ -56,11 +56,29 @@ describe("initialization", () => {
 })
 
 
+describe("Methods", () => {
+    it("should return the right path for a given class", () => {
+        expect(g.getPathFor("b")).toEqual("M183.07446654086226,-5520L722.6709246625055,-480L722.6709246625055,-480L183.07446654086226,80Z")
+    })
+
+    it("should create an area generator with the right properties", () => {
+        let gen = d3.area()
+                .x((stack, i) => g.xScale(g.dates[i]))
+                .y1(d => g.yScale(d[1] || 1))
+                .y0(d => g.yScale(d[0]))
+
+        expect(g.paths[0]([[1,2], [3,4]])).toEqual(gen([[1,2], [3,4]]))
+    })
+
+
+})
+
+
 describe("Paths", ()=> {
     it("should draw the right paths", () => {
         g.draw()
         let path = g.chart.select(".paths path").attr("d")
-        expect(path).toEqual("aaaa")
+        expect(path).toEqual("M183.07446654086226,80L722.6709246625055,-480L722.6709246625055,640L183.07446654086226,640Z")
          
     })
 })

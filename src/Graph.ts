@@ -131,6 +131,7 @@ export class Graph {
 
     draw() {
         if(!this.data) {throw new Error("There is no data yet")}
+        this.unhide()
         this.drawAxes()
         this.drawPaths()
         this.drawLabels()
@@ -268,18 +269,15 @@ export class Graph {
             .text(this.description)
     }
 
-    fadeOut() {
-        this.chart.select(".paths")
+    hide() {
+        this.chart
             .transition()
             .style("opacity", 0)
-        
-        this.chart.select(".label")
-            .transition()
-            .style("opacity", 0)
+    }
 
-        this.chart.select(".description").style("display", "none")
-            .transition()
-            .style("opacity", 0)
+    unhide() {
+        this.chart
+            .style("opacity", 1)
     }
 
 
