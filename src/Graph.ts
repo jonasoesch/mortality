@@ -150,7 +150,7 @@ export class Graph {
             axesGroup.append("g")
             .attr("class", "axisLeft")
             .attr("transform", `translate(${this.margin}, 0)`)
-            .call(this.axisLeft(this.xScale, this.w))
+            .call(this.axisLeft())
         )
 
 
@@ -158,7 +158,7 @@ export class Graph {
             axesGroup.append("g")
             .attr("class", "axisBottom")
             .attr("transform", `translate(0, ${this.h-this.margin})`)
-            .call(this.axisBottom(this.yScale, this.h))
+            .call(this.axisBottom())
         )
 
         axes.forEach( axis => {
@@ -309,11 +309,11 @@ export class Graph {
     }
 
 
-    private axisLeft(scale:d3.ScaleLinear<any, any>, w:number) {
+    protected axisLeft() {
         return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w).tickPadding(10))
     }
 
-    private axisBottom(scale:d3.ScaleLinear<any,any>, h:number) {
+    private axisBottom() {
         return d3.axisBottom(this.xScale).tickSize(-this.h).tickPadding(10)
     }
 

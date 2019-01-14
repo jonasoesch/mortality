@@ -60,7 +60,6 @@ export class MorphingGraph extends Graph {
         prop.from = from
         prop.to = to
         this.classes.push(prop)
-
     }
 
 
@@ -92,19 +91,23 @@ export class MorphingGraph extends Graph {
         return d3.interpolateHsl(color1, color2)(this.howFar)
     }
 
+    protected axisLeft() {
+        let originDomain = this.originGraph.yScale.domain()
+        let targetDomain = this.targetGraph.yScale.domain()
+        let interpolator = d3.interpolate(originDomain, targetDomain)
+
+        let yScale = d3.scaleLinear()
+            .domain(interpolator(this.howFar))
+            .range(this.originGraph.yScale.range())
+
+
+        return this.formatLeftAxis(d3.axisLeft(yScale).tickSize(-this.w).tickPadding(10))
+    }
+
     private fromToClasses(klass:string) {
         let pair = klass.split("---") 
         if(pair.length !== 2) {throw new Error("Need two properties to interpolate between")}
         return {from: pair[0], to: pair[1]}
-    }
-
-
-    protected axis(howFar:number):[number, number] {
-        return (this.axisInterpolator()(howFar) as [number, number])
-    }
-
-    protected axisInterpolator() {
-        return d3.interpolate(this.originDomain, this.targetDomain);
     }
 
 }
