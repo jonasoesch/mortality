@@ -272,11 +272,14 @@ export class Graph {
     hide() {
         this.chart
             .transition()
+            .duration(100)
             .style("opacity", 0)
     }
 
     unhide() {
         this.chart
+            .transition()
+            .duration(100)
             .style("opacity", 1)
     }
 
