@@ -11,7 +11,7 @@ export class Director {
     start= 200
     end = 400
 
-    constructor(name) {
+    constructor(name:string) {
         this.name = name 
     }
 
@@ -30,14 +30,14 @@ export class Director {
         this.actor  =a
     }
 
-    scrolling(evt) {
+    scrolling(evt:any) {
         let offset = evt.pageY
         if (offset > this.start && offset < this.end) {
             this.transition(this.howFar(offset)) 
         }
     }
 
-    protected howFar(offset) {
+    protected howFar(offset:number) {
         let total = this.end-this.start
         let position = offset - this.start
 

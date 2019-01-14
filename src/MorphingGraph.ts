@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
-import {Graph} from './graph';
+import {Graph} from './Graph';
+import {Property} from './Property'
 import interpolatePath from './interpolate-path';
 
 export class MorphingGraph extends Graph {
@@ -9,6 +10,7 @@ export class MorphingGraph extends Graph {
 
     targetGraph:Graph
     targetDomain:number[]
+
 
     howFar:number
 
@@ -27,8 +29,9 @@ export class MorphingGraph extends Graph {
      * mg.atPoint(0.5).draw()
      */
 
-    constructor(name) {
+    constructor(name:string) {
         super(name)
+        this.classes = []
         this.name = name 
     }
 
@@ -38,9 +41,6 @@ export class MorphingGraph extends Graph {
 
         // Initialize everything with the origin graph
         this.setScales(graph.xScale.domain(), (graph.yScale.domain() as [number, number]))
-        this.setColors(graph.colors)
-        this.setLabels(graph.labels)
-        this.setLabelOffsets(graph.labelOffsets)
         this.setData(graph.data)
     }
 
@@ -55,8 +55,12 @@ export class MorphingGraph extends Graph {
     }
 
 
-    addTransition(from, to) {
-        this.classes.push(`${from}---${to}`)
+    addTransition(from:string, to:string) {
+        let prop = new Property(`${from}---${to}`)
+        prop.from = from
+        prop.to = to
+        this.classes.push(prop)
+
     }
 
 
@@ -66,7 +70,7 @@ export class MorphingGraph extends Graph {
     }
 
 
-    getPathFor(klass) {
+    getPathFor(klass:string) {
         let from = this.fromToClasses(klass).from
         let to = this.fromToClasses(klass).to
 
@@ -78,7 +82,7 @@ export class MorphingGraph extends Graph {
     }
 
 
-    getColorFor(klass) {
+    getColorFor(klass:string) {
         let from = this.fromToClasses(klass).from
         let to = this.fromToClasses(klass).to
 
@@ -88,7 +92,7 @@ export class MorphingGraph extends Graph {
         return d3.interpolateHsl(color1, color2)(this.howFar)
     }
 
-    private fromToClasses(klass) {
+    private fromToClasses(klass:string) {
         let pair = klass.split("---") 
         if(pair.length !== 2) {throw new Error("Need two properties to interpolate between")}
         return {from: pair[0], to: pair[1]}

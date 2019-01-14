@@ -8,7 +8,7 @@ class UptickGraph extends Graph {
 
 export function graph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
-        let data:MortalityData[] = csv.map((d) => {
+        let data:MortalityData[] = csv.map((d:any) => {
             return {
                 date: new Date(Date.parse(d["date"])),
                 Rate85up: parseFloat(d["Normalized85up"]),

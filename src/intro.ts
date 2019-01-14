@@ -9,7 +9,7 @@ interface Data {
 
 
 d3.csv("data.csv").then((csv: any) => {
-    let data = csv.map((d) => {
+    let data = csv.map((d:any) => {
         return {
             x: parseInt(d.x),
             y: parseInt(d.y)

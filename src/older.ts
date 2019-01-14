@@ -12,7 +12,7 @@ class OlderGraph extends StackedGraph {
 
 export function graph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
-        let data:MortalityData[] = csv.map((d) => {
+        let data:MortalityData[] = csv.map((d:any) => {
             return {
                 date: new Date(Date.parse(d["date"])),
                 popshare25: parseFloat(d["popshare-25"]),

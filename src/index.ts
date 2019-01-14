@@ -16,6 +16,9 @@ graphPromises.push(aids.graph())
 
 Promise.all(graphPromises).then( (graphs) => {
     graphs[0].draw()
+    graphs[1].draw()
+    graphs[2].draw()
+    graphs[3].draw()
 
     let d = new Director("Ferdinand")
     d.setFromTo(graphs[0], graphs[1])
@@ -32,6 +35,6 @@ MortalityEveryone -> popshare75
 
 })
 
-function m(str):string[][] {
+function m(str:string):string[][] {
    return str.trim().split(/\n/).map( el => el.trim().split(/->/).map(elem => elem.trim()))
 }

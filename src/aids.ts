@@ -9,7 +9,7 @@ class AidsGraph extends StackedGraph {
 
 export function graph() {
     return d3.csv("data/causes.csv").then((csv: any) => {
-        let data:CausesData[] = csv.map((d) => {
+        let data:CausesData[] = csv.map((d:any) => {
             return {
                 date: new Date(Date.parse(d["date"])),
                 Other: parseFloat(d["Other"]) || 0,

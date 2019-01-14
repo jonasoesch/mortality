@@ -1,20 +1,21 @@
 import * as d3 from "d3";
 import * as glob from "./globals.json"
 import {Graph} from './Graph'
+import {Property} from './Property'
 
 
 export class StackedGraph extends Graph {
     stacks:any;
-    dates:Date;
+    dates:Date[];
 
 
-    setData(data) {
+    setData(data:any[]) {
         if(data === null) {throw new Error("You passed no data")}
         this.data = data
         this.pathGenerators()
         this.stacks = (d3.stack()
-            .keys(this.classes))(<any>data)
-        this.dates = data.map( d => d.date)
+            .keys(this.classes.map(k => k.name)))(<any>data)
+        this.dates = data.map( d => (d.date as Date))
     }
 
 
@@ -32,36 +33,50 @@ export class StackedGraph extends Graph {
      drawPaths() {
         let paths = this.chart.append("g").attr("class", "paths")
          this.classes.forEach( (klass) => {
-             this.drawPath(paths, klass)    
+             this.drawPath(paths, klass.name)    
          })
 
     }
 
-    drawPath(container, klass) {
+    drawPath(container:d3.Selection<any, any, any, any>, klass:string) {
             container.append('path')
                 .attr("d", d => this.getPathFor(klass))
                 .attr("fill", this.getColorFor(klass))
     }
 
 
-    getPathFor(klass) {
-        let i = this.classes.indexOf(klass)
+    getPathFor(klass:string) {
+        if(this.stacks == null) {throw new Error("There is no data yet")}
+        if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
+
+
+        let i = this.classes.map( k => k.name ).indexOf(klass)
+        if(i === -1) {throw new Error(`There is no class with name ${klass} in ${this.name}`)}
         let ret = this.paths[i](this.stacks[i])
         return ret
     }
 
 
-    setClasses(classes) {
-        this.classes = classes
+    setClasses(classes:string[]) {
+        if(this.classes.length === classes.length) {
+            classes.forEach( (c, i) => {
+                this.classes[i].name = c
+            } )
+        } else {
+            classes.forEach( (c) => {
+                this.classes.push(new Property(c)) 
+            } )
+        }
+
     }
 
 
     removeFill() {}
     
-    labelYPosition(d, klass:string, i:number, offset) {
+    labelYPosition(d:any, klass:string, i:number, offset:number) {
         return this.yScale(this.stacks[i][this.stacks[i].length-1][1] || 1) 
             + 20
             + offset 
-            + (this.labelOffsets ? this.labelOffsets[this.classes.indexOf(klass)][1] : 0)
+            + this.getPropertyFor(klass).labelOffsets[1]
     }
 }

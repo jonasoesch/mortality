@@ -11,13 +11,13 @@ This project intends to address some of the problems found in the transitions an
 1. Clone the repository:
 
 ```
-git clone https://github.com/jonasoesch/d3-typescript
+git clone https://github.com/jonasoesch/mortality
 ```
 
 2. Change into the folder:
 
 ```
-cd d3-typescript
+cd 
 ```
 
 3. Install the required node modules:
@@ -35,7 +35,7 @@ npm run start
 5. Start editing:
 * `src/index.ts`
 * `static/index.html`
-* `static/styles.css`
+* `src/styles.css`
 
 5. And finally build into `dist`
 

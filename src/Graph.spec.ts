@@ -1,6 +1,7 @@
 import 'jest';
 import * as d3 from 'd3';
 import {Graph} from './Graph';
+import {Property} from './Property';
 
 
 
@@ -26,22 +27,36 @@ describe("setup process", () => {
         expect(g.name).toBe("Jonas")
     });
 
+    it('should be drawn into the right HTML element', () => {
+        let target = d3.select("#Jonas svg")
+        expect(g.chart).toEqual(target)
+    })
 
-    test('scales', () => {
+
+    test('the scales should return the correct values', () => {
         expect(g.xScale(Date.parse("2005-03-20"))).toEqual(388.24793148497605)
         expect(g.yScale(0.5)).toEqual(360)
     });
 
 
-    test('setData', () => {
+    test('the data should be set', () => {
         expect(g.data).toBeTruthy()
         expect(g.data[1]["a"]).toEqual(2)
     })
 
-    test('scoping', () => {
-        expect(g.data).toBeTruthy()
-        expect(g.data[1]["a"]).toEqual(2)
+    test('Properties are set', () => {
+        expect(g.classes[0].name).toEqual("a")
+        expect(g.classes[0].color).toEqual("red")
+        expect(g.classes[0].label).toEqual("A")
     })
+
+    test('Path generators are prepared', () => {
+        expect(g.paths.length).toEqual(g.classes.length)
+        g.paths.forEach( path => {
+            expect(path).toBeInstanceOf(Function)
+        })
+    })
+
 })
 
 

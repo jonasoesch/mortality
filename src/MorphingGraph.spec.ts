@@ -2,6 +2,7 @@ import 'jest';
 import * as d3 from 'd3';
 import {MorphingGraph} from './MorphingGraph';
 import {Graph} from './Graph'
+import {Property} from './Property'
 
 
 let name = "Jonas"
@@ -42,8 +43,26 @@ a.setTarget(g2)
 a.addTransition("a", "b")
 
 describe("initialize", () => {
-    it("is an Actor object", () => {
+    it("is a MorphingGraph object", () => {
         expect(a).toBeInstanceOf(MorphingGraph)
+    })
+
+    it("has the right origin graph", () => {
+        expect(a.originGraph).toEqual(g1)
+    })
+    
+    it("has the right target graph", () => {
+        expect(a.targetGraph).toEqual(g2)
+    })
+
+
+    it("should have one property", () => {
+        expect(a.classes.length).toEqual(1)
+    })
+
+    it("It has a property with the right settings", () => {
+        let prop = new Property("a---b")
+        expect(a.classes[0]).toMatchObject(prop) 
     })
 
 })
