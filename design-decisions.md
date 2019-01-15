@@ -35,6 +35,26 @@ The original version only shows the top three age groups (75+, 65-74 and 55-64).
 Compared to the Bloomberg version, the y-axes consequently start at 0. It is quite well reasearched, that readers easily miss it when axes don't start at 0 and get the wrong impression of the data. (sources)
 
 
+## Reviews
+
+## Informal test of superposed transition
+
+Test subject: Simon Marcin
+Tag: test_1
+Scenario: Superposed
+
+The transition between "Mortality Everyone" and demographics over time is not clear. The reader didn't understand that the second graph showed in a way the composition of the line "Mortality Everyone". A proposed improvement was to show labels longer during transitions.
+
+
+## Informal test of static and superposed scenarios
+
+Test subject: Simon Schubiger
+Tag: test_2
+Scenario: Static and Superposed
+
+The relationship between "Mortality Everyone" and demographics over time was not clear in both scenarios. The reader suspected that it was because the transition between "Deaths per 100'000" and the stacked area percentage chart was conceptually difficult. The proposition was to include an intermediary step. For example by moving the line "Mortality Everyone" to the top (representing 100%) and then extending it downwards.
+
+It was also mentioned that the decomposition of Mortality into Demographics is not precise. Because the Mortality is actually composed by demographics and the respective mortality by age group.
 
 ## Sources
 
