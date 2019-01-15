@@ -18,22 +18,26 @@ export function graph() {
         let graph = new DecreaseGraph("decrease")
         graph.setDescription("Evolution of the mortality rate (per 100'000) since 1968")
         graph.setScales(d3.extent(data, d => d.date), [0, d3.max(data, d => d["MortalityMales"])])
-       graph.setColors([
-            "rgb(135, 145, 155)",
-            "rgb(204, 51, 153)",
-            "rgb(27, 122, 199)",
-        ])
-        graph.setLabels([
-            "Everyone",
-            "Women",
-            "Men",
-        ])
+
+        graph.addMark("MortalityEveryone")
+            .setColor("rgb(135, 145, 155)")
+            .setLabel("Everyone")
+            .setLabelOffsets([0,0])
+
+        graph.addMark("MortalityFemales")
+            .setColor("rgb(204, 51, 153)")
+            .setLabel("Women")
+            .setLabelOffsets([0,15])
+
+
+        graph.addMark("MortalityMales")
+            .setColor("rgb(27, 122, 199)")
+            .setLabel("Men")
+            .setLabelOffsets([0,-15])
+
         graph.setData(data)
-        graph.setLabelOffsets([
-            [0, 0],
-            [0, 15],
-            [0, -15],
-        ])
+        graph.setData(data)
+
         return graph
     })
 }
