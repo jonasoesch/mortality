@@ -14,11 +14,6 @@ h1 {
 }
 
 
-#decrease, #decrease-older, #older, #older-uptick, #uptick, #uptick-aids, #aids {
-    position:fixed;
-    top: 100px;
-}
-
 #container {
     max-width: $width$px;
     margin: 0 auto;
@@ -29,6 +24,12 @@ h1 {
     text-align: center;
     margin-bottom: 140px;
     font-style: italic;
+}
+
+
+#decrease-older, #older-uptick, #uptick-aids {
+    position: absolute;
+    top: 0;
 }
 
 .smallcaps {

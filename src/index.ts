@@ -16,7 +16,10 @@ graphPromises.push(aids.graph())
 Promise.all(graphPromises).then( (graphs) => {
     let d = new Director()
     graphs[0].draw()
-    d.addStep(-10, 200, graphs[0])
+    graphs[1].draw()
+    graphs[2].draw()
+    graphs[3].draw()
+    d.addStep(-10, 10, graphs[0])
 
     let decreaseOlder = new MorphingGraph("decrease-older")
     decreaseOlder.setOrigin(graphs[0])
@@ -29,9 +32,9 @@ Promise.all(graphPromises).then( (graphs) => {
     decreaseOlder.addTransition("MortalityEveryone", "popshare75")
 
 
-    d.addStep(200, 600, decreaseOlder)
+    d.addStep(10, 600, decreaseOlder)
 
-    d.addStep(600,700, graphs[1])
+    d.addStep(200,400, graphs[1])
 
 
     let olderUptick = new MorphingGraph("older-uptick")

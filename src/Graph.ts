@@ -45,6 +45,14 @@ export class Graph {
         this.description = description 
     }
 
+
+    yPosition() {
+        let offset = window.pageYOffset
+        let top = this.chart.node().getBoundingClientRect().top || 0
+        console.log(top)
+        return top + offset
+    }
+
     initStage() {
         this.insertChart()
         this.setDimensions()

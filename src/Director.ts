@@ -15,7 +15,9 @@ export class Director {
             if (offset > step.start && offset < step.end) {
                 this.transition(step.graph, this.howFar(step, offset)) 
             } else {
-               this.hide(step.graph) 
+                if(step.graph instanceof MorphingGraph) {
+                    this.hide(step.graph)
+                }
             }
         })
     }
@@ -39,9 +41,7 @@ export class Director {
     transition(graph:Graph, howFar:number) {
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
-        } else {
-            graph.draw() 
-        }
+        } 
     }
 
     hide(graph:Graph) {

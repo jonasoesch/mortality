@@ -69,6 +69,21 @@ export class MorphingGraph extends Graph {
     }
 
 
+    public draw() {
+        super.draw()
+        let start = this.originGraph.yPosition()
+        let end = this.targetGraph.yPosition()
+        let interpolator = d3.interpolate(start, end)
+        debugger;
+        console.log(interpolator(this.howFar))
+        this.chart
+            .attr("transform", `translate(0, ${interpolator(this.howFar)})`)
+    }
+
+    drawAxes() {}
+    
+
+
     getPathFor(klass:string) {
         let from = this.fromToClasses(klass).from
         let to = this.fromToClasses(klass).to
