@@ -10,7 +10,7 @@ g.setScales(
     [0, 1]
 )
 g.setColors(["red", "blue"])
-g.setClasses(["a", "b"])
+g.setMarkNames(["a", "b"])
 g.setLabels(["A", "B"])
 g.setLabelOffsets([[0,0], [0,0]])
 g.setData([
@@ -26,8 +26,8 @@ describe("initialization", () => {
     })
 
     it("should have the right class names", () => {
-        expect(g.classes[0].name).toEqual("a")
-        expect(g.classes[1].name).toEqual("b")
+        expect(g.marks[0].name).toEqual("a")
+        expect(g.marks[1].name).toEqual("b")
     })
 
 

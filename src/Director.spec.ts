@@ -20,7 +20,7 @@ g1.setScales(
     [d1[0].a, d1[2].a]
 )
 g1.setData(d1)
-g1.setClasses(d1)
+g1.setMarkNames(d1)
 
 
 // Second Graph
@@ -34,7 +34,7 @@ g2.setScales(
     [d2[0].b, d2[1].b]
 )
 g2.setData(d2)
-g2.setClasses(d2)
+g2.setMarkNames(d2)
 
 let a:MorphingGraph = new MorphingGraph("a-b")
 a.setOrigin(g1)

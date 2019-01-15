@@ -27,7 +27,7 @@ export function graph() {
         let graph = new AidsGraph("aids")
         graph.setDescription("The causes of death for americans between 25 and 44 years old")
         graph.setScales(d3.extent(data, d => d.date), [0, 160000])
-        graph.setClasses([
+        graph.setMarkNames([
             "Other",
             "Cancer",
             "Heart",

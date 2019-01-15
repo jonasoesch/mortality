@@ -1,7 +1,7 @@
 import 'jest';
 import * as d3 from 'd3';
 import {Graph} from './Graph';
-import {Property} from './Property';
+import {Mark} from './Mark';
 
 
 
@@ -45,13 +45,13 @@ describe("setup process", () => {
     })
 
     test('Properties are set', () => {
-        expect(g.classes[0].name).toEqual("a")
-        expect(g.classes[0].color).toEqual("red")
-        expect(g.classes[0].label).toEqual("A")
+        expect(g.marks[0].name).toEqual("a")
+        expect(g.marks[0].color).toEqual("red")
+        expect(g.marks[0].label).toEqual("A")
     })
 
     test('Path generators are prepared', () => {
-        expect(g.paths.length).toEqual(g.classes.length)
+        expect(g.paths.length).toEqual(g.marks.length)
         g.paths.forEach( path => {
             expect(path).toBeInstanceOf(Function)
         })

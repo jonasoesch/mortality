@@ -2,7 +2,7 @@ import 'jest';
 import * as d3 from 'd3';
 import {MorphingGraph} from './MorphingGraph';
 import {Graph} from './Graph'
-import {Property} from './Property'
+import {Mark} from './Mark'
 
 
 let name = "Jonas"
@@ -21,7 +21,7 @@ g1.setScales(
     [d1[0].a, d1[2].a]
 )
 g1.setData(d1)
-g1.setClasses(d1)
+g1.setMarkNames(d1)
 
 
 // Second Graph
@@ -35,7 +35,7 @@ g2.setScales(
     [d2[0].b, d2[1].b]
 )
 g2.setData(d2)
-g2.setClasses(d2)
+g2.setMarkNames(d2)
 
 let a = new MorphingGraph("Jonas")
 a.setOrigin(g1)
@@ -57,12 +57,12 @@ describe("initialize", () => {
 
 
     it("should have one property", () => {
-        expect(a.classes.length).toEqual(1)
+        expect(a.marks.length).toEqual(1)
     })
 
     it("It has a property with the right settings", () => {
-        let prop = new Property("a---b")
-        expect(a.classes[0]).toMatchObject(prop) 
+        let prop = new Mark("a---b")
+        expect(a.marks[0]).toMatchObject(prop) 
     })
 
 })

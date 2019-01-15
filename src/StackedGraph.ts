@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import * as glob from "./globals.json"
 import {Graph} from './Graph'
-import {Property} from './Property'
+import {Mark} from './Mark'
 
 
 export class StackedGraph extends Graph {
@@ -14,13 +14,13 @@ export class StackedGraph extends Graph {
         this.data = data
         this.pathGenerators()
         this.stacks = (d3.stack()
-            .keys(this.classes.map(k => k.name)))(<any>data)
+            .keys(this.marks.map(k => k.name)))(<any>data)
         this.dates = data.map( d => (d.date as Date))
     }
 
 
     pathGenerators() {
-        this.classes.forEach( klass => {
+        this.marks.forEach( mark => {
             this.paths.push(
                 d3.area()
                 .x((stack, i) => this.xScale(this.dates[i]))
@@ -32,39 +32,39 @@ export class StackedGraph extends Graph {
 
      drawPaths() {
         let paths = this.chart.append("g").attr("class", "paths")
-         this.classes.forEach( (klass) => {
-             this.drawPath(paths, klass.name)    
+         this.marks.forEach( (mark) => {
+             this.drawPath(paths, mark.name)    
          })
 
     }
 
-    drawPath(container:d3.Selection<any, any, any, any>, klass:string) {
+    drawPath(container:d3.Selection<any, any, any, any>, markName:string) {
             container.append('path')
-                .attr("d", d => this.getPathFor(klass))
-                .attr("fill", this.getColorFor(klass))
+                .attr("d", d => this.getPathFor(markName))
+                .attr("fill", this.getColorFor(markName))
     }
 
 
-    getPathFor(klass:string) {
+    getPathFor(markName:string) {
         if(this.stacks == null) {throw new Error("There is no data yet")}
         if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
 
 
-        let i = this.classes.map( k => k.name ).indexOf(klass)
-        if(i === -1) {throw new Error(`There is no class with name ${klass} in ${this.name}`)}
+        let i = this.marks.map( k => k.name ).indexOf(markName)
+        if(i === -1) {throw new Error(`There is no mark with name ${markName} in ${this.name}`)}
         let ret = this.paths[i](this.stacks[i])
         return ret
     }
 
 
-    setClasses(classes:string[]) {
-        if(this.classes.length === classes.length) {
-            classes.forEach( (c, i) => {
-                this.classes[i].name = c
+    setMarkNames(names:string[]) {
+        if(this.marks.length === names.length) {
+            names.forEach( (c, i) => {
+                this.marks[i].name = c
             } )
         } else {
-            classes.forEach( (c) => {
-                this.classes.push(new Property(c)) 
+            names.forEach( (c) => {
+                this.marks.push(new Mark(c)) 
             } )
         }
 
@@ -73,11 +73,11 @@ export class StackedGraph extends Graph {
 
     removeFill() {}
     
-    labelYPosition(d:any, klass:string, i:number, offset:number) {
+    labelYPosition(d:any, markName:string, i:number, offset:number) {
         return this.yScale(this.stacks[i][this.stacks[i].length-1][1] || 1) 
             + 20
             + offset 
-            + this.getPropertyFor(klass).labelOffsets[1]
+            + this.getMark(markName).labelOffsets[1]
     }
 }
 
