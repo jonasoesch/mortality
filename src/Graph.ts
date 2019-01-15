@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import * as glob from "./globals.json"
-import {Property} from './Property'
+import {Mark} from './Mark'
 
 export class Graph {
 
@@ -21,7 +21,7 @@ export class Graph {
     xScale:any //scaleTime
     yScale:d3.ScaleLinear<number, number>
     paths:d3.Line<any>[] = []
-    classes:Property[] 
+    marks:Mark[] 
 
     /*
         let graph = new Graph("name")
@@ -37,7 +37,7 @@ export class Graph {
     constructor(name:string) {
         this.name = name
         this.initStage()
-        this.classes = []
+        this.marks = []
     }
 
 
@@ -80,51 +80,51 @@ export class Graph {
     }
 
     setColors(colors:string[]) {
-        this.classes = this.classes.length > 0 ? this.classes : colors.map( c => new Property()) 
-        this.classes.forEach( (klass, i) => {
-            klass.color = colors[i] 
+        this.marks = this.marks.length > 0 ? this.marks : colors.map( c => new Mark()) 
+        this.marks.forEach( (mark, i) => {
+            mark.color = colors[i] 
         })
     }
 
     setLabels(labels:string[]) {
-        this.classes = this.classes ? this.classes : labels.map( label => new Property() )
-        this.classes.forEach((klass, i) => {
-            klass.label = labels[i] 
+        this.marks = this.marks ? this.marks : labels.map( label => new Mark() )
+        this.marks.forEach((mark, i) => {
+            mark.label = labels[i] 
         })
     }
 
     setData(data:any) {
         if(data === null) {throw new Error("You passed no data")}
         this.data = data
-        this.setClasses(data) 
+        this.setMarkNames(data) 
         this.pathGenerators()
     }
 
-    setClasses(data:any) {
-        let classNames:string[] = []
+    setMarkNames(data:any) {
+        let names:string[] = []
         for (let prop in data[0]) {
             if( data[0].hasOwnProperty( prop ) && prop !== "date" ) {
-                classNames.push(prop)
+                names.push(prop)
             } 
         }
 
-        if(this.classes != undefined && (this.classes.length > 0)) {
-            this.classes.forEach( (prop, i) => {
-                prop.name = classNames[i]
+        if(this.marks != undefined && (this.marks.length > 0)) {
+            this.marks.forEach( (prop, i) => {
+                prop.name = names[i]
             })
         }
         else {
-            this.classes = classNames.map( (k) => new Property(k) ) 
+            this.marks = names.map( (k) => new Mark(k) ) 
         } 
     }
 
     pathGenerators() {
-        this.classes.forEach( klass => {
+        this.marks.forEach( mark => {
             this.paths.push(
                 d3.area()
                 .x(d => this.xScale((d as any)["date"]))
-                .y1(d => this.yScale((d as any)[klass.name]))
-                .y0(d => this.yScale((d as any)[klass.name]))
+                .y1(d => this.yScale((d as any)[mark.name]))
+                .y0(d => this.yScale((d as any)[mark.name]))
             )
         })
     }
@@ -180,45 +180,45 @@ export class Graph {
     protected drawPaths() {
         this.chart.select(".paths").remove()
         let paths = this.chart.append("g").attr("class", "paths")
-        this.classes.forEach( (klass) => {
-            this.drawPath(paths, klass.name)
+        this.marks.forEach( (mark) => {
+            this.drawPath(paths, mark.name)
         })        
     }
 
 
-    protected drawPath(container:d3.Selection<any,any,any,any>, klass:string) {
-        let color = this.getColorFor(klass)
+    protected drawPath(container:d3.Selection<any,any,any,any>, markName:string) {
+        let color = this.getColorFor(markName)
             container.append('path')
-                .attr("class", klass)
-                .attr("d", d => this.getPathFor(klass))
+                .attr("class", markName)
+                .attr("d", d => this.getPathFor(markName))
                 .attr("stroke", color)
                 .attr("fill", color)
     }
 
 
-    public getColorFor(klass:string) {
-        let col = this.getPropertyFor(klass).color
+    public getColorFor(markName:string) {
+        let col = this.getMark(markName).color
         return col
     }
     
-    getPropertyFor(klass:string):Property{
+    getMark(markName:string):Mark{
         let ret
-        this.classes.forEach( prop => {
-            if(prop.name === klass) {
-                ret = prop
+        this.marks.forEach( mark => {
+            if(mark.name === markName) {
+                ret = mark
             }
         })
         return ret
     }
 
 
-    public getPathFor(klass:string) {
+    public getPathFor(markName:string) {
         if(this.data == null) {throw new Error("There is no data yet")}
         if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
 
-        let i = this.classes.map( k => k.name ).indexOf(klass)
+        let i = this.marks.map( k => k.name ).indexOf(markName)
         
-        if(i === -1) {throw new Error(`There is no class with name ${klass} in ${this.name}`)}
+        if(i === -1) {throw new Error(`There is no mark with name ${markName} in ${this.name}`)}
         let ret = this.paths[i](this.data)
         return ret
     }
@@ -228,22 +228,22 @@ export class Graph {
         this.chart.select(".labels").remove()
         let labels = this.chart.append("g").attr("class", "labels")
 
-        this.classes.forEach( (klass, i) => {
+        this.marks.forEach( (mark, i) => {
             labels.append("rect")
                 .datum(this.data)
-                .attr("y", d => this.labelYPosition(d, klass.name, i, -15))
-                .attr("x", this.labelXPosition(klass.name))
-                .attr("width", this.labelXWidth(klass.name))
+                .attr("y", d => this.labelYPosition(d, mark.name, i, -15))
+                .attr("x", this.labelXPosition(mark.name))
+                .attr("width", this.labelXWidth(mark.name))
                 .attr("height", 20)
-                .attr("fill", this.classes[i].color)
+                .attr("fill", this.marks[i].color)
                 .style("font-family", this.font)
 
 
             labels.append("text")
                 .datum(this.data)
-                .text(this.classes[i].label)
-                .attr("y", d =>  this.labelYPosition(d, klass.name, i, 0))
-                .attr("x", this.labelXPosition(klass.name, 5))
+                .text(this.marks[i].label)
+                .attr("y", d =>  this.labelYPosition(d, mark.name, i, 0))
+                .attr("x", this.labelXPosition(mark.name, 5))
                 .attr("fill", "white")
                 .style("font-family", this.font)
                 .style("font-weight", "bold")
@@ -285,23 +285,23 @@ export class Graph {
 
 
     setLabelOffsets(labelOffsets:number[][]) {
-        this.classes = this.classes.length > 0 ? this.classes : labelOffsets.map(lo => new Property())
-        this.classes.forEach( (prop, i) => {
-            this.classes[i].labelOffsets = labelOffsets[i] 
+        this.marks = this.marks.length > 0 ? this.marks : labelOffsets.map(lo => new Mark())
+        this.marks.forEach( (prop, i) => {
+            this.marks[i].labelOffsets = labelOffsets[i] 
         })
     }
 
-    labelXWidth(klass:string) {
+    labelXWidth(markName:string) {
         return 70
-                - this.getPropertyFor(klass).labelOffsets[0]
+                - this.getMark(markName).labelOffsets[0]
     }
 
-    labelYPosition(d:any, klass:string, i:number, offset=0):number {
-        return this.yScale(d[d.length-1][klass]) + offset + this.getPropertyFor(klass).labelOffsets[1]
+    labelYPosition(d:any, markName:string, i:number, offset=0):number {
+        return this.yScale(d[d.length-1][markName]) + offset + this.getMark(markName).labelOffsets[1]
     }
 
-     labelXPosition(klass:string, offset=0):number {
-        return this.w-this.margin + offset + this.getPropertyFor(klass).labelOffsets[0]
+     labelXPosition(markName:string, offset=0):number {
+        return this.w-this.margin + offset + this.getMark(markName).labelOffsets[0]
      }
 
     removeFill() {

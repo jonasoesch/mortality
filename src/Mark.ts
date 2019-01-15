@@ -1,4 +1,4 @@
-export class Property {
+export class Mark {
     name:string = ""
     color:string = "pink"
     label:string = ""

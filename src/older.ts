@@ -27,7 +27,7 @@ export function graph() {
         graph.setScales(d3.extent(data, d => d.date), [0, 1])
         graph.setDescription("Composition of the population by age groups")
 
-        graph.setClasses([
+        graph.setMarkNames([
             "popshare25",
             "popshare25_44",
             "popshare45_54",
