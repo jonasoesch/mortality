@@ -61,6 +61,8 @@ export function graph() {
                 .setLabel("Under 25")
                 .setLabelOffsets([0, 5])
 
+        graph.setData(data)
+
         return graph
     })
 }
