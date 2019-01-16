@@ -2,6 +2,21 @@ import * as d3 from "d3";
 import * as glob from "./globals.json"
 import {Mark} from './Mark'
 
+
+/**
+ Example usage:
+```javascript
+let graph = new Graph("name")
+graph.setScales( [start_date, end_date], [min, max])
+graph.setDescription("This graph shows foo and bar")
+graph.addMark("foo")
+     .setColor("red")
+     .setLabel("Foo")
+     .setLabelOffsets([0,13])
+graph.setData(data)
+```
+**/
+
 export class Graph {
 
     name:string
@@ -10,10 +25,10 @@ export class Graph {
     chart:d3.Selection<any, any, any, any>
 
 
-    h:number = (glob as any)["height"]
-    w:number = (glob as any)["width"]
-    fontColor:string = (glob as any)["fontColor"]
-    font:string = (glob as any)["fontFamily"]
+    h:number 
+    w:number
+    fontColor:string = "#fff"
+    font:string = "Fira Sans OT"
     lineWeight = 3
     margin = 80
 
@@ -23,20 +38,26 @@ export class Graph {
     paths:d3.Line<any>[] = []
     marks:Mark[] 
 
-    /*
-        let graph = new Graph("name")
-        graph.setDescription()
-        graph.setScales()
-        graph.setColor().setLabel().setLabelOffsets()
-        graph.setData()
-        graph.draw()
-    */
-
     constructor(name:string) {
         this.name = name
+        this.h = this.height()
+        this.w = this.width()
         this.initStage()
         this.marks = []
     }
+
+    protected container():HTMLElement {
+        return document.getElementById(this.name) 
+    }
+
+    protected width() {
+        return this.container().getBoundingClientRect().width
+    }
+
+    protected height() {
+        return this.container().getBoundingClientRect().height
+    }
+
 
 
     setDescription(description:string) {
