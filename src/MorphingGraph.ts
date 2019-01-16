@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import {Graph} from './Graph';
-import {Mark} from './Mark'
+import {MorphingMark} from './Mark'
 import interpolatePath from './interpolate-path';
 
 export class MorphingGraph extends Graph {
@@ -56,7 +56,7 @@ export class MorphingGraph extends Graph {
 
 
     addTransition(from:string, to:string) {
-        let prop = new Mark(`${from}---${to}`)
+        let prop = new MorphingMark(`${from}---${to}`)
         prop.from = from
         prop.to = to
         this.marks.push(prop)
