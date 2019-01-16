@@ -9,10 +9,8 @@ g.setScales(
     [new Date(Date.parse("2000-01-10")), new Date(Date.parse("2018-11-20"))],
     [0, 1]
 )
-g.setColors(["red", "blue"])
-g.setMarkNames(["a", "b"])
-g.setLabels(["A", "B"])
-g.setLabelOffsets([[0,0], [0,0]])
+g.addMark("a").setColor("red").setLabel("A").setLabelOffsets([0,0])
+g.addMark("b").setColor("blue").setLabel("B").setLabelOffsets([0,0])
 g.setData([
     {"date": new Date(Date.parse("2001-10-05")), "a": 1, "b": 10}, 
     {"date": new Date(Date.parse("2010-11-06")), "a": 2, "b": 0}]

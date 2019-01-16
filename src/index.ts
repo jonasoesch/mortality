@@ -17,6 +17,7 @@ Promise.all(graphPromises).then( (graphs) => {
     let d = new Director()
     graphs[0].draw()
     graphs[1].draw()
+    debugger;
     graphs[2].draw()
     graphs[3].draw()
     d.addStep(-10, 10, graphs[0])

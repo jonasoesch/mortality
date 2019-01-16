@@ -107,8 +107,8 @@ describe( "path drawing", () => {
 } )
 
 describe("other interpolations", () => {
-    g1.setColors(["white"])
-    g2.setColors(["black"])
+    g1.marks.forEach( mark => mark.setColor("white"))
+    g2.marks.forEach( mark => mark.setColor("black"))
 
     it("interpolates between colors", () => {
         a.atPoint(0.5).draw()     

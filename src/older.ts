@@ -27,30 +27,35 @@ export function graph() {
         graph.setScales(d3.extent(data, d => d.date), [0, 1])
         graph.setDescription("Composition of the population by age groups")
 
-        graph.setMarkNames([
-            "popshare25",
-            "popshare25_44",
-            "popshare45_54",
-            "popshare55_64",
-            "popshare65_74",
-            "popshare75",
-        ])
-        graph.setColors([
-            "rgb(117, 212, 156)",
-            "rgb(60, 190, 203)",
-            "rgb(26, 130, 140)",
-            "rgb(38, 148, 222)",
-            "rgb(47, 105, 160)",
-            "rgb(154, 129, 232)",
-        ])
-        graph.setLabels([
-            "Under 25",
-            "25–44",
-            "45–54",
-            "55–64",
-            "65–74",
-            "Over 75",
-        ])
+
+        graph.addMark("popshare25")
+            .setColor("rgb(117, 212, 156)")
+            .setLabel("Under 25")
+
+
+        graph.addMark("popshare25_44")
+            .setColor("rgb(60, 190, 203)")
+            .setLabel("25–44")
+
+
+        graph.addMark("popshare45_54")
+            .setColor("rgb(26, 130, 140)")
+            .setLabel("45–54")
+
+        graph.addMark("popshare55_64")
+            .setColor("rgb(38, 148, 222)")
+            .setLabel("55–64")
+
+
+        graph.addMark("popshare65_74")
+            .setColor("rgb(47, 105, 160)")
+            .setLabel("65–74")
+
+
+        graph.addMark("popshare75")
+            .setColor("rgb(154, 129, 232)")
+            .setLabel("Over 75")
+
         graph.setData(data)
         return graph
     })

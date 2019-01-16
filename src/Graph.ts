@@ -27,9 +27,7 @@ export class Graph {
         let graph = new Graph("name")
         graph.setDescription()
         graph.setScales()
-        graph.setColors()
-        graph.setLabels()
-        graph.setLabelOffsets()
+        graph.setColor().setLabel().setLabelOffsets()
         graph.setData()
         graph.draw()
     */
@@ -51,6 +49,12 @@ export class Graph {
         let top = this.chart.node().getBoundingClientRect().top || 0
         console.log(top)
         return top + offset
+    }
+
+    addMark(markName:string):Mark {
+        let mark = new Mark(markName)
+        this.marks.push(mark)
+        return mark
     }
 
     initStage() {
@@ -87,19 +91,6 @@ export class Graph {
             .range([this.h-this.margin, this.margin])
     }
 
-    setColors(colors:string[]) {
-        this.marks = this.marks.length > 0 ? this.marks : colors.map( c => new Mark()) 
-        this.marks.forEach( (mark, i) => {
-            mark.color = colors[i] 
-        })
-    }
-
-    setLabels(labels:string[]) {
-        this.marks = this.marks ? this.marks : labels.map( label => new Mark() )
-        this.marks.forEach((mark, i) => {
-            mark.label = labels[i] 
-        })
-    }
 
     setData(data:any) {
         if(data === null) {throw new Error("You passed no data")}
@@ -289,14 +280,6 @@ export class Graph {
             .transition()
             .duration(100)
             .style("opacity", 1)
-    }
-
-
-    setLabelOffsets(labelOffsets:number[][]) {
-        this.marks = this.marks.length > 0 ? this.marks : labelOffsets.map(lo => new Mark())
-        this.marks.forEach( (prop, i) => {
-            this.marks[i].labelOffsets = labelOffsets[i] 
-        })
     }
 
     labelXWidth(markName:string) {

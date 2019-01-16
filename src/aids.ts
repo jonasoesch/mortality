@@ -27,54 +27,57 @@ export function graph() {
         let graph = new AidsGraph("aids")
         graph.setDescription("The causes of death for americans between 25 and 44 years old")
         graph.setScales(d3.extent(data, d => d.date), [0, 160000])
-        graph.setMarkNames([
-            "Other",
-            "Cancer",
-            "Heart",
-            "LiverKidneyPancreas",
-            "Suicide",
-            "Vehicle",
-            "Homicide",
-            "Respiratory",
-            "Drug_induced",
-            "AIDS",
-        ])
-        graph.setColors([
-            "rgb(135, 145, 155)",
-            "rgb(103, 191, 60)",
-            "rgb(207, 92, 43)",
-            "rgb(27, 122, 199)",
-            "rgb(204, 51, 153)",
-            "rgb(255, 153, 0)",
-            "rgb(200, 200, 0)",
-            "rgb(130, 20, 182)",
-            "rgb(170, 122, 220)",
-            "rgb(241, 49, 71)",
-        ])
-        graph.setLabels([
-            "All other causes of death",
-            "Cancer",
-            "Heart diseases",
-            "Diseases of the liver, kidney, and pancreas",
-            "Suicide",
-            "Motor vehicle accidents",
-            "Homicide",
-            "Respiratory diseases",
-            "Drug-induced",
-            "AIDS",
-        ])
-        graph.setLabelOffsets([
-            [-130, 20],
-            [0, 15],
-            [-60, 15],
-            [-260, -5],
-            [-3, 5],
-            [-150, 0],
-            [-12, -5],
-            [-100, -15],
-            [-50, 10],
-            [0, -10],
-        ])
+        graph.addMark("Other")
+            .setColor("rgb(135, 145, 155)")
+            .setLabel("All other causes of death")
+            .setLabelOffsets([-130, 20])
+
+        graph.addMark("Cancer")
+            .setColor("rgb(103, 191, 60)")
+            .setLabel("Cancer")
+            .setLabelOffsets([0, 15])
+
+
+        graph.addMark("Heart")
+            .setColor("rgb(207, 92, 43)")
+            .setLabel("Heart diseases")
+            .setLabelOffsets([-60, 15])
+
+        graph.addMark("LiverKidneyPancreas")
+            .setColor("rgb(27, 122, 199)")
+            .setLabel("Diseases of the liver, kidney, and pancreas")
+            .setLabelOffsets([-260, -5])
+
+        graph.addMark("Suicide")
+            .setColor("rgb(204, 51, 153)")
+            .setLabel("Suicide")
+            .setLabelOffsets([-3, 5])
+
+        graph.addMark("Vehicle")
+            .setColor("rgb(255, 153, 0)")
+            .setLabel("Motor vehicle accidents")
+            .setLabelOffsets([-150, 0])
+
+        graph.addMark("Homicide")
+            .setColor("rgb(200, 200, 0)")
+            .setLabel("Homicide")
+            .setLabelOffsets([-12, -5])
+
+        graph.addMark("Respiratory")
+            .setColor("rgb(130, 20, 182)")
+            .setLabel("Respiratory diseases")
+            .setLabelOffsets([-100, -15])
+
+        graph.addMark("Drug_induced")
+            .setColor("rgb(170, 122, 220)")
+            .setLabel("Drug-induced")
+            .setLabelOffsets([-50, 10])
+
+        graph.addMark("AIDS")
+            .setColor("rgb(241, 49, 71)")
+            .setLabel("AIDS")
+            .setLabelOffsets([0, -10])
+
         graph.setData(data)
         return graph
 
