@@ -20,8 +20,8 @@
         "loadash": "^1.0.0"
     },
     "scripts": {
-        "start": "python3 build.py && webpack-dev-server --open",
-        "build": "python3 build.py && webpack && cp -r static/* dist/",
+        "start": "webpack-dev-server --open",
+        "build": "webpack && cp -r static/* dist/",
         "test": "jest",
         "testWatch": "jest --watch"
     }

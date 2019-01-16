@@ -13,7 +13,7 @@ export class Director {
         let offset = evt.pageY
         this.storyboard.forEach( (step) => {
             if (offset > step.start && offset < step.end) {
-                this.transition(step.graph, this.howFar(step, offset)) 
+                this.draw(step.graph, this.howFar(step, offset)) 
             } else {
                 if(step.graph instanceof MorphingGraph) {
                     this.hide(step.graph)
@@ -38,7 +38,7 @@ export class Director {
     }
 
 
-    transition(graph:Graph, howFar:number) {
+    draw(graph:Graph, howFar:number) {
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
         } 
