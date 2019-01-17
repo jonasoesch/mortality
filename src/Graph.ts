@@ -358,9 +358,6 @@ export class Graph {
     }
 
 
-
-
-
     protected drawDescription() {
         this.chart.select("description")
         this.chart
