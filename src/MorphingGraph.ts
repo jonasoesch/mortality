@@ -14,12 +14,6 @@ export class MorphingGraph extends Graph {
 
     howFar:number
 
-    stage:d3.Selection<any, any, any, any>
-        transitions:string[][]
-    _pathInterpolators:Function[]
-
-
-
     /*
      * This chart needs no data but is based on two existing graphs
      * mg = new MorpingGraph("name")
@@ -29,12 +23,12 @@ export class MorphingGraph extends Graph {
      * mg.atPoint(0.5).draw()
      */
 
-    constructor(name:string) {
-        super(name)
-        this.marks = []
-        this.name = name 
-    }
 
+    /**
+     * Sets the graph from which the interpolation
+     * should start. The MorphingGraph is initialized with
+     * the values of this graph.
+     **/
     public setOrigin(graph:Graph) {
         this.originGraph = graph     
         this.originDomain = graph.yScale.domain()
@@ -44,30 +38,50 @@ export class MorphingGraph extends Graph {
         this.setData(graph.data)
     }
 
-    drawLabels() {}
-
-
+    /**
+     * Defines the graph to which the MorphingGraph
+     * should interpolate.
+     **/
     public setTarget(graph:Graph) {
         this.targetGraph = graph
         this.targetDomain = graph.yScale.domain()
     }
 
+    /**
+     * No labels should be drawn
+     **/
+    drawLabels() {}
 
+
+    /**
+     * Instead of adding marks as in a regular Graph
+     * transitions from on mark to another
+     * are defined on a MorphingGraph
+     **/
     addTransition(from:string, to:string) {
-        let prop = new MorphingMark(`${from}---${to}`)
-        prop.from = this.originGraph.getMark(from)
-        prop.to = this.targetGraph.getMark(to)
-        this.marks.push(prop)
+        let mark = new MorphingMark(`${from}---${to}`)
+
+        mark.from = this.originGraph.getMark(from)
+        mark.to = this.targetGraph.getMark(to)
+
+        this.marks.push(mark)
+        return mark
     }
 
 
+    /**
+     * Defines at which stage between `from`-
+     * and `to`-graphs the MorphingGraph should
+     * be drawn. `howFar` should be a number between 0 and 1
+     **/
     public atPoint(howFar:number) {
+        if(0 > howFar || 1 < howFar) {throw new Error("howFar should be between 0 and 1")}
         this.howFar = howFar 
         return this
     }
 
 
-    getPathFor(markName:string) {
+    public getPathFor(markName:string) {
         let from = this.fromToClasses(markName).from
         let to = this.fromToClasses(markName).to
 
@@ -79,10 +93,8 @@ export class MorphingGraph extends Graph {
     }
 
 
-    getColorFor(mark:MorphingMark) {
-        let color1 = mark.from.color
-        let color2 = mark.to.color
-        return d3.interpolateHsl(color1, color2)(this.howFar)
+    public getColorFor(mark:MorphingMark) {
+        return mark.atPoint(this.howFar).color
     }
 
     protected axisLeft() {

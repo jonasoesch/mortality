@@ -97,4 +97,14 @@ export class Mark {
 export class MorphingMark extends Mark {
     from:Mark
     to:Mark
+    howFar:number = 0
+
+    atPoint(howFar:number):MorphingMark {
+        this.howFar = howFar 
+        return this
+    }
+
+    get color() {
+        return d3.interpolateHsl(this.from.color, this.to.color)(this.howFar)
+    }
 }
