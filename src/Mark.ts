@@ -95,6 +95,6 @@ export class Mark {
 
 
 export class MorphingMark extends Mark {
-    from:string
-    to:string
+    from:Mark
+    to:Mark
 }

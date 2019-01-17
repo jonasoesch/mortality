@@ -88,6 +88,11 @@ export class Graph {
         this.setDimensions()
     }
 
+    private insertChart() {
+        this.chart = d3.select(`#${this.name}`)
+            .append("svg")
+    }
+
     private setDimensions() {
         this.chart
             .attr("width", this.w)
@@ -113,16 +118,27 @@ export class Graph {
      **/
     public addMark(markName:string):Mark {
         let mark = new Mark(markName)
+        mark.pathGenerator = this.pathGeneratorFor(markName)
         this.marks.push(mark)
         return mark
     }
 
-    private insertChart() {
-        this.chart = d3.select(`#${this.name}`)
-            .append("svg")
+    /**
+     * Creates the d3-Line function that generates the actual path when provided with input data
+     * The x-axis is always mapped to the "date" column
+     * The y-axis to the markName
+     **/
+    private pathGeneratorFor(markName:string) {
+        return d3.area()
+                .x(d => this.xScale((d as any)["date"]))
+                .y1(d => this.yScale((d as any)[markName]))
+                .y0(d => this.yScale((d as any)[markName]))
     }
 
-    
+    /**
+     * Defines the data domains that should be mapped to
+     * the width `w` and the height `h` of the graph
+     **/
     public setScales(x:[Date, Date], y:[number, number]) {
         this.setYScale(y) 
         this.setXScale(x) 
@@ -140,56 +156,65 @@ export class Graph {
             .range([this.h-this.margin, this.margin])
     }
 
-
     public setData(data:any) {
         if(data === null) {throw new Error("You passed no data")}
         this.data = data
-        this.pathGenerators()
     }
 
 
-    pathGenerators() {
-        this.marks.forEach( mark => {
-          mark.pathGenerator =  d3.area()
-                .x(d => this.xScale((d as any)["date"]))
-                .y1(d => this.yScale((d as any)[mark.name]))
-                .y0(d => this.yScale((d as any)[mark.name]))
-        })
-    }
 
+    ///////////////////// Drawing ////////////////////////////
+
+    /**
+     * The draw function will create an SVG with the specification of the
+     * Graph and it's Marks
+     **/
     draw() {
-        if(!this.data) {throw new Error("There is no data yet")}
+        if(!this.data) {throw new Error("Can't draw. There is no data yet")}
         this.unhide()
         this.drawAxes()
-        this.drawPaths()
+        this.drawMarks()
         this.drawLabels()
         if(this.description) { this.drawDescription() }
+    }
+
+    /**
+     * Removes and re-adds the group containing
+     * a certain type of visual elements (axes, marks, labels, …). This
+     * effectively clears the stage before redrawing
+     * the respective elements
+     **/
+    protected clearStagePart(stagePart:string):d3.Selection<any,any,any,any> {
+        this.chart.select(`.${stagePart}`).remove()
+        return this.chart.append("g").attr("class", stagePart)
     }
 
 
     protected drawAxes() {
 
-        this.chart.select(".axes").remove()
-        let axesGroup = this.chart.append("g").attr("class", "axes")
+       let axesGroup = this.clearStagePart("axes") 
 
-
-        let axes = []
-        axes.push(
-            axesGroup.append("g")
+        let axisLeft = axesGroup.append("g")
             .attr("class", "axisLeft")
             .attr("transform", `translate(${this.margin}, 0)`)
             .call(this.axisLeft())
-        )
 
+        this.styleAxis(axisLeft)
 
-        axes.push(
-            axesGroup.append("g")
+        let axisBottom = axesGroup.append("g")
             .attr("class", "axisBottom")
             .attr("transform", `translate(0, ${this.h-this.margin})`)
             .call(this.axisBottom())
-        )
 
-        axes.forEach( axis => {
+        this.styleAxis(axisBottom)
+
+    }
+
+    /**
+     * Styles a given axis by setting e. g. the font-size
+     * or stroke-color
+     **/
+    protected styleAxis(axis:d3.Selection<any,any,any,any>) {
             axis.selectAll("line")
                 .attr("stroke", d3.color(this.fontColor).darker(4).toString())
                 .style("stroke-width",  this.lineWeight)
@@ -202,41 +227,42 @@ export class Graph {
 
             axis.selectAll("path")
                 .attr("stroke", "none")
-        } )
     }
 
-    protected drawPaths() {
-        this.chart.select(".paths").remove()
-        let paths = this.chart.append("g").attr("class", "paths")
+
+    protected drawMarks() {
+        let paths = this.clearStagePart("paths")
         this.marks.forEach( (mark) => {
-            this.drawPath(paths, mark.name)
+            this.drawMark(paths, mark)
         })        
     }
 
 
-    protected drawPath(container:d3.Selection<any,any,any,any>, markName:string) {
-        let color = this.getColorFor(markName)
+    protected drawMark(container:d3.Selection<any,any,any,any>, mark:Mark) {
             container.append('path')
-                .attr("class", markName)
-                .attr("d", d => this.getPathFor(markName))
-                .attr("stroke", color)
-                .attr("fill", color)
+                .attr("class", mark.name)
+                .attr("d", d => this.getPathFor(mark.name))
+                .attr("stroke", this.getColorFor(mark))
+                .attr("fill", this.getColorFor(mark))
     }
 
 
-    public getColorFor(markName:string) {
-        let col = this.getMark(markName).color
-        return col
+    public getColorFor(mark:Mark) {
+        return mark.color
     }
     
-    getMark(markName:string):Mark{
-        let ret
+
+    /**
+     * Find a mark by its name
+     **/
+    public getMark(markName:string):Mark{
+        let found = undefined
         this.marks.forEach( mark => {
             if(mark.name === markName) {
-                ret = mark
+                found = mark
             }
         })
-        return ret
+        return found
     }
 
 
@@ -252,8 +278,7 @@ export class Graph {
 
 
     protected drawLabels() {
-        this.chart.select(".labels").remove()
-        let labels = this.chart.append("g").attr("class", "labels")
+        let labels = this.clearStagePart("labels")
 
         this.marks.forEach( (mark, i) => {
             labels.append("rect")

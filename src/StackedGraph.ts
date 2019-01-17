@@ -28,18 +28,18 @@ export class StackedGraph extends Graph {
         })
     }
 
-     drawPaths() {
+     drawMarks() {
         let paths = this.chart.append("g").attr("class", "paths")
          this.marks.forEach( (mark) => {
-             this.drawPath(paths, mark.name)    
+             this.drawMark(paths, mark)    
          })
 
     }
 
-    drawPath(container:d3.Selection<any, any, any, any>, markName:string) {
+    drawMark(container:d3.Selection<any, any, any, any>, mark:Mark) {
             container.append('path')
-                .attr("d", d => this.getPathFor(markName))
-                .attr("fill", this.getColorFor(markName))
+                .attr("d", d => this.getPathFor(mark.name))
+                .attr("fill", this.getColorFor(mark))
     }
 
 
