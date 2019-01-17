@@ -2,7 +2,6 @@ import * as d3 from "d3";
 import * as glob from "./globals.json"
 import {Mark} from './Mark'
 
-
 /**
  Example usage:
 ```javascript
@@ -15,7 +14,7 @@ graph.addMark("foo")
      .setLabelOffsets([0,13])
 graph.setData(data)
 ```
-**/
+ **/
 
 export class Graph {
 
@@ -30,14 +29,14 @@ export class Graph {
     chart:d3.Selection<any, any, any, any>
 
 
-    /** 
-     * Height `h` is taken from the containing HTMLElement defined by `name`
-     **/
-    h:number 
+        /** 
+         * Height `h` is taken from the containing HTMLElement defined by `name`
+         **/
+        h:number 
     /** Width `w` is taken from the containing HTMLElement defined by `name`**/
     w:number
 
-    
+
     fontColor:string = "#fff"
     font:string = "Fira Sans OT"
     lineWeight = 3
@@ -47,17 +46,17 @@ export class Graph {
     xScale:any //scaleTime
     yScale:d3.ScaleLinear<number, number>
 
-    /*
-     * The marks that should be drawn in the chart.
-     * For example lines or areas.
-     * Only the definition is stored in a Mark.
-     * The Graph class is responsible for drawing it
-     * with a given dataset
-     **/
-    marks:Mark[] 
+        /*
+         * The marks that should be drawn in the chart.
+         * For example lines or areas.
+         * Only the definition is stored in a Mark.
+         * The Graph class is responsible for drawing it
+         * with a given dataset
+         **/
+        marks:Mark[] 
 
     /////////// Initialization /////////////////
-    
+
     constructor(name:string) {
         this.name = name
         this.h = this.height() || 720
@@ -123,6 +122,21 @@ export class Graph {
         return mark
     }
 
+
+    /**
+     * Find a mark by its name
+     **/
+    public getMark(markName:string):Mark{
+        let found = undefined
+        this.marks.forEach( mark => {
+            if(mark.name === markName) {
+                found = mark
+            }
+        })
+        return found
+    }
+
+
     /**
      * Creates the d3-Line function that generates the actual path when provided with input data
      * The x-axis is always mapped to the "date" column
@@ -130,9 +144,9 @@ export class Graph {
      **/
     private pathGeneratorFor(markName:string) {
         return d3.area()
-                .x(d => this.xScale((d as any)["date"]))
-                .y1(d => this.yScale((d as any)[markName]))
-                .y0(d => this.yScale((d as any)[markName]))
+            .x(d => this.xScale((d as any)["date"]))
+            .y1(d => this.yScale((d as any)[markName]))
+            .y0(d => this.yScale((d as any)[markName]))
     }
 
     /**
@@ -192,7 +206,7 @@ export class Graph {
 
     protected drawAxes() {
 
-       let axesGroup = this.clearStagePart("axes") 
+        let axesGroup = this.clearStagePart("axes") 
 
         let axisLeft = axesGroup.append("g")
             .attr("class", "axisLeft")
@@ -211,22 +225,47 @@ export class Graph {
     }
 
     /**
+     * Wrap access to y-axis to
+     * make it extensible
+     **/
+    protected axisLeft() {
+        return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w).tickPadding(10))
+    }
+
+    /**
+     * Wrap access to x-axis to
+     * make it extensible
+     **/
+    protected axisBottom() {
+        return d3.axisBottom(this.xScale).tickSize(-this.h).tickPadding(10)
+    }
+
+    /**
+     * Wrap the y-axis into a formatting-function
+     * so subclasses can define their own formatting
+     **/
+    protected formatLeftAxis(axis:d3.Axis<any>) {
+        return axis 
+    }
+
+
+    /**
      * Styles a given axis by setting e. g. the font-size
      * or stroke-color
      **/
     protected styleAxis(axis:d3.Selection<any,any,any,any>) {
-            axis.selectAll("line")
-                .attr("stroke", d3.color(this.fontColor).darker(4).toString())
-                .style("stroke-width",  this.lineWeight)
+        axis.selectAll("line")
+            .attr("stroke", d3.color(this.fontColor).darker(4).toString())
+            .style("stroke-width",  this.lineWeight)
 
-            axis.selectAll("text")
-                .attr("fill", d3.color(this.fontColor).darker(1).toString())
-                .style("font-size", "16px")
-                .style("font-family", this.font)
-                .style("font-weight", "bold")
+        axis.selectAll("text")
+            .attr("fill", d3.color(this.fontColor).darker(1).toString())
+            .style("font-size", "16px")
+            .style("font-family", this.font)
+            .style("font-weight", "bold")
 
-            axis.selectAll("path")
-                .attr("stroke", "none")
+        axis.selectAll("path")
+            .attr("stroke", "none")
     }
 
 
@@ -239,39 +278,35 @@ export class Graph {
 
 
     protected drawMark(container:d3.Selection<any,any,any,any>, mark:Mark) {
-            container.append('path')
-                .attr("class", mark.name)
-                .attr("d", d => this.getPathFor(mark.name))
-                .attr("stroke", this.getColorFor(mark))
-                .attr("fill", this.getColorFor(mark))
+        container.append('path')
+            .attr("class", mark.name)
+            .attr("d", d => this.getPathFor(mark.name))
+            .attr("stroke", this.getColorFor(mark))
+            .attr("stroke-width", this.lineWeight)
+            .attr("fill", this.getColorFor(mark))
     }
 
 
+    /**
+     * Wraps access to the mark color
+     * so it stays extensible
+     **/
     public getColorFor(mark:Mark) {
         return mark.color
     }
-    
+
 
     /**
-     * Find a mark by its name
+     * Wraps access to a marks path
+     * so it stays extensible.
+     * The selector is a string which makes testing easier
      **/
-    public getMark(markName:string):Mark{
-        let found = undefined
-        this.marks.forEach( mark => {
-            if(mark.name === markName) {
-                found = mark
-            }
-        })
-        return found
-    }
-
-
     public getPathFor(markName:string):string {
-
         let mark = this.getMark(markName)
 
+        if(mark === undefined) {throw new Error(`There is no mark named ${markName}`)}
         if(this.data == null) {throw new Error("There is no data yet")}
-        if(mark.pathGenerator === null) {throw new Error("No pathGenerator yet")}
+        if(mark.pathGenerator === null) {throw new Error(`There is no pathGenerator for mark ${markName}`)}
 
         return mark.pathGenerator(this.data)
     }
@@ -283,9 +318,9 @@ export class Graph {
         this.marks.forEach( (mark, i) => {
             labels.append("rect")
                 .datum(this.data)
-                .attr("y", d => this.labelYPosition(d, mark.name, i, -15))
-                .attr("x", this.labelXPosition(mark.name))
-                .attr("width", this.labelXWidth(mark.name))
+                .attr("y", d => this.labelYPosition(d, mark, -15))
+                .attr("x", this.labelXPosition(mark))
+                .attr("width", this.labelXWidth(mark))
                 .attr("height", 20)
                 .attr("fill", this.marks[i].color)
                 .style("font-family", this.font)
@@ -294,15 +329,34 @@ export class Graph {
             labels.append("text")
                 .datum(this.data)
                 .text(this.marks[i].label)
-                .attr("y", d =>  this.labelYPosition(d, mark.name, i, 0))
-                .attr("x", this.labelXPosition(mark.name, 5))
-                .attr("fill", "white")
+                .attr("y", d =>  this.labelYPosition(d, mark, 0))
+                .attr("x", this.labelXPosition(mark))
+                .attr("fill", this.fontColor)
                 .style("font-family", this.font)
                 .style("font-weight", "bold")
         } )
-        
-        this.removeFill()
+
     }
+
+
+    protected labelXWidth(mark:Mark) {
+        return 70
+            - mark.labelOffsets[0]
+    }
+
+    protected labelYPosition(data:any, mark:Mark, offset=0):number {
+        return this.yScale(data[data.length-1][mark.name]) 
+            + offset 
+            + mark.labelOffsets[1]
+    }
+
+    protected labelXPosition(mark:Mark, offset=0):number {
+        return this.w
+            - this.margin 
+            + offset 
+            + mark.labelOffsets[0]
+    }
+
 
 
 
@@ -314,13 +368,17 @@ export class Graph {
             .attr("class", "description")
             .attr("x", this.margin + 10)
             .attr("y", 30)
-            .attr("fill", "white")
+            .attr("fill", this.fontColor)
             .style("font-size", "16px")
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.description)
     }
 
+
+    /**
+     * Hide the whole graph
+     **/
     hide() {
         this.chart
             .transition()
@@ -328,44 +386,13 @@ export class Graph {
             .style("opacity", 0)
     }
 
+    /**
+     * Show the whole graph (typically used after hiding it)
+     **/
     unhide() {
         this.chart
             .transition()
             .duration(100)
             .style("opacity", 1)
     }
-
-    labelXWidth(markName:string) {
-        return 70
-                - this.getMark(markName).labelOffsets[0]
-    }
-
-    labelYPosition(d:any, markName:string, i:number, offset=0):number {
-        return this.yScale(d[d.length-1][markName]) + offset + this.getMark(markName).labelOffsets[1]
-    }
-
-     labelXPosition(markName:string, offset=0):number {
-        return this.w-this.margin + offset + this.getMark(markName).labelOffsets[0]
-     }
-
-    removeFill() {
-        let paths = this.chart.select(".paths")
-        paths.selectAll("path")
-            .attr("stroke-width", this.lineWeight)
-            .attr("fill", "none")
-    }
-
-
-    protected axisLeft() {
-        return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w).tickPadding(10))
-    }
-
-    private axisBottom() {
-        return d3.axisBottom(this.xScale).tickSize(-this.h).tickPadding(10)
-    }
-
-    formatLeftAxis(axis:d3.Axis<any>) {
-        return axis 
-    }
-
 }

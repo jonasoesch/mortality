@@ -59,11 +59,12 @@ export class StackedGraph extends Graph {
 
     removeFill() {}
     
-    labelYPosition(d:any, markName:string, i:number, offset:number) {
+    labelYPosition(d:any, mark:Mark, offset:number) {
+        let i = this.marks.map(m => m.name).indexOf(mark.name)
         return this.yScale(this.stacks[i][this.stacks[i].length-1][1] || 1) 
             + 20
             + offset 
-            + this.getMark(markName).labelOffsets[1]
+            + mark.labelOffsets[1]
     }
 }
 
