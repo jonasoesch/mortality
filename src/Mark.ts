@@ -9,6 +9,7 @@ export class Mark {
     private _color:string = "pink"
     private _label:string = ""
     private _labelOffsets:number[] = [0, 0]
+    private _pathGenerator:Function
 
 
     constructor(name="No name") {
@@ -77,6 +78,14 @@ export class Mark {
     setLabelOffsets(labelOffsets:number[]):Mark {
         this.labelOffsets = labelOffsets
         return this
+    }
+
+    get pathGenerator():Function {
+        return this._pathGenerator 
+    }
+
+    set pathGenerator(pathGenerator) {
+        this._pathGenerator = pathGenerator 
     }
 
 

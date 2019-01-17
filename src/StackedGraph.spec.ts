@@ -2,7 +2,7 @@ import 'jest'
 import * as d3 from 'd3';
 import {StackedGraph} from './StackedGraph'
 
-d3.select("body").append("div").attr("id", "Jonas")
+d3.select("body").append("div").attr("id", "Jonas").style("width", 1280).style("height", 720)
 let g = new StackedGraph("Jonas")
 g.setDescription("The evolution of mortality") 
 g.setScales(

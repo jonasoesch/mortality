@@ -49,9 +49,8 @@ describe("setup process", () => {
     })
 
     test('Path generators are prepared', () => {
-        expect(g.paths.length).toEqual(g.marks.length)
-        g.paths.forEach( path => {
-            expect(path).toBeInstanceOf(Function)
+        g.marks.forEach( mark => {
+            expect(mark.pathGenerator).toBeInstanceOf(Function)
         })
     })
 
@@ -85,11 +84,6 @@ describe('document', () => {
         expect(path).toEqual(comp)
     })
 
-    test('getPathFor', () => {
-        let path = g.getPathFor("a")
-        let comp = "M183.07446654086226,80L722.6709246625055,-480L722.6709246625055,-480L183.07446654086226,80Z"
-        expect(path).toEqual(comp)
-    })
 
 
     test("different data creates a different path", () => {

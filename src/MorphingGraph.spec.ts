@@ -5,9 +5,10 @@ import {Graph} from './Graph'
 import {Mark} from './Mark'
 
 
-let name = "Jonas"
-let pathSelector = `body #Jonas .paths path`
-d3.select(document).select("body").append("div").attr("id", name)
+let pathSelector = `body #A-B .paths path`
+d3.select(document).select("body").append("div").attr("id", "A").style("width", 1280).style("height", 720)
+d3.select(document).select("body").append("div").attr("id", "B").style("width", 1280).style("height", 720)
+d3.select(document).select("body").append("div").attr("id", "A-B").style("width", 1280).style("height", 720)
 
 // First Graph
 let d1 = [
@@ -20,8 +21,8 @@ g1.setScales(
     [d1[0].date, d1[2].date],
     [d1[0].a, d1[2].a]
 )
+g1.addMark("a")
 g1.setData(d1)
-g1.setMarkNames(d1)
 
 
 // Second Graph
@@ -34,10 +35,10 @@ g2.setScales(
     [d2[0].date, d2[1].date], 
     [d2[0].b, d2[1].b]
 )
+g2.addMark("b")
 g2.setData(d2)
-g2.setMarkNames(d2)
 
-let a = new MorphingGraph("Jonas")
+let a = new MorphingGraph("A-B")
 a.setOrigin(g1)
 a.setTarget(g2)
 a.addTransition("a", "b")

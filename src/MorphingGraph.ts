@@ -44,8 +44,6 @@ export class MorphingGraph extends Graph {
         this.setData(graph.data)
     }
 
-
-    setMarkNames() {}
     drawLabels() {}
 
 

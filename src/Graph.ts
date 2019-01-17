@@ -19,14 +19,25 @@ graph.setData(data)
 
 export class Graph {
 
+    /** 
+     * Defines the HTMLElement where the chart should be
+     * drawn. The HTMLElement must have an id of "name"
+     * so that the chart can be inserted there
+     **/
     name:string
     description:string
     data:any = null
     chart:d3.Selection<any, any, any, any>
 
 
+    /** 
+     * Height `h` is taken from the containing HTMLElement defined by `name`
+     **/
     h:number 
+    /** Width `w` is taken from the containing HTMLElement defined by `name`**/
     w:number
+
+    
     fontColor:string = "#fff"
     font:string = "Fira Sans OT"
     lineWeight = 3
@@ -36,14 +47,24 @@ export class Graph {
     xScale:any //scaleTime
     yScale:d3.ScaleLinear<number, number>
     paths:d3.Line<any>[] = []
+
+    /*
+     * The marks that should be drawn in the chart.
+     * For example lines or areas.
+     * Only the definition is stored in a Mark.
+     * The Graph class is responsible for drawing it
+     * with a given dataset
+     **/
     marks:Mark[] 
 
+    /////////// Initialization /////////////////
+    
     constructor(name:string) {
         this.name = name
-        this.h = this.height()
-        this.w = this.width()
-        this.initStage()
+        this.h = this.height() || 720
+        this.w = this.width() || 1280
         this.marks = []
+        this.initStage()
     }
 
     protected container():HTMLElement {
@@ -59,25 +80,13 @@ export class Graph {
     }
 
 
-
-    setDescription(description:string) {
-        this.description = description 
-    }
-
-    addMark(markName:string):Mark {
-        let mark = new Mark(markName)
-        this.marks.push(mark)
-        return mark
-    }
-
-    initStage() {
+    /**
+     * Adds an SVG with the right dimensions
+     * into the containing element
+     **/
+    private initStage() {
         this.insertChart()
         this.setDimensions()
-    }
-
-    private insertChart() {
-        this.chart = d3.select(`#${this.name}`)
-            .append("svg")
     }
 
     private setDimensions() {
@@ -86,8 +95,36 @@ export class Graph {
             .attr("height", this.h)
     }
 
+
+    ///////////////// Configuration //////////////////////
+
+    public setDescription(description:string) {
+        this.description = description 
+    }
+
+
+    /**
+     * Adds a mark with a given name and directly returns it.
+     * This makes mathod chaining possible like this:
+     * ```javascript
+     * graph.addMark("mark")
+     * .setColor("red")
+     * .setLabel("A Mark")
+     * ```
+     **/
+    public addMark(markName:string):Mark {
+        let mark = new Mark(markName)
+        this.marks.push(mark)
+        return mark
+    }
+
+    private insertChart() {
+        this.chart = d3.select(`#${this.name}`)
+            .append("svg")
+    }
+
     
-    setScales(x:[Date, Date], y:[number, number]) {
+    public setScales(x:[Date, Date], y:[number, number]) {
         this.setYScale(y) 
         this.setXScale(x) 
     }
@@ -105,39 +142,20 @@ export class Graph {
     }
 
 
-    setData(data:any) {
+    public setData(data:any) {
         if(data === null) {throw new Error("You passed no data")}
         this.data = data
-        this.setMarkNames(data) 
         this.pathGenerators()
     }
 
-    setMarkNames(data:any) {
-        let names:string[] = []
-        for (let prop in data[0]) {
-            if( data[0].hasOwnProperty( prop ) && prop !== "date" ) {
-                names.push(prop)
-            } 
-        }
-
-        if(this.marks != undefined && (this.marks.length > 0)) {
-            this.marks.forEach( (prop, i) => {
-                prop.name = names[i]
-            })
-        }
-        else {
-            this.marks = names.map( (k) => new Mark(k) ) 
-        } 
-    }
 
     pathGenerators() {
+        if(this.marks.length === 0) { throw new Error("No marks to generate paths for. First add a mark.") }
         this.marks.forEach( mark => {
-            this.paths.push(
-                d3.area()
+          mark.pathGenerator =  d3.area()
                 .x(d => this.xScale((d as any)["date"]))
                 .y1(d => this.yScale((d as any)[mark.name]))
                 .y0(d => this.yScale((d as any)[mark.name]))
-            )
         })
     }
 
@@ -224,15 +242,14 @@ export class Graph {
     }
 
 
-    public getPathFor(markName:string) {
-        if(this.data == null) {throw new Error("There is no data yet")}
-        if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
+    public getPathFor(markName:string):string {
 
-        let i = this.marks.map( k => k.name ).indexOf(markName)
-        
-        if(i === -1) {throw new Error(`There is no mark with name ${markName} in ${this.name}`)}
-        let ret = this.paths[i](this.data)
-        return ret
+        let mark = this.getMark(markName)
+
+        if(this.data == null) {throw new Error("There is no data yet")}
+        if(mark.pathGenerator === null) {throw new Error("No pathGenerator yet")}
+
+        return mark.pathGenerator(this.data)
     }
 
 

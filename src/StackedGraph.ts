@@ -57,20 +57,6 @@ export class StackedGraph extends Graph {
     }
 
 
-    setMarkNames(names:string[]) {
-        if(this.marks.length === names.length) {
-            names.forEach( (c, i) => {
-                this.marks[i].name = c
-            } )
-        } else {
-            names.forEach( (c) => {
-                this.marks.push(new Mark(c)) 
-            } )
-        }
-
-    }
-
-
     removeFill() {}
     
     labelYPosition(d:any, markName:string, i:number, offset:number) {
