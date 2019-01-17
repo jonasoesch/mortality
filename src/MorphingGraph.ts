@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import {Graph} from './Graph';
-import {MorphingMark} from './Mark'
+import {MorphingMark, Mark} from './Mark'
 import interpolatePath from './interpolate-path';
 
 export class MorphingGraph extends Graph {
@@ -44,8 +44,6 @@ export class MorphingGraph extends Graph {
         this.setData(graph.data)
     }
 
-
-    setMarkNames() {}
     drawLabels() {}
 
 
@@ -57,8 +55,8 @@ export class MorphingGraph extends Graph {
 
     addTransition(from:string, to:string) {
         let prop = new MorphingMark(`${from}---${to}`)
-        prop.from = from
-        prop.to = to
+        prop.from = this.originGraph.getMark(from)
+        prop.to = this.targetGraph.getMark(to)
         this.marks.push(prop)
     }
 
@@ -96,13 +94,9 @@ export class MorphingGraph extends Graph {
     }
 
 
-    getColorFor(markName:string) {
-        let from = this.fromToClasses(markName).from
-        let to = this.fromToClasses(markName).to
-
-
-        let color1 = this.originGraph.getColorFor(from)
-        let color2 = this.targetGraph.getColorFor(to)
+    getColorFor(mark:MorphingMark) {
+        let color1 = mark.from.color
+        let color2 = mark.to.color
         return d3.interpolateHsl(color1, color2)(this.howFar)
     }
 

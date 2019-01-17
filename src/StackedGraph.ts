@@ -5,79 +5,60 @@ import {Mark} from './Mark'
 
 
 export class StackedGraph extends Graph {
+
+    /**
+     * To create a stacked graph, the data needs to be transformed.
+     * The transformed data is stored in `stacks`.
+     **/
     stacks:any;
-    dates:Date[];
 
 
-    setData(data:any[]) {
+    public setData(data:any[]) {
         if(data === null) {throw new Error("You passed no data")}
         this.data = data
-        this.pathGenerators()
         this.stacks = (d3.stack()
-            .keys(this.marks.map(k => k.name)))(<any>data)
-        this.dates = data.map( d => (d.date as Date))
+            .keys(this.marks.map(mark => mark.name)))(<any>data)
+        debugger;
     }
 
-
-    pathGenerators() {
-        this.marks.forEach( mark => {
-            this.paths.push(
-                d3.area()
-                .x((stack, i) => this.xScale(this.dates[i]))
+    protected pathGeneratorFor(markName:string) {
+        return d3.area()
+                .x( d => this.xScale(d["data"]["date"]))
                 .y1(d => this.yScale(d[1] || 1))
                 .y0(d => this.yScale(d[0]))
-            )
-        })
     }
-
-     drawPaths() {
-        let paths = this.chart.append("g").attr("class", "paths")
-         this.marks.forEach( (mark) => {
-             this.drawPath(paths, mark.name)    
-         })
-
-    }
-
-    drawPath(container:d3.Selection<any, any, any, any>, markName:string) {
-            container.append('path')
-                .attr("d", d => this.getPathFor(markName))
-                .attr("fill", this.getColorFor(markName))
-    }
-
-
-    getPathFor(markName:string) {
-        if(this.stacks == null) {throw new Error("There is no data yet")}
-        if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
-
-
-        let i = this.marks.map( k => k.name ).indexOf(markName)
-        if(i === -1) {throw new Error(`There is no mark with name ${markName} in ${this.name}`)}
-        let ret = this.paths[i](this.stacks[i])
-        return ret
-    }
-
-
-    setMarkNames(names:string[]) {
-        if(this.marks.length === names.length) {
-            names.forEach( (c, i) => {
-                this.marks[i].name = c
-            } )
-        } else {
-            names.forEach( (c) => {
-                this.marks.push(new Mark(c)) 
-            } )
-        }
-
-    }
-
-
-    removeFill() {}
     
-    labelYPosition(d:any, markName:string, i:number, offset:number) {
-        return this.yScale(this.stacks[i][this.stacks[i].length-1][1] || 1) 
+    public getPathFor(markName:string) {
+        let mark = this.getMark(markName)
+
+        if(mark === undefined) {throw new Error(`There is no mark named ${markName}`)}
+        if(this.stacks == null) {throw new Error("There is no data yet")}
+        if(mark.pathGenerator === null) {throw new Error(`No pathGenerator mark ${markName}`)}
+
+        let path = mark.pathGenerator(this.stackDataFor(mark))
+        return path
+    }
+
+
+    /**
+     * Redefined from Graph
+     **/
+    protected labelYPosition(d:any, mark:Mark, offset:number) {
+        let stackData = this.stackDataFor(mark)
+        let i = this.marks.map(m => m.name).indexOf(mark.name)
+        return this.yScale(stackData[stackData.length-1][1] || 1) 
             + 20
             + offset 
-            + this.getMark(markName).labelOffsets[1]
+            + mark.labelOffsets[1]
+    }
+
+    /**
+     * Returns the corresponding array of data
+     * in stacks for a given mark
+     **/
+    private stackDataFor(mark:Mark) {
+        let i = this.marks.map( m => m.name ).indexOf(mark.name)
+        return this.stacks[i]
     }
 }
 

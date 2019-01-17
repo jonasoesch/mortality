@@ -26,7 +26,6 @@ h1 {
     font-style: italic;
 }
 
-
 #decrease, #older, #uptick, #aids {
     width: 1280px;
     height: 720px;
@@ -49,7 +48,7 @@ h1 {
 
 article {
     margin: 40px auto;
-    max-width: 1280;
+    max-width: 1280px;
     font: 16px/24px "Avenir, Helvetica Neue, Arial, sans-serif";
     font-weight: Regular;
     color: white;

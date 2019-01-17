@@ -25,53 +25,59 @@ describe("setup process", () => {
         expect(g.name).toBe("Jonas")
     });
 
+
     it('should be drawn into the right HTML element', () => {
         let target = d3.select("#Jonas svg")
         expect(g.chart).toEqual(target)
     })
 
-
-    test('the scales should return the correct values', () => {
+    it('the scales should return the correct values', () => {
         expect(g.xScale(Date.parse("2005-03-20"))).toEqual(388.24793148497605)
         expect(g.yScale(0.5)).toEqual(360)
     });
 
+    it("should add a new mark", ()=> {
+        g.addMark("newMark")
+        expect(g.marks[1].name).toEqual("newMark")
+    })
 
-    test('the data should be set', () => {
+    it('the data should be set', () => {
         expect(g.data).toBeTruthy()
         expect(g.data[1]["a"]).toEqual(2)
     })
 
-    test('Properties are set', () => {
+    it('should set properties correctly', () => {
         expect(g.marks[0].name).toEqual("a")
         expect(g.marks[0].color).toEqual("red")
         expect(g.marks[0].label).toEqual("A")
     })
 
-    test('Path generators are prepared', () => {
-        expect(g.paths.length).toEqual(g.marks.length)
-        g.paths.forEach( path => {
-            expect(path).toBeInstanceOf(Function)
+    it('should add a pathGenerator to each mark', () => {
+        g.marks.forEach( mark => {
+            expect(mark.pathGenerator).toBeInstanceOf(Function)
         })
     })
 
 })
 
 
-describe('document', () => {
+describe('docum)nt', () => {
 
-    test('snapshot', () => {
+    test('leftAxis', () => {
         expect(document.getElementsByClassName("axisLeft")[0]).toMatchSnapshot();
+    })
+
+    test('bottomAxis', () => {
+        expect(document.getElementsByClassName("axisBottom")[0]).toMatchSnapshot();
+    })
+
+    test('labels', () => {
+        expect(document.getElementsByClassName("labels")[0]).toMatchSnapshot();
     })
 
     test('description', () => {
         let el = d3.select(document).select("svg .description").text()
         expect(el).toEqual("The evolution of mortality")
-    })
-
-    test('label backgrounds', () => {
-        let bgs = d3.select(document).select("svg .labels rect")
-        expect(bgs.size()).toEqual(1)
     })
 
     test('label texts', () => {
@@ -85,13 +91,6 @@ describe('document', () => {
         expect(path).toEqual(comp)
     })
 
-    test('getPathFor', () => {
-        let path = g.getPathFor("a")
-        let comp = "M183.07446654086226,80L722.6709246625055,-480L722.6709246625055,-480L183.07446654086226,80Z"
-        expect(path).toEqual(comp)
-    })
-
-
     test("different data creates a different path", () => {
         let path1 = g.getPathFor("a")
         g.setData([
@@ -102,7 +101,16 @@ describe('document', () => {
         expect(path1).not.toEqual(path2)
 
     })
-
-
 })
+
+
+describe("getMark", () => {
+    it("should return the correct mark", ()=>{
+        expect(g.getMark("a")).toEqual(g.marks[0])
+    })
+    it("should return undefined if there is no mark with that name", () => {
+        expect(g.getMark("doesn't exist")).toBeUndefined() 
+    })
+})
+
 
