@@ -43,14 +43,6 @@ describe("initialization", () => {
         }) 
     })
 
-
-    it("should have the right number of path generators", () => {
-        expect(g.paths).toHaveLength(2) 
-        g.paths.forEach( path => {
-            expect(path).toBeInstanceOf(Function)
-        })
-    })
-
 })
 
 
@@ -65,7 +57,7 @@ describe("Methods", () => {
                 .y1(d => g.yScale(d[1] || 1))
                 .y0(d => g.yScale(d[0]))
 
-        expect(g.paths[0]([[1,2], [3,4]])).toEqual(gen([[1,2], [3,4]]))
+        expect(g.marks[0].pathGenerator([[1,2], [3,4]])).toEqual(gen([[1,2], [3,4]]))
     })
 
 

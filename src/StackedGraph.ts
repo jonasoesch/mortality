@@ -21,12 +21,10 @@ export class StackedGraph extends Graph {
 
     pathGenerators() {
         this.marks.forEach( mark => {
-            this.paths.push(
-                d3.area()
+                mark.pathGenerator = d3.area()
                 .x((stack, i) => this.xScale(this.dates[i]))
                 .y1(d => this.yScale(d[1] || 1))
                 .y0(d => this.yScale(d[0]))
-            )
         })
     }
 
@@ -46,13 +44,15 @@ export class StackedGraph extends Graph {
 
 
     getPathFor(markName:string) {
+        let mark = this.getMark(markName)
+
         if(this.stacks == null) {throw new Error("There is no data yet")}
-        if(this.paths.length === 0) {throw new Error("No pathGenerators yet")}
+        if(mark.pathGenerator === null) {throw new Error(`No pathGenerator mark ${markName}`)}
 
 
         let i = this.marks.map( k => k.name ).indexOf(markName)
         if(i === -1) {throw new Error(`There is no mark with name ${markName} in ${this.name}`)}
-        let ret = this.paths[i](this.stacks[i])
+        let ret = mark.pathGenerator(this.stacks[i])
         return ret
     }
 

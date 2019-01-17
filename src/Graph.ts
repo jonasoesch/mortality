@@ -46,7 +46,6 @@ export class Graph {
 
     xScale:any //scaleTime
     yScale:d3.ScaleLinear<number, number>
-    paths:d3.Line<any>[] = []
 
     /*
      * The marks that should be drawn in the chart.
@@ -150,7 +149,6 @@ export class Graph {
 
 
     pathGenerators() {
-        if(this.marks.length === 0) { throw new Error("No marks to generate paths for. First add a mark.") }
         this.marks.forEach( mark => {
           mark.pathGenerator =  d3.area()
                 .x(d => this.xScale((d as any)["date"]))

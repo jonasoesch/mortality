@@ -1,3 +1,5 @@
+import * as d3 from 'd3'
+
 /**
  * This is a data class to keep together the graphical properties 
  * of a mark. A mark can be a line or an area or a point in a graph
@@ -9,7 +11,7 @@ export class Mark {
     private _color:string = "pink"
     private _label:string = ""
     private _labelOffsets:number[] = [0, 0]
-    private _pathGenerator:Function
+    private _pathGenerator:d3.Line<any>
 
 
     constructor(name="No name") {
@@ -80,7 +82,7 @@ export class Mark {
         return this
     }
 
-    get pathGenerator():Function {
+    get pathGenerator():d3.Line<any> {
         return this._pathGenerator 
     }
 
