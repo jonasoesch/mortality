@@ -142,7 +142,7 @@ export class Graph {
      * The x-axis is always mapped to the "date" column
      * The y-axis to the markName
      **/
-    private pathGeneratorFor(markName:string) {
+    protected pathGeneratorFor(markName:string) {
         return d3.area()
             .x(d => this.xScale((d as any)["date"]))
             .y1(d => this.yScale((d as any)[markName]))

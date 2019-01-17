@@ -18,10 +18,6 @@ g.setData([
 
 
 describe("initialization", () => {
-    it("should have an array with dates", () => {
-        expect((g as any).dates[0]).toBeInstanceOf(Date)
-        expect((g as any).dates[1]).toBeInstanceOf(Date)
-    })
 
     it("should have the right class names", () => {
         expect(g.marks[0].name).toEqual("a")
@@ -50,16 +46,6 @@ describe("Methods", () => {
     it("should return the right path for a given class", () => {
         expect(g.getPathFor("b")).toEqual("M183.07446654086226,-5520L722.6709246625055,-480L722.6709246625055,-480L183.07446654086226,80Z")
     })
-
-    it("should create an area generator with the right properties", () => {
-        let gen = d3.area()
-                .x((stack, i) => g.xScale(g.dates[i]))
-                .y1(d => g.yScale(d[1] || 1))
-                .y0(d => g.yScale(d[0]))
-
-        expect(g.marks[0].pathGenerator([[1,2], [3,4]])).toEqual(gen([[1,2], [3,4]]))
-    })
-
 
 })
 
