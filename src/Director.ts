@@ -4,18 +4,50 @@ import {MorphingGraph} from './MorphingGraph'
 
 export class Director {
     storyboard:Step[] = []
+    timer:Date = new Date()
+    lastScrollTop:number
 
     constructor() {
-        document.addEventListener('scroll', (evt) => this.scrolling(evt))
+       this.lastScrollTop = window.scrollY;
+        
+        if (window.requestAnimationFrame) {
+            let that = this
+            this.loop();
+        }
     }
 
-    scrolling(evt:any) {
-        let offset = evt.pageY
+
+    loop() {
+        var scrollTop = window.scrollY;
+        if (this.lastScrollTop === scrollTop) {
+            window.requestAnimationFrame(() => this.loop());
+            return;
+        } else {
+            this.lastScrollTop = scrollTop;
+
+            // fire scroll function if scrolls vertically
+            this.scrolling(scrollTop);
+            window.requestAnimationFrame(() => this.loop());
+        }
+    } 
+
+    scrolling(scroll:number) {
+
+        let t = new Date()
+        let difference = t.getTime() - this.timer.getTime()
+
+        // only execute if the last execution has been
+        // been more than x ms ago
+        if(difference<10) {return}
+        
+        this.timer = t
+
+        let offset = scroll
         this.storyboard.forEach( (step) => {
             if (offset > step.start && offset < step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
             } else {
-               this.hide(step.graph) 
+                this.hide(step.graph) 
             }
         })
     }

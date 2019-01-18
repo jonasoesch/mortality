@@ -185,11 +185,17 @@ export class Graph {
      **/
     draw() {
         if(!this.data) {throw new Error("Can't draw. There is no data yet")}
-        this.unhide()
+        let t1 = new Date().getTime()
         this.drawAxes()
+        let t2 = new Date().getTime()
         this.drawMarks()
+        let t3 = new Date().getTime()
         this.drawLabels()
+        let t4 = new Date().getTime()
         if(this.description) { this.drawDescription() }
+        this.unhide()
+        let t5 = new Date().getTime()
+        //console.table([{axes: t2-t1, marks: t3-t2, labels: t4-t3, unhide:t5-t4}])
     }
 
     /**
@@ -378,8 +384,8 @@ export class Graph {
      **/
     hide() {
         this.chart
-            .transition()
-            .duration(100)
+            //.transition()
+            //.duration(100)
             .style("opacity", 0)
     }
 
@@ -388,8 +394,8 @@ export class Graph {
      **/
     unhide() {
         this.chart
-            .transition()
-            .duration(100)
+            //.transition()
+            //.duration(500)
             .style("opacity", 1)
     }
 }

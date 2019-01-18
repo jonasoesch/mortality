@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 import {Graph} from './Graph';
 import {MorphingMark, Mark} from './Mark'
-import interpolatePath from './interpolate-path';
 
 export class MorphingGraph extends Graph {
     name:string
@@ -89,7 +88,7 @@ export class MorphingGraph extends Graph {
         let path1 = this.originGraph.getPathFor(from)
         let path2 = this.targetGraph.getPathFor(to)
 
-        return interpolatePath(path1, path2, null)(this.howFar)
+        return d3.interpolate(path1, path2)(this.howFar)
     }
 
 
