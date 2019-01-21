@@ -44,7 +44,7 @@ export class Director {
 
         let offset = scroll
         this.storyboard.forEach( (step) => {
-            if (offset > step.start && offset < step.end) {
+            if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
             } else {
                 this.hide(step.graph) 
