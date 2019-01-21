@@ -1,14 +1,16 @@
 import * as intro from './intro';
 import * as decrease from './decrease';
+import * as decreaseEveryone from './decrease-everyone'
 import * as older from './older';
 import * as uptick from './uptick';
 import * as aids from './aids';
 import {Director} from './Director'
-import {MorphingGraph} from './MorphingGraph'
+import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
 
 
 let graphPromises = []
 graphPromises.push(decrease.graph())
+graphPromises.push(decreaseEveryone.graph())
 graphPromises.push(older.graph())
 graphPromises.push(uptick.graph())
 graphPromises.push(aids.graph())
@@ -18,9 +20,16 @@ Promise.all(graphPromises).then( (graphs) => {
     graphs[0].draw()
     d.addStep(-10, 200, graphs[0])
 
+    let decreaseDecrease = new MorphingGraphWithLabels("decrease-everyone-morph")
+    decreaseDecrease.setOrigin(graphs[0])
+    decreaseDecrease.setTarget(graphs[1])
+    decreaseDecrease.addTransition("MortalityEveryone", "MortalityEveryone").setLabel("Everyone")
+
+    d.addStep(200, 400, decreaseDecrease)
+
     let decreaseOlder = new MorphingGraph("decrease-older")
-    decreaseOlder.setOrigin(graphs[0])
-    decreaseOlder.setTarget(graphs[1])
+    decreaseOlder.setOrigin(graphs[1])
+    decreaseOlder.setTarget(graphs[2])
     decreaseOlder.addTransition("MortalityEveryone", "popshare25")
     decreaseOlder.addTransition("MortalityEveryone", "popshare25_44")
     decreaseOlder.addTransition("MortalityEveryone", "popshare45_54")
@@ -29,14 +38,14 @@ Promise.all(graphPromises).then( (graphs) => {
     decreaseOlder.addTransition("MortalityEveryone", "popshare75")
 
 
-    d.addStep(200, 600, decreaseOlder)
+    d.addStep(400, 600, decreaseOlder)
 
-    d.addStep(600,700, graphs[1])
+    d.addStep(600,700, graphs[2])
 
 
     let olderUptick = new MorphingGraph("older-uptick")
-    olderUptick.setOrigin(graphs[1])
-    olderUptick.setTarget(graphs[2])
+    olderUptick.setOrigin(graphs[2])
+    olderUptick.setTarget(graphs[3])
     olderUptick.addTransition("popshare25", "Rate_25")
     olderUptick.addTransition("popshare25_44", "Rate25_44")
     olderUptick.addTransition("popshare45_54", "Rate45_54")
@@ -48,11 +57,11 @@ Promise.all(graphPromises).then( (graphs) => {
     d.addStep(700, 1100, olderUptick)
 
 
-    d.addStep(1100, 1300, graphs[2])
+    d.addStep(1100, 1300, graphs[3])
 
     let uptickAids = new MorphingGraph("uptick-aids")
-    uptickAids.setOrigin(graphs[2])
-    uptickAids.setTarget(graphs[3])
+    uptickAids.setOrigin(graphs[3])
+    uptickAids.setTarget(graphs[4])
     uptickAids.addTransition("Rate25_44", "Other")
     uptickAids.addTransition("Rate25_44", "Cancer")
     uptickAids.addTransition("Rate25_44", "Heart")
@@ -67,7 +76,7 @@ Promise.all(graphPromises).then( (graphs) => {
 
     d.addStep(1300, 1700, uptickAids)
 
-    d.addStep(1700, 3000, graphs[3])
+    d.addStep(1700, 3000, graphs[4])
 
 })
 

@@ -105,6 +105,6 @@ export class MorphingMark extends Mark {
     }
 
     get color() {
-        return d3.interpolateHsl(this.from.color, this.to.color)(this.howFar)
+        return d3.interpolateHcl(this.from.color, this.to.color)(this.howFar)
     }
 }

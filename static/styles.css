@@ -18,7 +18,7 @@ h1,p {
     color: white;
 }
 
-#decrease, #decrease-older, #older, #older-uptick, #uptick, #uptick-aids, #aids {
+#decrease, #decrease-everyone, #decrease-everyone-morph, #decrease-older, #older, #older-uptick, #uptick, #uptick-aids, #aids {
     position:fixed;
     top: 0px;
     width: 900px;

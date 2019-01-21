@@ -57,14 +57,22 @@ export class Director {
         this.storyboard.push(new Step(start, end, graph))
     }
 
-    protected howFar(step:Step, offset:number) {
+    protected howFar(step:Step, offset:number):number {
         let total = step.end-step.start
         let position = offset - step.start
 
         if(total < 0) {throw new Error("End is before start")}
         if(position < 0) {throw new Error("Position is not between end and start")}
 
-        return position/total
+        return this.easing(position/total)
+    }
+
+    /**
+     * The easing-method wraps `howFar` to allow the application of
+     * different easing functions.
+     **/
+    easing(howFar:number){
+        return d3.easePolyInOut(howFar) 
     }
 
 

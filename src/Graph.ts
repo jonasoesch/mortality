@@ -350,7 +350,7 @@ export class Graph {
             - mark.labelOffsets[0]
     }
 
-    protected labelYPosition(data:any, mark:Mark, offset=0):number {
+    public labelYPosition(data:any, mark:Mark, offset=0):number {
         return this.yScale(data[data.length-1][mark.name]) 
             + offset 
             + mark.labelOffsets[1]

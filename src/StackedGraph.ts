@@ -18,7 +18,6 @@ export class StackedGraph extends Graph {
         this.data = data
         this.stacks = (d3.stack()
             .keys(this.marks.map(mark => mark.name)))(<any>data)
-        debugger;
     }
 
     protected pathGeneratorFor(markName:string) {
