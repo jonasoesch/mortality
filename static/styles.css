@@ -1,24 +1,40 @@
 body {
     background-color: black;
+    font-family: "Fira Sans OT";
 }
 h1 {
     text-align: center;
-    font-size: 16px;
-    font-family: "Avenir, Helvetica Neue, Arial, sans-serif";
+    font-size: 20px;
     font-weight: 900;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: white;
     margin-bottom: 40px;
     margin-top: 160px;
 }
 
 
+h1,p {
+    margin-left: 940px;
+    color: white;
+}
+
 #decrease, #decrease-older, #older, #older-uptick, #uptick, #uptick-aids, #aids {
     position:fixed;
-    top: 100px;
-    width: 1280px;
+    top: 0px;
+    width: 900px;
     height: 720px;
+}
+
+#older-caption {
+    margin-top: 500px
+}
+
+#uptick-caption {
+    margin-top: 500px
+}
+
+#aids-caption {
+    margin-top: 400px;
 }
 
 #container {
