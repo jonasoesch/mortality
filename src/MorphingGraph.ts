@@ -46,10 +46,6 @@ export class MorphingGraph extends Graph {
         this.targetDomain = graph.yScale.domain()
     }
 
-    /**
-     * No labels should be drawn
-     **/
-    drawLabels() {}
 
 
     /**
@@ -67,7 +63,13 @@ export class MorphingGraph extends Graph {
         return mark
     }
 
+    draw() {
+        this.drawAxes()
+        this.drawMarks()
+        this.unhide()
+    }
 
+    
     /**
      * Defines at which stage between `from`-
      * and `to`-graphs the MorphingGraph should
@@ -114,7 +116,21 @@ export class MorphingGraph extends Graph {
         if(pair.length !== 2) {throw new Error("Need two properties to interpolate between")}
         return {from: pair[0], to: pair[1]}
     }
-
 }
 
+export class MorphingGraphWithLabels extends MorphingGraph {
 
+    draw() {
+        this.drawAxes() 
+        this.drawMarks()
+        this.drawLabels()
+        this.unhide()
+    }
+    
+    public labelYPosition(mark:MorphingMark, offset=0) {
+        let start = this.originGraph.labelYPosition(mark.from, offset)
+        let end = this.targetGraph.labelYPosition(mark.to, offset)
+        return d3.interpolate(start, end)(this.howFar)
+    }
+    
+}
