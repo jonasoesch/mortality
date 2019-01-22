@@ -1,19 +1,14 @@
-import * as intro from './intro';
-import * as decrease from './decrease';
-import * as decreaseEveryone from './decrease-everyone'
-import * as older from './older';
-import * as uptick from './uptick';
-import * as aids from './aids';
+import {decreaseGraph, decreaseEveryoneGraph, olderGraph, uptickGraph, aidsGraph} from './graphs'
 import {Director} from './Director'
 import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
 
 
 let graphPromises = []
-graphPromises.push(decrease.graph())
-graphPromises.push(decreaseEveryone.graph())
-graphPromises.push(older.graph())
-graphPromises.push(uptick.graph())
-graphPromises.push(aids.graph())
+graphPromises.push(decreaseGraph())
+graphPromises.push(decreaseEveryoneGraph())
+graphPromises.push(olderGraph())
+graphPromises.push(uptickGraph())
+graphPromises.push(aidsGraph())
 
 Promise.all(graphPromises).then( (graphs) => {
     let d = new Director()

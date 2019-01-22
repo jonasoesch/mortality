@@ -42,3 +42,9 @@ npm run start
 ```
 npm run build
 ```
+
+
+## Adding a new Graph to the story
+
+* `index.html`: Add an empty `<section>` with an `id` of *name*
+* ``

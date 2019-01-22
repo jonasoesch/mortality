@@ -322,8 +322,6 @@ export class Graph {
         let labels = this.clearStagePart("labels")
 
         this.marks.forEach( (mark, i) => {
-
-
             labels.append("rect")
                 .attr("y",this.labelYPosition(mark, -15))
                 .attr("x", this.labelXPosition(mark))
