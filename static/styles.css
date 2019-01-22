@@ -18,7 +18,7 @@ h1,p {
     color: white;
 }
 
-#decrease, #decrease-everyone, #decrease-everyone-morph, #decrease-older, #older, #older-uptick, #uptick, #uptick-aids, #aids {
+.graph {
     position:fixed;
     top: 0px;
     width: 900px;

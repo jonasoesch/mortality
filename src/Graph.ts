@@ -90,6 +90,7 @@ export class Graph {
     private insertChart() {
         this.chart = d3.select(`#${this.name}`)
             .append("svg")
+            .attr("id", `svg-${this.name}`)
     }
 
     private setDimensions() {
