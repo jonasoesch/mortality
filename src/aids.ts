@@ -46,7 +46,7 @@ export function graph() {
         graph.addMark("LiverKidneyPancreas")
             .setColor("rgb(27, 122, 199)")
             .setLabel("Diseases of the liver, kidney, and pancreas")
-            .setLabelOffsets([-260, -5])
+            .setLabelOffsets([-255, -5])
 
         graph.addMark("Suicide")
             .setColor("rgb(204, 51, 153)")
@@ -56,7 +56,7 @@ export function graph() {
         graph.addMark("Vehicle")
             .setColor("rgb(255, 153, 0)")
             .setLabel("Motor vehicle accidents")
-            .setLabelOffsets([-150, 0])
+            .setLabelOffsets([-120, 0])
 
         graph.addMark("Homicide")
             .setColor("rgb(200, 200, 0)")
