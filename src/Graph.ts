@@ -324,7 +324,7 @@ export class Graph {
         this.marks.forEach( (mark, i) => {
             labels.append("rect")
                 .datum(this.data)
-                .attr("y", d => this.labelYPosition(d, mark, -15))
+                .attr("y", d => this.labelYPosition(mark, -15))
                 .attr("x", this.labelXPosition(mark))
                 .attr("width", this.labelXWidth(mark))
                 .attr("height", 20)
@@ -335,7 +335,7 @@ export class Graph {
             labels.append("text")
                 .datum(this.data)
                 .text(this.marks[i].label)
-                .attr("y", d =>  this.labelYPosition(d, mark, 0))
+                .attr("y", d =>  this.labelYPosition(mark, 0))
                 .attr("x", this.labelXPosition(mark))
                 .attr("fill", this.fontColor)
                 .style("font-family", this.font)
@@ -350,8 +350,8 @@ export class Graph {
             - mark.labelOffsets[0]
     }
 
-    public labelYPosition(data:any, mark:Mark, offset=0):number {
-        return this.yScale(data[data.length-1][mark.name]) 
+    public labelYPosition(mark:Mark, offset=0):number {
+        return this.yScale(this.data[this.data.length-1][mark.name]) 
             + offset 
             + mark.labelOffsets[1]
     }

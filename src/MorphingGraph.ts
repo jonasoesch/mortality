@@ -46,10 +46,6 @@ export class MorphingGraph extends Graph {
         this.targetDomain = graph.yScale.domain()
     }
 
-    /**
-     * No labels should be drawn
-     **/
-    drawLabels() {}
 
 
     /**
@@ -67,7 +63,13 @@ export class MorphingGraph extends Graph {
         return mark
     }
 
+    draw() {
+        this.drawAxes()
+        this.drawMarks()
+        this.unhide()
+    }
 
+    
     /**
      * Defines at which stage between `from`-
      * and `to`-graphs the MorphingGraph should
@@ -114,37 +116,21 @@ export class MorphingGraph extends Graph {
         if(pair.length !== 2) {throw new Error("Need two properties to interpolate between")}
         return {from: pair[0], to: pair[1]}
     }
-)
 }
 
 export class MorphingGraphWithLabels extends MorphingGraph {
-   drawLabels() {
-        let labels = this.clearStagePart("labels")
 
-        this.marks.forEach( (mark, i) => {
-            debugger;
-            labels.append("rect")
-                .datum(this.data)
-                .attr("y", d => this.labelYPosition(d, mark, -15))
-                .attr("x", this.labelXPosition(mark))
-                .attr("width", this.labelXWidth(mark))
-                .attr("height", 20)
-                .attr("fill", this.marks[i].color)
-                .style("font-family", this.font)
-
-
-            labels.append("text")
-                .datum(this.data)
-                .text(this.marks[i].label)
-                .attr("y", d =>  this.labelYPosition(d, mark, 0))
-                .attr("x", this.labelXPosition(mark))
-                .attr("fill", this.fontColor)
-                .style("font-family", this.font)
-                .style("font-weight", "bold")
-        } )
-   } 
-
-    public labelYPosition(d, mark, offset=0){
-        return d3.interpolate(240, 147)(this.howFar) + offset 
+    draw() {
+        this.drawAxes() 
+        this.drawMarks()
+        this.drawLabels()
+        this.unhide()
     }
+    
+    public labelYPosition(mark:MorphingMark, offset=0) {
+        let start = this.originGraph.labelYPosition(mark.from, offset)
+        let end = this.targetGraph.labelYPosition(mark.to, offset)
+        return d3.interpolate(start, end)(this.howFar)
+    }
+    
 }
