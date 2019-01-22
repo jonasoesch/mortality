@@ -118,6 +118,9 @@ export class MorphingGraph extends Graph {
     }
 }
 
+/**
+ * Will paint the transition including the labels
+ **/
 export class MorphingGraphWithLabels extends MorphingGraph {
 
     draw() {
