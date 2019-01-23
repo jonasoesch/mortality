@@ -108,7 +108,7 @@ export class MorphingGraph extends Graph {
             .range(this.originGraph.yScale.range())
 
 
-        return this.formatLeftAxis(d3.axisLeft(yScale).tickSize(-this.w).tickPadding(10))
+        return this.formatLeftAxis(d3.axisLeft(yScale).tickSize(-this.w+2*this.margin).tickPadding(10))
     }
 
     private fromToClasses(markName:string) {
@@ -117,6 +117,7 @@ export class MorphingGraph extends Graph {
         return {from: pair[0], to: pair[1]}
     }
 }
+
 
 /**
  * Will paint the transition including the labels
@@ -137,3 +138,4 @@ export class MorphingGraphWithLabels extends MorphingGraph {
     }
     
 }
+

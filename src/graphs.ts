@@ -15,7 +15,8 @@ export function decreaseGraph() {
         } )
 
         let graph = new Graph("decrease")
-        graph.setDescription("Evolution of the mortality rate (per 100'000) since 1968")
+        graph.setDescription("Evolution of the mortality rate since 1968")
+        graph.setAxisLabels("Deaths per 100'000 persons")
         graph.setScales(d3.extent(data, d => d.date), [0, d3.max(data, d => d["MortalityMales"])])
 
         graph.addMark("MortalityEveryone")
@@ -47,14 +48,14 @@ export function decreaseEveryoneGraph() {
         let data:MortalityData[] = csv.map((d:any) => {
             return {
                 date: new Date(Date.parse(d["date"])),
-                MortalityEveryone: 1000,
+                MortalityEveryone: 100000,
                 MortalityMales: parseFloat(d["MortalityMales"]),
             }
         } )
 
         let graph = new Graph("decrease-everyone")
         graph.setDescription("Evolution of the mortality rate (per 100'000) since 1968")
-        graph.setScales(d3.extent(data, d => d.date), [0, d3.max(data, d => d["MortalityMales"])])
+        graph.setScales(d3.extent(data, d => d.date), [0, 110000])
 
         graph.addMark("MortalityEveryone")
             .setColor("rgb(135, 145, 155)")
@@ -89,7 +90,8 @@ export function olderGraph() {
         } )
         let graph = new OlderGraph("older")
         graph.setScales(d3.extent(data, d => d.date), [0, 1])
-        graph.setDescription("Composition of the population by age groups")
+        graph.setDescription("The population is getting older")
+        graph.setAxisLabels("Share of the (living) U. S. population")
 
 
         graph.addMark("popshare25")
@@ -143,44 +145,45 @@ export function ageDifferencesGraph() {
         } )
 
         let graph = new Graph("differences")
-        graph.setDescription("Very different mortality rates for different age groups")
+        graph.setDescription("Older people have a higher mortality")
+        graph.setAxisLabels("Deaths per 100'000 persons")
         graph.setScales(d3.extent(data, d => d.date), [0, 20000])
 
 
             graph.addMark("Rate85up")
                 .setColor("rgb(125, 75, 186)")
-                .setLabel("Over 85")
-                .setLabelOffsets([0, 0])
+                .setLabel("Over 84")
+                .setLabelOffsets([0, 3])
 
             graph.addMark("Rate75_84")
                 .setColor("rgb(154, 129, 232)")
                 .setLabel("75–84")
-                .setLabelOffsets([0, -17])
+                .setLabelOffsets([0, 3])
 
             graph.addMark("Rate65_74")
                 .setColor("rgb(47, 105, 160)")
                 .setLabel("65–74")
-                .setLabelOffsets([0, 8])
+                .setLabelOffsets([0, 0])
 
             graph.addMark("Rate55_64")
                 .setColor("rgb(38, 148, 222)")
                 .setLabel("55–64")
-                .setLabelOffsets([0, 28])
+                .setLabelOffsets([0, -5])
 
             graph.addMark("Rate45_54")
                 .setColor("rgb(26, 130, 140)")
                 .setLabel("45–54")
-                .setLabelOffsets([0, 7])
+                .setLabelOffsets([0, 0])
 
             graph.addMark("Rate25_44")
                 .setColor("rgb(60, 190, 203)")
                 .setLabel("25–44")
-                .setLabelOffsets([0, 3])
+                .setLabelOffsets([0, 8])
 
             graph.addMark("Rate_25")
                 .setColor("rgb(117, 212, 156)")
                 .setLabel("Under 25")
-                .setLabelOffsets([0, 5])
+                .setLabelOffsets([0, 25])
 
         graph.setData(data)
 
@@ -206,13 +209,14 @@ export function uptickGraph() {
         } )
 
         let graph = new Graph("uptick")
-        graph.setDescription("The evolution of the mortality rate since 1968 by age group")
+        graph.setDescription("Mortality is falling in all age groups")
+        graph.setAxisLabels("Mortality rate relative to 1968")
         graph.setScales(d3.extent(data, d => d.date), [0, 100])
 
 
             graph.addMark("Rate85up")
                 .setColor("rgb(125, 75, 186)")
-                .setLabel("Over 85")
+                .setLabel("Over 84")
                 .setLabelOffsets([0, 0])
 
             graph.addMark("Rate75_84")
@@ -270,7 +274,8 @@ export function aidsGraph() {
             }
         } )
         let graph = new StackedGraph("aids")
-        graph.setDescription("The causes of death for americans between 25 and 44 years old")
+        graph.setAxisLabels("Total deaths and their cause of 25–44 year olds")
+        graph.setDescription("Aids slowed the fall in the 90's for 25–44 year olds")
         graph.setScales(d3.extent(data, d => d.date), [0, 160000])
         graph.addMark("Other")
             .setColor("rgb(135, 145, 155)")

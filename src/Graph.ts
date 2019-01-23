@@ -25,6 +25,7 @@ export class Graph {
      **/
     name:string
     description:string
+    yAxisLabel:string = ""
     data:any = null
     chart:d3.Selection<any, any, any, any>
 
@@ -104,6 +105,10 @@ export class Graph {
 
     public setDescription(description:string) {
         this.description = description 
+    }
+
+    public setAxisLabels(y) {
+        this.yAxisLabel = y
     }
 
 
@@ -229,14 +234,17 @@ export class Graph {
 
         this.styleAxis(axisBottom)
 
+        this.drawAxisLabels()
+
     }
+
 
     /**
      * Wrap access to y-axis to
      * make it extensible
      **/
     protected axisLeft() {
-        return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w).tickPadding(10))
+        return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w+2*this.margin).tickPadding(10))
     }
 
     /**
@@ -244,7 +252,7 @@ export class Graph {
      * make it extensible
      **/
     protected axisBottom() {
-        return d3.axisBottom(this.xScale).tickSize(-this.h).tickPadding(10)
+        return d3.axisBottom(this.xScale).tickSize(-this.h+2*this.margin).tickPadding(10)
     }
 
     /**
@@ -371,17 +379,29 @@ private measureText(str, fontSize = 10) {
 
 
     protected drawDescription() {
-        this.chart.select("description")
-        this.chart
+        let description = this.clearStagePart("description")
+        description
             .append("text")
-            .attr("class", "description")
-            .attr("x", this.margin + 10)
-            .attr("y", 30)
+            .attr("x", (this.w/2) - this.margin)
+            .attr("y", 50)
             .attr("fill", this.fontColor)
-            .style("font-size", "16px")
+            .style("font-size", "20px")
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.description)
+    }
+
+    protected drawAxisLabels() {
+        let axisLabels = this.clearStagePart("axisLabels") 
+        axisLabels
+            .append("text")
+            .attr("x", this.margin/2)
+            .attr("y", 50)
+            .attr("fill", this.fontColor)
+            .style("font-size", "14px")
+            .style("font-family", this.font)
+            .style("font-weight", "bold")
+            .text(this.yAxisLabel)
     }
 
 

@@ -1,6 +1,7 @@
 body {
     background-color: black;
     font-family: "Fira Sans OT";
+    line-height: 1.4em;
 }
 h1 {
     text-align: center;
@@ -31,6 +32,10 @@ h1,p {
 
 #uptick-caption {
     margin-top: 500px
+}
+
+#differences-caption {
+    margin-top: 400px
 }
 
 #aids-caption {

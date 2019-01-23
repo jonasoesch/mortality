@@ -13,7 +13,7 @@ graphPromises.push(aidsGraph())
 
 Promise.all(graphPromises).then( (graphs) => {
     let d = new Director()
-    graphs[0].draw() // Initial drawing
+    document.getElementsByTagName('body')[0].scrollBy(0, 2) // Initial drawing
     d.addStep(-10, 200, graphs[0])
 
     let decreaseDecrease = new MorphingGraphWithLabels("decrease-everyone-morph")
@@ -53,16 +53,16 @@ Promise.all(graphPromises).then( (graphs) => {
     d.addStep(700,1000, olderDifferences) 
     d.addStep(1000, 1200, graphs[3]) // differences
 
-    let differencesUptick = new MorphingGraph("differences-uptick")
+    let differencesUptick = new MorphingGraphWithLabels("differences-uptick")
     differencesUptick.setOrigin(graphs[3]) // differences
     differencesUptick.setTarget(graphs[4]) // uptick
-    differencesUptick.addTransition("Rate_25"  , "Rate_25"  )
-    differencesUptick.addTransition("Rate25_44", "Rate25_44")
-    differencesUptick.addTransition("Rate45_54", "Rate45_54")
-    differencesUptick.addTransition("Rate55_64", "Rate55_64")
-    differencesUptick.addTransition("Rate65_74", "Rate65_74")
-    differencesUptick.addTransition("Rate75_84", "Rate75_84")
-    differencesUptick.addTransition("Rate85up" , "Rate85up" )
+    differencesUptick.addTransition("Rate_25"  , "Rate_25"  ).setLabel("Under 25")
+    differencesUptick.addTransition("Rate25_44", "Rate25_44").setLabel("25–44")
+    differencesUptick.addTransition("Rate45_54", "Rate45_54").setLabel("45–54")
+    differencesUptick.addTransition("Rate55_64", "Rate55_64").setLabel("55–64")
+    differencesUptick.addTransition("Rate65_74", "Rate65_74").setLabel("65-74")
+    differencesUptick.addTransition("Rate75_84", "Rate75_84").setLabel("75–84")
+    differencesUptick.addTransition("Rate85up" , "Rate85up" ).setLabel("Over 84")
 
     d.addStep(1200, 1600, differencesUptick)
     d.addStep(1600, 1800, graphs[4]) // uptick
