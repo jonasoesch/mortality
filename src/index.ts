@@ -31,7 +31,7 @@ Promise.all(graphPromises).then( (graphs) => {
     decreaseOlder.addTransition("MortalityEveryone", "popshare75")
 
 
-    d.addStep(decreaseOlder.originGraph.yPosition(), decreaseOlder.targetGraph.yPosition()-200, decreaseOlder)
+    d.addStep(decreaseOlder.originGraph.yPosition()+50, decreaseOlder.targetGraph.yPosition()-200, decreaseOlder)
 
     
     let olderDifferences = new MorphingGraph("older-differences")
@@ -46,7 +46,7 @@ Promise.all(graphPromises).then( (graphs) => {
     olderDifferences.addTransition("popshare75", "Rate85up")
 
 
-    d.addStep(olderDifferences.originGraph.yPosition(), olderDifferences.targetGraph.yPosition()-200, olderDifferences) 
+    d.addStep(olderDifferences.originGraph.yPosition()+50, olderDifferences.targetGraph.yPosition()-200, olderDifferences) 
 
     let differencesUptick = new MorphingGraphWithLabels("differences-uptick")
     differencesUptick.setOrigin(graphs[2]) // differences
@@ -59,7 +59,7 @@ Promise.all(graphPromises).then( (graphs) => {
     differencesUptick.addTransition("Rate75_84", "Rate75_84").setLabel("75–84")
     differencesUptick.addTransition("Rate85up" , "Rate85up" ).setLabel("Over 84")
 
-    d.addStep(differencesUptick.originGraph.yPosition(), differencesUptick.targetGraph.yPosition()-200, differencesUptick)
+    d.addStep(differencesUptick.originGraph.yPosition()+50, differencesUptick.targetGraph.yPosition()-200, differencesUptick)
 
 
     let uptickAids = new MorphingGraph("uptick-aids")
@@ -76,6 +76,6 @@ Promise.all(graphPromises).then( (graphs) => {
     uptickAids.addTransition("Rate25_44", "Drug_induced")
     uptickAids.addTransition("Rate25_44", "AIDS")
 
-    d.addStep(uptickAids.originGraph.yPosition(), uptickAids.targetGraph.yPosition()-200, uptickAids)
+    d.addStep(uptickAids.originGraph.yPosition()+50, uptickAids.targetGraph.yPosition()-200, uptickAids)
 
 })
