@@ -8,6 +8,7 @@ import {Mark} from './Mark'
 let graph = new Graph("name")
 graph.setScales( [start_date, end_date], [min, max])
 graph.setDescription("This graph shows foo and bar")
+graph.setAxisLabels("y-Axis")
 graph.addMark("foo")
      .setColor("red")
      .setLabel("Foo")
@@ -25,6 +26,7 @@ export class Graph {
      **/
     name:string
     description:string
+    yAxisLabel:string = ""
     data:any = null
     chart:d3.Selection<any, any, any, any>
 
@@ -32,7 +34,7 @@ export class Graph {
         /** 
          * Height `h` is taken from the containing HTMLElement defined by `name`
          **/
-        h:number 
+    h:number 
     /** Width `w` is taken from the containing HTMLElement defined by `name`**/
     w:number
 
@@ -65,6 +67,21 @@ export class Graph {
         this.initStage()
     }
 
+    public cloneWithNewName(name:string):Graph {
+        let clone = new Graph(name)
+        clone.setScales(this.xScale.domain(), <[number, number]>this.yScale.domain())
+        clone.setDescription(this.description)
+        clone.setAxisLabels(this.yAxisLabel)
+        this.marks.forEach( mark => clone
+            .addMark(mark.name)
+            .setColor(mark.color) 
+            .setLabel(mark.label)
+            .setLabelOffsets(mark.labelOffsets)
+        )
+        clone.setData(this.data)
+        return clone
+    }
+
     protected container():HTMLElement {
         return document.getElementById(this.name) 
     }
@@ -92,6 +109,7 @@ export class Graph {
     private insertChart() {
         this.chart = d3.select(`#${this.name}`)
             .append("svg")
+            .attr("id", `svg-${this.name}`)
     }
 
     private setDimensions() {
@@ -105,6 +123,10 @@ export class Graph {
 
     public setDescription(description:string) {
         this.description = description 
+    }
+
+    public setAxisLabels(y) {
+        this.yAxisLabel = y
     }
 
 
@@ -122,6 +144,11 @@ export class Graph {
         mark.pathGenerator = this.pathGeneratorFor(markName)
         this.marks.push(mark)
         return mark
+    }
+
+
+    public removeMark(markName:string) {
+        this.marks = this.marks.filter( mark => mark.name !== markName )
     }
 
 
@@ -187,11 +214,17 @@ export class Graph {
      **/
     draw() {
         if(!this.data) {throw new Error("Can't draw. There is no data yet")}
-        this.unhide()
+        let t1 = new Date().getTime()
         this.drawAxes()
+        let t2 = new Date().getTime()
         this.drawMarks()
+        let t3 = new Date().getTime()
         this.drawLabels()
+        let t4 = new Date().getTime()
         if(this.description) { this.drawDescription() }
+        this.unhide()
+        let t5 = new Date().getTime()
+        //console.table([{axes: t2-t1, marks: t3-t2, labels: t4-t3, unhide:t5-t4}])
     }
 
     /**
@@ -224,14 +257,17 @@ export class Graph {
 
         this.styleAxis(axisBottom)
 
+        this.drawAxisLabels()
+
     }
+
 
     /**
      * Wrap access to y-axis to
      * make it extensible
      **/
     protected axisLeft() {
-        return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w).tickPadding(10))
+        return this.formatLeftAxis(d3.axisLeft(this.yScale).tickSize(-this.w+2*this.margin).tickPadding(10))
     }
 
     /**
@@ -239,7 +275,7 @@ export class Graph {
      * make it extensible
      **/
     protected axisBottom() {
-        return d3.axisBottom(this.xScale).tickSize(-this.h).tickPadding(10)
+        return d3.axisBottom(this.xScale).tickSize(-this.h+2*this.margin).tickPadding(10)
     }
 
     /**
@@ -319,35 +355,40 @@ export class Graph {
 
         this.marks.forEach( (mark, i) => {
             labels.append("rect")
-                .datum(this.data)
-                .attr("y", d => this.labelYPosition(d, mark, -15))
+                .attr("y",this.labelYPosition(mark, -15))
                 .attr("x", this.labelXPosition(mark))
                 .attr("width", this.labelXWidth(mark))
                 .attr("height", 20)
                 .attr("fill", this.marks[i].color)
                 .style("font-family", this.font)
 
-
             labels.append("text")
-                .datum(this.data)
                 .text(this.marks[i].label)
-                .attr("y", d =>  this.labelYPosition(d, mark, 0))
-                .attr("x", this.labelXPosition(mark))
+                .attr("y", this.labelYPosition(mark, 0))
+                .attr("x", this.labelXPosition(mark, 3))
                 .attr("fill", this.fontColor)
                 .style("font-family", this.font)
                 .style("font-weight", "bold")
+
         } )
 
     }
-
+    
+private measureText(str, fontSize = 10) {
+  const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0666656494140625,0.46666717529296875,0.6566665649414063,0.7,0.7033340454101562,1.05,0.976666259765625,0.475,0.525,0.525,0.6416671752929688,0.7,0.46666717529296875,0.6066665649414062,0.46666717529296875,0.7199996948242188,0.7600006103515625,0.6,0.7066665649414062,0.7033340454101562,0.723333740234375,0.7166671752929688,0.7350006103515625,0.6449996948242187,0.7566665649414063,0.7350006103515625,0.46666717529296875,0.46666717529296875,0.7,0.7,0.7,0.7066665649414062,1.2199996948242187,0.7783340454101563,0.8300003051757813,0.773333740234375,0.8566665649414062,0.7416671752929688,0.698333740234375,0.8383331298828125,0.8816665649414063,0.5066665649414063,0.5100006103515625,0.7949996948242187,0.7033340454101562,0.9966659545898438,0.8883331298828125,0.9,0.7883331298828125,0.9,0.8066665649414062,0.7449996948242188,0.7166671752929688,0.875,0.7850006103515625,1.0316665649414063,0.7566665649414063,0.75,0.723333740234375,0.525,0.7199996948242188,0.525,0.7199996948242188,0.7199996948242188,0.498333740234375,0.748333740234375,0.7916671752929687,0.6783340454101563,0.798333740234375,0.748333740234375,0.598333740234375,0.7283340454101562,0.7883331298828125,0.47833404541015623,0.48833465576171875,0.7166671752929688,0.49166717529296877,1.0633331298828126,0.7883331298828125,0.7850006103515625,0.7916671752929687,0.798333740234375,0.5850006103515625,0.673333740234375,0.5666671752929687,0.7816665649414063,0.6949996948242188,0.9316665649414062,0.6783340454101563,0.6916671752929687,0.6416671752929688,0.525,0.6033340454101562,0.525,0.7]
+  const avg = 0.7047721140008222
+  return str
+    .split('')
+    .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
+    .reduce((cur, acc) => acc + cur) * fontSize
+}
 
     protected labelXWidth(mark:Mark) {
-        return 70
-            - mark.labelOffsets[0]
+        return this.measureText(mark.label, 12) + 8 //offset
     }
 
-    protected labelYPosition(data:any, mark:Mark, offset=0):number {
-        return this.yScale(data[data.length-1][mark.name]) 
+    public labelYPosition(mark:Mark, offset=0):number {
+        return this.yScale(this.data[this.data.length-1][mark.name]) 
             + offset 
             + mark.labelOffsets[1]
     }
@@ -361,17 +402,29 @@ export class Graph {
 
 
     protected drawDescription() {
-        this.chart.select("description")
-        this.chart
+        let description = this.clearStagePart("description")
+        description
             .append("text")
-            .attr("class", "description")
-            .attr("x", this.margin + 10)
-            .attr("y", 30)
+            .attr("x", (this.w/2) - this.margin)
+            .attr("y", 50)
             .attr("fill", this.fontColor)
-            .style("font-size", "16px")
+            .style("font-size", "20px")
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.description)
+    }
+
+    protected drawAxisLabels() {
+        let axisLabels = this.clearStagePart("axisLabels") 
+        axisLabels
+            .append("text")
+            .attr("x", this.margin/2)
+            .attr("y", 50)
+            .attr("fill", this.fontColor)
+            .style("font-size", "14px")
+            .style("font-family", this.font)
+            .style("font-weight", "bold")
+            .text(this.yAxisLabel)
     }
 
 
@@ -380,8 +433,8 @@ export class Graph {
      **/
     hide() {
         this.chart
-            .transition()
-            .duration(100)
+            //.transition()
+            //.duration(100)
             .style("opacity", 0)
     }
 
@@ -390,8 +443,8 @@ export class Graph {
      **/
     unhide() {
         this.chart
-            .transition()
-            .duration(100)
+            //.transition()
+            //.duration(500)
             .style("opacity", 1)
     }
 

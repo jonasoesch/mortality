@@ -1,18 +1,34 @@
 body {
     background-color: black;
+    font-family: "Fira Sans OT";
+    line-height: 1.4em;
 }
 h1 {
     text-align: center;
-    font-size: 16px;
-    font-family: "Avenir, Helvetica Neue, Arial, sans-serif";
+    font-size: 20px;
     font-weight: 900;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: white;
     margin-bottom: 40px;
     margin-top: 160px;
+    color: white;
 }
 
+
+p {
+    margin-left: 100px;
+    color: white;
+}
+
+.graph {
+    width: 1240px;
+    height: 720px;
+}
+
+.graph.morphing {
+    position: absolute;
+    top: 0;
+}
 
 #container {
     max-width: 1280px;
@@ -24,18 +40,6 @@ h1 {
     text-align: center;
     margin-bottom: 140px;
     font-style: italic;
-}
-
-#decrease, #older, #uptick, #aids {
-    width: 1280px;
-    height: 720px;
-}
-
-#decrease-older, #older-uptick, #uptick-aids {
-    position: absolute;
-    top: 0;
-    width: 1280px;
-    height: 720px;
 }
 
 .smallcaps {

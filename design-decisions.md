@@ -35,6 +35,13 @@ The original version only shows the top three age groups (75+, 65-74 and 55-64).
 Compared to the Bloomberg version, the y-axes consequently start at 0. It is quite well reasearched, that readers easily miss it when axes don't start at 0 and get the wrong impression of the data. (sources)
 
 
+## Speed
+
+The animations need to be fast enough to feel fluid to the reader. Otherwise unintended perceptual effects may interfere with the measuremenents. We aim therefore at a refresh rate 30 frames per second.
+
+* The scroll event fires about avery 20ms, when it is empty
+* The event still fires about every 40ms, when there is work
+
 ## Reviews
 
 ## Informal test of superposed transition
@@ -61,3 +68,4 @@ It was also mentioned that the decomposition of Mortality into Demographics is n
 [^Bloomberg]: Matthew C. Klein, "How Americans Die", Bloomberg Visual Data, 2014-04-17 "
 [^CDCP]: Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File 1968-1978. CDC WONDER Online Database, compiled from Compressed Mortality File CMF 1968-1988, Series 20, No. 2A, 2000. Accessed at http://wonder.cdc.gov/cmf-icd8.html on Jan 7, 2019 8:28:10 AM
 * https://ourworldindata.org/why-do-women-live-longer-than-men
+

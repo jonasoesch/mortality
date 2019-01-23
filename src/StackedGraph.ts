@@ -18,7 +18,6 @@ export class StackedGraph extends Graph {
         this.data = data
         this.stacks = (d3.stack()
             .keys(this.marks.map(mark => mark.name)))(<any>data)
-        debugger;
     }
 
     protected pathGeneratorFor(markName:string) {
@@ -43,7 +42,7 @@ export class StackedGraph extends Graph {
     /**
      * Redefined from Graph
      **/
-    protected labelYPosition(d:any, mark:Mark, offset:number) {
+    public labelYPosition( mark:Mark, offset:number) {
         let stackData = this.stackDataFor(mark)
         let i = this.marks.map(m => m.name).indexOf(mark.name)
         return this.yScale(stackData[stackData.length-1][1] || 1) 
@@ -61,6 +60,3 @@ export class StackedGraph extends Graph {
         return this.stacks[i]
     }
 }
-
-
-

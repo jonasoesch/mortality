@@ -3,18 +3,43 @@
         <title>Mortality in the U. S.</title>
         <link rel="stylesheet" type="text/css" href="styles.css" />
     </head>
-    <body style="height: 4000px">
+    <body style="height: 5000px">
 
         <div id="container">
-            <section id="intro"></section>
-            <section id="decrease"></section>
-            <section id="decrease-older"></section>
-            <section id="older"></section>
-            <section id="older-uptick"></section>
-            <section id="uptick"></section>
-            <section id="uptick-aids"></section>
-            <section id="aids"></section>
-            <section id="conclusion"></section>
+            <h1>How Americans Die</h1>
+            <section id="decrease" class="graph"></section>
+            <section id="decrease-everyone" class="graph morphing"></section>
+            <section id="decrease-everyone-morph" class="graph morphing"></section>
+            <section class="caption" id="decrease-caption" class="graph morphing">
+                <p>The mortality rate fell by about 17 percent from 1968 through 2010, years for which we have detailed data.</p>
+                <p>Almost all of this improvement can be attributed to improved survival prospects for <strong style="background-color: rgb(27, 122, 199); color: white; padding: 3px">men</strong></p>
+                <p>It looks like progress stopped in the mid-1990s…</p>
+            </section>
+            <section id="decrease-older" class="graph morphing"></section>
+            <section id="older" class="graph"></section>
+            <section class="caption" id="older-caption">
+                <p>…but that's only because the population has aged a lot since then.</p>
+            </section>
+            <section id="older-differences" class="graph morphing"></section>
+            <section id="differences" class="graph"></section>
+            <section class="caption" id="differences-caption">
+                <p>This has a big effect on the overall mortality rate, because old people die sooner than the young.</p>
+            </section>
+            <section id="differences-uptick" class="graph morphing"></section>
+            <section id="uptick" class="graph"></section>
+            <section class="caption" id="uptick-caption">
+                <p>If you divide the population into separate age cohorts, you can see that  improvements in life expectancy have been broad-based and ongoing.</p>
+                <p>Looking at mortality for each age cohort since 1968, we see that Americans <strong style="background-color: rgb(117, 212, 156); color: white; padding: 3px"> under 25</strong> have made the most progress.</p>
+                <p>But one line in this chart looks unusual! Look at the mortality rate for people <strong style="background-color: rgb(60, 190, 203); color: white; padding: 3px">aged&nbsp;25-44</strong>.</p>
+            </section>
+            <section id="uptick-aids" class="graph morphing"></section>
+            <section id="aids" class="graph"></section>
+            <section class="caption" id="aids-caption">
+                <p>What caused the surge in mortality for<strong style="background-color: rgb(60, 190, 203); color: white; padding: 3px">25-&nbsp;to&nbsp;44-year-olds</strong>?</p>
+                <p>AIDS, which at its peak, killed more than 40,000 Americans a year (more than 30,000 of whom were&nbsp;25&nbsp;to&nbsp;44&nbsp;years&nbsp;old).</p>
+                <p>(Slowing infection rates and better treatment eventually allowed many of those with the virus  to survive&nbsp;into&nbsp;their&nbsp;50s&nbsp;and&nbsp;60s)</p>
+                <p>For a few years, <strong style="background-color: rgb(241, 49, 71); color: white; padding: 3px">AIDS</strong> was the single biggest killer of Americans who should otherwise have been in the prime of their&nbsp;lives.</p>
+            </section>
         </div>
         <script src="main.js"></script>
     </body>

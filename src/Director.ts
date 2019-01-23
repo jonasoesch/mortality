@@ -4,20 +4,50 @@ import {MorphingGraph} from './MorphingGraph'
 
 export class Director {
     storyboard:Step[] = []
+    timer:Date = new Date()
+    lastScrollTop:number
 
     constructor() {
-        document.addEventListener('scroll', (evt) => this.scrolling(evt))
+       this.lastScrollTop = window.scrollY;
+        
+        if (window.requestAnimationFrame) {
+            let that = this
+            this.loop();
+        }
     }
 
-    scrolling(evt:any) {
-        let offset = evt.pageY
+
+    loop() {
+        var scrollTop = window.scrollY;
+        if (this.lastScrollTop === scrollTop) {
+            window.requestAnimationFrame(() => this.loop());
+            return;
+        } else {
+            this.lastScrollTop = scrollTop;
+
+            // fire scroll function if scrolls vertically
+            this.scrolling(scrollTop);
+            window.requestAnimationFrame(() => this.loop());
+        }
+    } 
+
+    scrolling(scroll:number) {
+
+        let t = new Date()
+        let difference = t.getTime() - this.timer.getTime()
+
+        // only execute if the last execution has been
+        // been more than x ms ago
+        if(difference<10) {return}
+        
+        this.timer = t
+
+        let offset = scroll
         this.storyboard.forEach( (step) => {
-            if (offset > step.start && offset < step.end) {
+            if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
-            } else {
-                if(step.graph instanceof MorphingGraph) {
+            } else if(step.graph instanceof MorphingGraph) {
                     this.hide(step.graph)
-                }
             }
         })
     }
@@ -27,14 +57,22 @@ export class Director {
         this.storyboard.push(new Step(start, end, graph))
     }
 
-    protected howFar(step:Step, offset:number) {
+    protected howFar(step:Step, offset:number):number {
         let total = step.end-step.start
         let position = offset - step.start
 
         if(total < 0) {throw new Error("End is before start")}
         if(position < 0) {throw new Error("Position is not between end and start")}
 
-        return position/total
+        return this.easing(position/total)
+    }
+
+    /**
+     * The easing-method wraps `howFar` to allow the application of
+     * different easing functions.
+     **/
+    easing(howFar:number){
+        return howFar 
     }
 
 
