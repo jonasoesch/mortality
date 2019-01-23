@@ -8,6 +8,7 @@ import {Mark} from './Mark'
 let graph = new Graph("name")
 graph.setScales( [start_date, end_date], [min, max])
 graph.setDescription("This graph shows foo and bar")
+graph.setAxisLabels("y-Axis")
 graph.addMark("foo")
      .setColor("red")
      .setLabel("Foo")
@@ -33,7 +34,7 @@ export class Graph {
         /** 
          * Height `h` is taken from the containing HTMLElement defined by `name`
          **/
-        h:number 
+    h:number 
     /** Width `w` is taken from the containing HTMLElement defined by `name`**/
     w:number
 
@@ -64,6 +65,21 @@ export class Graph {
         this.w = this.width() || 1280
         this.marks = []
         this.initStage()
+    }
+
+    public cloneWithNewName(name:string):Graph {
+        let clone = new Graph(name)
+        clone.setScales(this.xScale.domain(), <[number, number]>this.yScale.domain())
+        clone.setDescription(this.description)
+        clone.setAxisLabels(this.yAxisLabel)
+        this.marks.forEach( mark => clone
+            .addMark(mark.name)
+            .setColor(mark.color) 
+            .setLabel(mark.label)
+            .setLabelOffsets(mark.labelOffsets)
+        )
+        clone.setData(this.data)
+        return clone
     }
 
     protected container():HTMLElement {
@@ -126,6 +142,11 @@ export class Graph {
         mark.pathGenerator = this.pathGeneratorFor(markName)
         this.marks.push(mark)
         return mark
+    }
+
+
+    public removeMark(markName:string) {
+        this.marks = this.marks.filter( mark => mark.name !== markName )
     }
 
 
