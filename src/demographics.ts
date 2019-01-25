@@ -1,23 +1,57 @@
 import {genderGraph, demographicsGraph} from './graphs'
 import {Director} from './Director'
-import {MorphingGraph} from './MorphingGraph'
+import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
+import {scrollIndicator} from './scrollIndicator'
 
 Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     let d = new Director()
-    graphs[0].draw()
 
-    let morph = new MorphingGraph('gender-demographics')
-    morph.setOrigin(graphs[0])
-    morph.setTarget(graphs[1])
-    morph.addTransition("MortalityEveryone", "popshare25")
-    morph.addTransition("MortalityEveryone", "popshare25_44")
-    morph.addTransition("MortalityEveryone", "popshare45_54")
-    morph.addTransition("MortalityEveryone", "popshare55_64")
-    morph.addTransition("MortalityEveryone", "popshare65_74")
-    morph.addTransition("MortalityEveryone", "popshare75")
+
+
+    /*
+     * Create the intermediate graph to hide
+     * the gender specific marks and
+     * morph the line to the top
+     */
+    let highlight = graphs[0].cloneWithNewName("highlight")
+    highlight.removeMark("MortalityFemales")
+    highlight.removeMark("MortalityMales")
+    highlight.setData(
+        highlight.data.map(d => { 
+            return {
+            date: d["date"],
+            MortalityEveryone: 1000,
+            }
+        })
+    )
+
+    /* 
+     * Create the two morphing graphs
+     */
+    let morphHighlight = new MorphingGraphWithLabels('gender-highlight')
+    morphHighlight.setOrigin(graphs[0])
+    morphHighlight.setTarget(highlight)
+    morphHighlight.addTransition("MortalityEveryone", "MortalityEveryone").setLabel("Everyone")
+
+
+    let morphDemographics = new MorphingGraph('highlight-demographics')
+    morphDemographics.setOrigin(highlight)
+    morphDemographics.setTarget(graphs[1])
+    morphDemographics.addTransition("MortalityEveryone", "popshare25")
+    morphDemographics.addTransition("MortalityEveryone", "popshare25_44")
+    morphDemographics.addTransition("MortalityEveryone", "popshare45_54")
+    morphDemographics.addTransition("MortalityEveryone", "popshare55_64")
+    morphDemographics.addTransition("MortalityEveryone", "popshare65_74")
+    morphDemographics.addTransition("MortalityEveryone", "popshare75")
+
+
 
     // Storyboard
-    d.addStep(-200, 200, graphs[0]) // gender
-    d.addStep(200, 600, morph) // gender
-    d.addStep(600, 10000, graphs[1]) // demographics
+    d.addStep(-200, 50, graphs[0]) // gender
+    d.addStep(-200, 20, scrollIndicator)
+    d.addStep(50, 300, morphHighlight) // highlight everyone
+    d.addStep(300, 500, morphDemographics) // fan out into demographics
+    d.addStep(500, 10000, graphs[1]) // demographics
+
+    d.drawAll(0)
 })
