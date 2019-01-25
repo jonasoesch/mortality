@@ -403,7 +403,7 @@ private measureText(str, fontSize = 10) {
         let description = this.clearStagePart("description")
         description
             .append("text")
-            .attr("x", (this.w/2) - this.margin)
+            .attr("x", (this.w/2) - this.margin - this.measureText(this.description)/2+20)
             .attr("y", 50)
             .attr("fill", this.fontColor)
             .style("font-size", "20px")
@@ -418,7 +418,7 @@ private measureText(str, fontSize = 10) {
             .append("text")
             .attr("x", this.margin/2)
             .attr("y", 50)
-            .attr("fill", this.fontColor)
+            .attr("fill", d3.color(this.fontColor).darker(1).toString())
             .style("font-size", "14px")
             .style("font-family", this.font)
             .style("font-weight", "bold")
