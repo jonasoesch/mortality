@@ -14,10 +14,10 @@ h1 {
 }
 
 .scroll-indicator {
-    margin-top: 820px;
-    margin-left: 400;
     font-weight: 100;
-    position: relative;
+    position: fixed;
+    bottom: 40px;
+    left: 47%;
 }
 
 .scroll-indicator::before {
@@ -49,7 +49,7 @@ h1 {
 .graph {
     position:fixed;
     top: 0px;
-    width: 900px;
+    width: 1280px;
     height: 720px;
 }
 
