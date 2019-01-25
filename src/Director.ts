@@ -53,9 +53,11 @@ export class Director {
         this.logger.scroll(scroll)
 
         this.timer = t
+        this.drawAll(scroll)
+    }
 
-        let offset = scroll
-        this.storyboard.forEach( (step) => {
+    drawAll(offset:number) {
+    this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
             } else {
