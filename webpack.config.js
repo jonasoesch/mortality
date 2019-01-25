@@ -1,7 +1,12 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: {
+        'demographics': './src/demographics.ts',
+        'absolute': './src/absolute.ts',
+        'relative': './src/relative.ts',
+        'causes': './src/causes.ts'
+    },
     devtool: 'inline-source-map',
     mode: "development",
     // Typescript
@@ -19,11 +24,10 @@ module.exports = {
         extensions: [ '.ts', '.js' ]
     },
     output: {
-        filename: 'main.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {
         contentBase: './static'
     },
 };
-
