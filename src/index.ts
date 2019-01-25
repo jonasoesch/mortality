@@ -1,12 +1,12 @@
-import {decreaseGraph, olderGraph, ageDifferencesGraph, uptickGraph, aidsGraph} from './graphs'
+import {genderGraph, demographicsGraph, ageDifferencesGraph, uptickGraph, aidsGraph} from './graphs'
 import {Director} from './Director'
 import {Graph} from './Graph'
 import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
 
 
 let graphPromises = []
-graphPromises.push(decreaseGraph())
-graphPromises.push(olderGraph())
+graphPromises.push(genderGraph())
+graphPromises.push(demographicsGraph())
 graphPromises.push(ageDifferencesGraph())
 graphPromises.push(uptickGraph())
 graphPromises.push(aidsGraph())
@@ -37,7 +37,7 @@ Promise.all(graphPromises).then( (graphs) => {
     d.addStep(200, 400, decreaseDecrease)
 
     let decreaseOlder = new MorphingGraph("decrease-older")
-    decreaseOlder.setOrigin(decreaseHighlight)//decrease
+    decreaseOlder.setOrigin(decreaseHighlight)//gender based
     decreaseOlder.setTarget(graphs[1])//older
     decreaseOlder.addTransition("MortalityEveryone", "popshare25")
     decreaseOlder.addTransition("MortalityEveryone", "popshare25_44")

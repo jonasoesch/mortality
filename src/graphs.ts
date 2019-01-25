@@ -3,7 +3,7 @@ import {Graph} from './Graph';
 import {StackedGraph} from './StackedGraph';
 let l = console.log
 
-export function decreaseGraph() {
+export function genderGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
             return {
@@ -49,7 +49,7 @@ class OlderGraph extends StackedGraph {
     }
 }
 
-export function olderGraph() {
+export function demographicsGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
             return {
