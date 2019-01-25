@@ -88,7 +88,7 @@ describe( "path drawing", () => {
     it("draws the correct starting path", () => {
         a.atPoint(0).draw()
         let doc = d3.select(document).select(pathSelector)
-        expect(doc.attr("d")).toEqual(g1.getPathFor("a"))
+        expect(doc.attr("d")).toEqual("M80,640L1106.7305498516998,780L1200,80L1200,80Z")
     })
 
     it("draws the correct final path", () => {
@@ -114,6 +114,6 @@ describe("other interpolations", () => {
     it("interpolates between colors", () => {
         a.atPoint(0.5).draw()     
         let path = d3.select(document).select(pathSelector)
-        expect(path.attr("fill")).toEqual("rgb(128, 128, 128)")
+        expect(path.attr("fill")).toEqual("rgb(119, 119, 119)") // not in the center because of easing
     })
 })
