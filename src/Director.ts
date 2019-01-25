@@ -1,14 +1,18 @@
 import * as d3 from 'd3'
 import {Graph} from './Graph'
 import {MorphingGraph} from './MorphingGraph'
+import {Logger} from './Logger'
 
 export class Director {
     storyboard:Step[] = []
     timer:Date = new Date()
+    logTimer:Date = new Date()
     lastScrollTop:number
+    logger:Logger
 
     constructor() {
        this.lastScrollTop = window.scrollY;
+        this.logger = new Logger()
         
         if (window.requestAnimationFrame) {
             let that = this
@@ -35,11 +39,19 @@ export class Director {
 
         let t = new Date()
         let difference = t.getTime() - this.timer.getTime()
+        let logTimerDiff = t.getTime() - this.logTimer.getTime()
 
         // only execute if the last execution has been
         // been more than x ms ago
         if(difference<10) {return}
-        
+
+        // Send logs every 1000ms
+        if(logTimerDiff>1000) {
+            this.logger.send()
+            this.logTimer = t
+        }
+        this.logger.scroll(scroll)
+
         this.timer = t
 
         let offset = scroll

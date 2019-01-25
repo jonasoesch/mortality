@@ -6,3 +6,4 @@ screen-dimensions.numbers
 src/__snapshots__
 overview.spec.sketch
 doc
+*.pyc
