@@ -3,7 +3,7 @@ import {Graph} from './Graph';
 import {StackedGraph} from './StackedGraph';
 let l = console.log
 
-export function decreaseGraph() {
+export function genderGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
             return {
@@ -14,7 +14,7 @@ export function decreaseGraph() {
             }
         } )
 
-        let graph = new Graph("decrease")
+        let graph = new Graph("gender")
         graph.setDescription("Evolution of the mortality rate since 1968")
         graph.setAxisLabels("Deaths per 100'000 persons")
         graph.setScales(d3.extent(data, d => d.date), [0, d3.max(data, d => d["MortalityMales"])])
@@ -49,7 +49,7 @@ class OlderGraph extends StackedGraph {
     }
 }
 
-export function olderGraph() {
+export function demographicsGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
             return {
@@ -62,7 +62,7 @@ export function olderGraph() {
                 popshare75: parseFloat(d["popshare75+"]),
             }
         } )
-        let graph = new OlderGraph("older")
+        let graph = new OlderGraph("demographics")
         graph.setScales(d3.extent(data, d => d.date), [0, 1])
         graph.setDescription("The population is getting older")
         graph.setAxisLabels("Share of the (living) U. S. population")
