@@ -88,6 +88,17 @@ export class MorphingGraph extends Graph {
     }
 
 
+    public hide() {
+        this.chart
+            .style("opacity", 0)
+    }
+
+    public unhide() {
+        this.chart
+            .style("opacity", 1)
+    }
+
+
     public getPathFor(markName:string) {
         let from = this.fromToClasses(markName).from
         let to = this.fromToClasses(markName).to

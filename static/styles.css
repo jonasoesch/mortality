@@ -30,15 +30,20 @@ p {
 }
 
 .graph {
-    width: 700px;
-    height: 400px;
+    width: 800px;
+    height: 500px;
     float: left;
     margin-right: 40px;
+}
+
+.unhighlight {
+    filter: saturate(15%)
 }
 
 .graph.morphing {
     position: absolute;
     top: 0;
+    z-index: 10;
 }
 
 #container {

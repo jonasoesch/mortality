@@ -48,7 +48,7 @@ export class Director {
     this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
-            } else if(step.graph instanceof MorphingGraph) {
+            } else if(step.graph) {
                     this.hide(step.graph)
             }
         })
@@ -74,14 +74,16 @@ export class Director {
      * different easing functions.
      **/
     easing(howFar:number){
-        return howFar 
+        return d3.easePolyInOut.exponent(2)(howFar)
     }
 
 
     draw(graph:Graph, howFar:number) {
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
-        } 
+        } else {
+            graph.draw() 
+        }
     }
 
     hide(graph:Graph) {

@@ -41,7 +41,7 @@ export class Graph {
 
     fontColor:string = "#fff"
     font:string = "Fira Sans OT"
-    fontSizing = 1;
+    scale = 0.7;
     lineWeight = 3
     margin = 80
 
@@ -288,8 +288,8 @@ export class Graph {
     }
 
 
-    private fontSize(basesize) {
-        return basesize * this.fontSizing
+    protected rescale(basesize) {
+        return basesize * this.scale
     }
 
 
@@ -304,7 +304,7 @@ export class Graph {
 
         axis.selectAll("text")
             .attr("fill", d3.color(this.fontColor).darker(1).toString())
-            .style("font-size", this.fontSize(16))
+            .style("font-size", this.rescale(16))
             .style("font-family", this.font)
             .style("font-weight", "bold")
 
@@ -364,7 +364,7 @@ export class Graph {
                 .attr("y",this.labelYPosition(mark, -15))
                 .attr("x", this.labelXPosition(mark))
                 .attr("width", this.labelXWidth(mark))
-                .attr("height", this.fontSize(20))
+                .attr("height", this.rescale(20))
                 .attr("fill", this.marks[i].color)
                 .style("font-family", this.font)
 
@@ -375,7 +375,7 @@ export class Graph {
                 .attr("fill", this.fontColor)
                 .style("font-family", this.font)
                 .style("font-weight", "bold")
-                .style("font-size", this.fontSize(16))
+                .style("font-size", this.rescale(16))
 
         } )
 
@@ -396,15 +396,15 @@ private measureText(str, fontSize = 10) {
 
     public labelYPosition(mark:Mark, offset=0):number {
         return this.yScale(this.data[this.data.length-1][mark.name]) 
-            + offset * this.fontSizing
-            + mark.labelOffsets[1]
+            + this.rescale(offset)
+            + this.rescale(mark.labelOffsets[1])
     }
 
     protected labelXPosition(mark:Mark, offset=0):number {
         return this.w
             - this.margin 
-            + offset 
-            + mark.labelOffsets[0]
+            + this.rescale(offset)
+            + this.rescale(mark.labelOffsets[0])
     }
 
 
@@ -415,7 +415,7 @@ private measureText(str, fontSize = 10) {
             .attr("x", this.w - this.measureText(this.description) - this.margin*2)
             .attr("y", 50)
             .attr("fill", this.fontColor)
-            .style("font-size", this.fontSize(18))
+            .style("font-size", this.rescale(18))
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.description)
@@ -428,7 +428,7 @@ private measureText(str, fontSize = 10) {
             .attr("x", this.margin/2)
             .attr("y", 50)
             .attr("fill", d3.color(this.fontColor).darker(1).toString())
-            .style("font-size", this.fontSize(12))
+            .style("font-size", this.rescale(12))
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.yAxisLabel)
@@ -439,20 +439,14 @@ private measureText(str, fontSize = 10) {
      * Hide the whole graph
      **/
     hide() {
-        this.chart
-            //.transition()
-            //.duration(100)
-            .style("opacity", 0)
+        this.chart.classed("unhighlight", true)
     }
 
     /**
      * Show the whole graph (typically used after hiding it)
      **/
     unhide() {
-        this.chart
-            //.transition()
-            //.duration(500)
-            .style("opacity", 1)
+        this.chart.classed("unhighlight", false)
     }
 
 
@@ -460,6 +454,14 @@ private measureText(str, fontSize = 10) {
         let offset = window.pageYOffset
         let top = this.chart.node().getBoundingClientRect().top || 0
         return top + offset
+    }
+
+
+    transitionStart() {
+        return this.yPosition()-60
+    }
+    transitionEnd() {
+        return this.yPosition()+60 
     }
     
 }

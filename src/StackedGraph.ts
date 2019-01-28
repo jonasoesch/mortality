@@ -47,8 +47,8 @@ export class StackedGraph extends Graph {
         let i = this.marks.map(m => m.name).indexOf(mark.name)
         return this.yScale(stackData[stackData.length-1][1] || 1) 
             + 20
-            + offset 
-            + mark.labelOffsets[1]
+            + this.rescale(offset)
+            + this.rescale( mark.labelOffsets[1] ) 
     }
 
     /**
