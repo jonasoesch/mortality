@@ -90,6 +90,7 @@ export class MorphingGraph extends Graph {
 
     public hide() {
         this.chart
+            .style("opacity", 0)
     }
 
     public unhide() {
@@ -147,7 +148,6 @@ export class MorphingGraphWithLabels extends MorphingGraph {
         let start = this.originGraph.xPosition()
         let end = this.targetGraph.xPosition()
         let interpolator = d3.interpolate(start, end)
-        console.log(this.chart)
         this.chart
             .attr("transform", `translate(${interpolator(this.howFar)}, 0)`)
     }
