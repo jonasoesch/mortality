@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+
 body {
     background-color: black;
-    font-family: "Fira Sans OT";
+    font-family: "Fira Sans", sans-serif;
     line-height: 1.4em;
     height: 6000px;
 }
@@ -108,7 +110,6 @@ p {
 article {
     margin: 40px auto;
     max-width: 1280px;
-    font: 16px/24px "Avenir, Helvetica Neue, Arial, sans-serif";
     font-weight: Regular;
     color: white;
 }

@@ -40,7 +40,7 @@ export class Graph {
 
 
     fontColor:string = "#fff"
-    font:string = "Fira Sans OT"
+    font:string = "Fira Sans"
     scale = 0.9;
     lineWeight = 3
     margin = 80
