@@ -38,12 +38,12 @@ p {
 
  
 .scroll-indicator {
-    margin-left: 400;
     font-weight: 100;
     position: fixed;
-    bottom: 20px;
+    bottom: 40px;
+    left: 47%;
 }
- 
+
 .scroll-indicator::before {
     display: block;
     content: "";
@@ -68,7 +68,7 @@ p {
     40% {
         transform: rotate(-45deg) translate(0, 0);
     }
- }
+}
 
 
 

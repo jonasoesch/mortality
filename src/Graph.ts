@@ -439,14 +439,12 @@ private measureText(str, fontSize = 10) {
      * Hide the whole graph
      **/
     hide() {
-        this.chart.classed("unhighlight", true)
     }
 
     /**
      * Show the whole graph (typically used after hiding it)
      **/
     unhide() {
-        this.chart.classed("unhighlight", false)
     }
 
 

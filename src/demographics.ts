@@ -20,7 +20,7 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
         highlight.data.map(d => { 
             return {
             date: d["date"],
-            MortalityEveryone: 1100,
+            MortalityEveryone: 1120,
             }
         })
     )

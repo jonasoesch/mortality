@@ -48,7 +48,7 @@ export class Director {
     this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
-            } else if(step.graph instanceof MorphingGraph) {
+            } else if(step.graph) {
                     this.hide(step.graph)
             }
         })
