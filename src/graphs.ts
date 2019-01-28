@@ -16,7 +16,7 @@ export function genderGraph() {
 
         let graph = new Graph("gender")
         graph.setDescription("Evolution of the mortality rate since 1968")
-        graph.setAxisLabels("Deaths per 100'000 persons")
+        graph.setAxisLabels("Deaths per 100'000")
         graph.setScales(d3.extent(data, d => d.date), [0, d3.max(data, d => d["MortalityMales"])])
 
         graph.addMark("MortalityEveryone")
@@ -64,8 +64,8 @@ export function demographicsGraph() {
         } )
         let graph = new OlderGraph("demographics")
         graph.setScales(d3.extent(data, d => d.date), [0, 1])
-        graph.setDescription("The population is getting older")
-        graph.setAxisLabels("Share of the (living) U. S. population")
+        graph.setDescription("Demographic change since 1968")
+        graph.setAxisLabels("Share of the population")
 
 
         graph.addMark("popshare25")
@@ -119,8 +119,8 @@ export function ageDifferencesGraph() {
         } )
 
         let graph = new Graph("differences")
-        graph.setDescription("Older people have a higher mortality")
-        graph.setAxisLabels("Deaths per 100'000 persons")
+        graph.setDescription("Mortality rates of different age groups")
+        graph.setAxisLabels("Deaths per 100'000")
         graph.setScales(d3.extent(data, d => d.date), [0, 20000])
 
 
@@ -183,8 +183,8 @@ export function uptickGraph() {
         } )
 
         let graph = new Graph("uptick")
-        graph.setDescription("Mortality is falling in all age groups")
-        graph.setAxisLabels("Mortality rate relative to 1968")
+        graph.setDescription("Evolution of the mortality rates")
+        graph.setAxisLabels("Mortality rate relative to 1968 (100)")
         graph.setScales(d3.extent(data, d => d.date), [0, 100])
 
 
@@ -248,8 +248,8 @@ export function aidsGraph() {
             }
         } )
         let graph = new StackedGraph("aids")
-        graph.setAxisLabels("Total deaths and their cause of 25–44 year olds")
-        graph.setDescription("Aids slowed the fall in the 90's for 25–44 year olds")
+        graph.setAxisLabels("Number of deaths per cause")
+        graph.setDescription("Causes of death for 25–44 year old")
         graph.setScales(d3.extent(data, d => d.date), [0, 160000])
         graph.addMark("Other")
             .setColor("rgb(135, 145, 155)")
