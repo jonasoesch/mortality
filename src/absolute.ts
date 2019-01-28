@@ -25,5 +25,6 @@ Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
     d.addStep(500, 10000, graphs[1])
 
 
-    d.drawAll(0)
+    graphs[0].draw()
+    graphs[1].draw()
 })
