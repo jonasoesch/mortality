@@ -19,8 +19,8 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     highlight.setData(
         highlight.data.map(d => { 
             return {
-            date: d["date"],
-            MortalityEveryone: 1120,
+                date: d["date"],
+                MortalityEveryone: 1120,
             }
         })
     )
@@ -53,6 +53,7 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     d.addStep(300, 500, morphDemographics) // fan out into demographics
     d.addStep(500, 10000, graphs[1]) // demographics
 
-   graphs[0].draw()
-   graphs[1].draw()
+    graphs[0].draw()
+    scrollIndicator.draw()
+    graphs[1].draw()
 })

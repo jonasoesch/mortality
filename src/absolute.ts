@@ -26,5 +26,6 @@ Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
 
 
     graphs[0].draw()
+    scrollIndicator.draw()
     graphs[1].draw()
 })
