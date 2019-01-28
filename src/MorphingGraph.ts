@@ -66,12 +66,12 @@ export class MorphingGraph extends Graph {
     draw() {
         this.drawMarks()
         this.unhide()
-        let start = this.originGraph.yPosition()
-        let end = this.targetGraph.yPosition()
+        let start = this.originGraph.xPosition()
+        let end = this.targetGraph.xPosition()
         let interpolator = d3.interpolate(start, end)
         console.log(this.chart)
         this.chart
-            .attr("transform", `translate(0, ${interpolator(this.howFar)})`)
+            .attr("transform", `translate(${interpolator(this.howFar)}, 0)`)
 
     }
 
@@ -90,7 +90,6 @@ export class MorphingGraph extends Graph {
 
     public hide() {
         this.chart
-            .style("opacity", 0)
     }
 
     public unhide() {
@@ -145,12 +144,12 @@ export class MorphingGraphWithLabels extends MorphingGraph {
         this.drawMarks()
         this.drawLabels()
         this.unhide()
-        let start = this.originGraph.yPosition()
-        let end = this.targetGraph.yPosition()
+        let start = this.originGraph.xPosition()
+        let end = this.targetGraph.xPosition()
         let interpolator = d3.interpolate(start, end)
         console.log(this.chart)
         this.chart
-            .attr("transform", `translate(0, ${interpolator(this.howFar)})`)
+            .attr("transform", `translate(${interpolator(this.howFar)}, 0)`)
     }
     
     public labelYPosition(mark:MorphingMark, offset=0) {

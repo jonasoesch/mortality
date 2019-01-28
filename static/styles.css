@@ -2,6 +2,7 @@ body {
     background-color: black;
     font-family: "Fira Sans OT";
     line-height: 1.4em;
+    height: 6000px;
 }
 h1 {
     text-align: center;
@@ -20,8 +21,6 @@ p {
     color: white;
 }
 
-.graph {
-}
 
 .caption {
     z-index: 10;
@@ -30,10 +29,15 @@ p {
 }
 
 .graph {
-    width: 800px;
-    height: 500px;
-    float: left;
+    width: 650px;
+    height: 700px;
+    position: fixed;
     margin-right: 40px;
+}
+
+
+.right {
+    left: 700px;
 }
 
 .unhighlight {
@@ -41,9 +45,8 @@ p {
 }
 
 .graph.morphing {
-    position: absolute;
-    top: 0;
     z-index: 10;
+    left: 0;
 }
 
 #container {

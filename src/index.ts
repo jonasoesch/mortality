@@ -15,9 +15,6 @@ Promise.all(graphPromises).then( (graphs) => {
     let d = new Director()
     graphs[0].draw()
     graphs[1].draw()
-    graphs[2].draw()
-    graphs[3].draw()
-    graphs[4].draw()
 
 
     let decreaseOlder = new MorphingGraph("decrease-older")
@@ -30,8 +27,9 @@ Promise.all(graphPromises).then( (graphs) => {
     decreaseOlder.addTransition("MortalityEveryone", "popshare65_74")
     decreaseOlder.addTransition("MortalityEveryone", "popshare75")
 
-    d.addStep(-100, graphs[0].transitionStart(), graphs[0])
-    d.addStep(decreaseOlder.originGraph.transitionStart(), decreaseOlder.originGraph.transitionEnd(), decreaseOlder)
+    d.addStep(-200, 50, graphs[0])
+    d.addStep(50, 450, decreaseOlder)
+    d.addStep(450, 10000, graphs[1])
 
     let olderDifferences = new MorphingGraph("older-differences")
     olderDifferences.setOrigin(graphs[1]) // demographics
@@ -44,8 +42,6 @@ Promise.all(graphPromises).then( (graphs) => {
     olderDifferences.addTransition("popshare75", "Rate75_84")
     olderDifferences.addTransition("popshare75", "Rate85up")
 
-    d.addStep(graphs[0].transitionEnd(), graphs[1].transitionStart(), graphs[1])
-    d.addStep(olderDifferences.originGraph.transitionStart(), olderDifferences.originGraph.transitionEnd(), olderDifferences)
 
     let differencesUptick = new MorphingGraphWithLabels("differences-uptick")
     differencesUptick.setOrigin(graphs[2]) // differences
@@ -58,8 +54,6 @@ Promise.all(graphPromises).then( (graphs) => {
     differencesUptick.addTransition("Rate75_84", "Rate75_84").setLabel("75–84")
     differencesUptick.addTransition("Rate85up" , "Rate85up" ).setLabel("Over 84")
 
-    d.addStep(graphs[1].transitionEnd(), graphs[2].transitionStart(), graphs[2])
-    d.addStep(differencesUptick.originGraph.transitionStart(), differencesUptick.originGraph.transitionEnd(), differencesUptick)
 
     let uptickAids = new MorphingGraph("uptick-aids")
     uptickAids.setOrigin(graphs[3]) // uptick
@@ -75,10 +69,5 @@ Promise.all(graphPromises).then( (graphs) => {
     uptickAids.addTransition("Rate25_44", "Drug_induced")
     uptickAids.addTransition("Rate25_44", "AIDS")
 
-    d.addStep(graphs[2].transitionEnd(), graphs[3].transitionStart(), graphs[3])
-    d.addStep(uptickAids.originGraph.transitionStart(), uptickAids.originGraph.transitionEnd(), uptickAids)
-
-
-    d.addStep(graphs[3].transitionEnd(), 10000, graphs[4])
 
 })

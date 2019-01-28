@@ -41,7 +41,7 @@ export class Graph {
 
     fontColor:string = "#fff"
     font:string = "Fira Sans OT"
-    scale = 0.7;
+    scale = 0.9;
     lineWeight = 3
     margin = 80
 
@@ -428,7 +428,7 @@ private measureText(str, fontSize = 10) {
             .attr("x", this.margin/2)
             .attr("y", 50)
             .attr("fill", d3.color(this.fontColor).darker(1).toString())
-            .style("font-size", this.rescale(12))
+            .style("font-size", this.rescale(16))
             .style("font-family", this.font)
             .style("font-weight", "bold")
             .text(this.yAxisLabel)
@@ -450,18 +450,12 @@ private measureText(str, fontSize = 10) {
     }
 
 
-    yPosition() {
-        let offset = window.pageYOffset
-        let top = this.chart.node().getBoundingClientRect().top || 0
-        return top + offset
+    xPosition() {
+        let offset = window.pageXOffset
+        let left = this.chart.node().getBoundingClientRect().left || 0
+        return left + offset
     }
 
 
-    transitionStart() {
-        return this.yPosition()-60
-    }
-    transitionEnd() {
-        return this.yPosition()+60 
-    }
     
 }
