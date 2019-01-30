@@ -109,19 +109,19 @@ The same text has been used as in the Bloomberg version of the article. Axis lab
 
 ### Informal test of superposed transition
 
-Test subject: Simon Marcin
-Tag: test_1
-Scenario: Superposed
-Date: 14.01.2019
+Test subject: Simon Marcin   
+Tag: test_1   
+Scenario: Superposed   
+Date: 14.01.2019   
 
 The transition between "Mortality Everyone" and demographics over time is not clear. The reader didn't understand that the second graph showed in a way the composition of the line "Mortality Everyone". A proposed improvement was to show labels longer during transitions.
 
 ### Informal test of static and superposed scenarios
 
-Test subject: Simon Schubiger
-Tag: test_2
-Scenario: Static and Superposed
-Date: 15.01.2019
+Test subject: Simon Schubiger   
+Tag: test_2   
+Scenario: Static and Superposed   
+Date: 15.01.2019   
 
 The relationship between "Mortality Everyone" and demographics over time was not clear in both scenarios. The reader suspected that it was because the transition between "Deaths per 100'000" and the stacked area percentage chart was conceptually difficult. The proposition was to include an intermediary step. For example by moving the line "Mortality Everyone" to the top (representing 100%) and then extending it downwards.
 
@@ -143,9 +143,9 @@ See [[Javascript Performance]] for more info.
 The performance optimization also removed the third-party interpolate-path code. It took about 5ms to run on each draw call without any real use (as the morphing is now from area to area, the `d3.interpolate` function can be used)
 
 ### Informal testing
-Test subjects: Till Meyer zu Westram, Moritz Meyer zu Westram, Riccarda Jegi, Andrea Zirn
-Tag: test_3 (slower version) und tag_4 (faster version)
-Scenario: Superposed
+Test subjects: Till Meyer zu Westram, Moritz Meyer zu Westram, Riccarda Jegi, Andrea Zirn    
+Tag: test_3 (slower version) und tag_4 (faster version)   
+Scenario: Superposed  
 
 Both versions where presented to the subjects. They were asked which "felt" better to use.
 Two subjects selected the faster version only after trying each a few times. Two subjects said that they didn't experience any difference.
@@ -153,11 +153,11 @@ Two subjects selected the faster version only after trying each a few times. Two
 We conclude that the speed improvements where perceptible but now disturbing. Still, we naturally selected the faster version.
 
 ### Informal testing
-Test subjects: Jonathan Ehrengruber
-Tag: test_5
-Scenario: Juxtaposed animated
-Date: 30.1.2019
-Questionnare: Q1
+Test subjects: Jon Eh
+Tag: test_5   
+Scenario: Juxtaposed animated   
+Date: 30.1.2019   
+Questionnare: Q1   
 
 The subject was shown the "demographics" experiment. He first tried to understand the relationship between the two graphs and only later started to scroll. His first attempt was to scroll with the keyboard. This jumped "over" the animation. In a second attempt the subject scrolled with the trackpad. But as his scroll speed was configured to be very high, the animation just flickered over the screen. He interpreted the flicker as an error and never got to see the animation.
 
@@ -165,11 +165,11 @@ Perceived the two visualizations as not related. Attention on *Men*, *Under 25*
 
 
 ### Informal testing
-Test subjects: PH student
-Tag: test_5
-Scenario: Juxtaposed animated:
-Date: 30.1.2019
-Questionnaire: Q1
+Test subjects: PH student   
+Tag: test_5   
+Scenario: Juxtaposed animated   
+Date: 30.1.2019   
+Questionnaire: Q1   
 
 The subject was shown the "demographics" experiment. His viewport was not large enough to accomodate the two graphs completely. He scrolled very quickly and missed the transition. After an explanation, he completed the test as intended.
 
