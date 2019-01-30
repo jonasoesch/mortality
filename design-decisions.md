@@ -92,6 +92,10 @@ We therefore decided to introduce staged transitions for "one-to-many* situation
 
 ![](design-decisions/89EC54E7-CFF4-424A-94A7-F4E9F7C5A877.png)
 
+
+### Variable scrolling speed
+Scrolling configurations can differ wildly. And some people even scroll with assistive technology or the keyboard.
+
 ### Axes
 
 Compared to the Bloomberg version, the y-axes consequently start at 0. It is quite well reasearched, that readers easily miss it when axes don't start at 0 and get the wrong impression of the data.
@@ -148,6 +152,29 @@ Two subjects selected the faster version only after trying each a few times. Two
 
 We conclude that the speed improvements where perceptible but now disturbing. Still, we naturally selected the faster version.
 
+### Informal testing
+Test subjects: Jonathan Ehrengruber
+Tag: test_5
+Scenario: Juxtaposed animated
+Date: 30.1.2019
+Questionnare: Q1
+
+The subject was shown the "demographics" experiment. He first tried to understand the relationship between the two graphs and only later started to scroll. His first attempt was to scroll with the keyboard. This jumped "over" the animation. In a second attempt the subject scrolled with the trackpad. But as his scroll speed was configured to be very high, the animation just flickered over the screen. He interpreted the flicker as an error and never got to see the animation.
+
+Perceived the two visualizations as not related. Attention on *Men*, *Under 25*
+
+
+### Informal testing
+Test subjects: PH student
+Tag: test_5
+Scenario: Juxtaposed animated:
+Date: 30.1.2019
+Questionnaire: Q1
+
+The subject was shown the "demographics" experiment. His viewport was not large enough to accomodate the two graphs completely. He scrolled very quickly and missed the transition. After an explanation, he completed the test as intended.
+
+Perceived the visualizations as related and show "the life expectancy  and the effect it has on age of population". The attention was on "Everyone".
+
 ## Details
 ### Superposed
 * The morphing should be very smooth and there should not be a visible redraw of the graph when arriving at a final state
@@ -155,6 +182,13 @@ We conclude that the speed improvements where perceptible but now disturbing. St
 * The appeareance of the labels and the title should be smooth (because it looks better?)
 * A slight overlap in the interval removes the v
 
+
+
+## Questionnaires
+### Q1
+1. In your opinion, what efffect or relationship is shown in the data mini-story?
+2. Which group did you pay the most attention to in this data mini-story?
+3. Overall, was this data mini-story shown in a visuallly nice way?
 
 
 ## Sources
