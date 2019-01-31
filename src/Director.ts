@@ -77,7 +77,7 @@ export class Director {
      * different easing functions.
      **/
     easing(howFar:number){
-        return d3.easePolyInOut(howFar) 
+        return howFar 
     }
 
 
