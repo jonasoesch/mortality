@@ -7,6 +7,8 @@ export class Director {
     timer:Date = new Date()
     lastScrollTop:number
 
+    lastScroll:number = null
+
     constructor() {
        this.lastScrollTop = window.scrollY;
         
@@ -36,6 +38,7 @@ export class Director {
         let t = new Date()
         let difference = t.getTime() - this.timer.getTime()
 
+
         // only execute if the last execution has been
         // been more than x ms ago
         if(difference<10) {return}
@@ -48,8 +51,8 @@ export class Director {
     this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
-            } else if(step.graph) {
-                    this.hide(step.graph)
+            } else {
+                this.hide(step.graph) 
             }
         })
     }
@@ -74,7 +77,7 @@ export class Director {
      * different easing functions.
      **/
     easing(howFar:number){
-        return d3.easePolyInOut.exponent(2)(howFar)
+        return d3.easePolyInOut(howFar) 
     }
 
 

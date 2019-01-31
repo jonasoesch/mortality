@@ -25,6 +25,9 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
         })
     )
 
+
+    let highlightRight = highlight.cloneWithNewName('highlight-right')
+
     /* 
      * Create the two morphing graphs
      */
@@ -34,8 +37,14 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     morphHighlight.addTransition("MortalityEveryone", "MortalityEveryone").setLabel("Everyone")
 
 
+    let moveHighlight = new MorphingGraphWithLabels('move-highlight')
+    moveHighlight.setOrigin(highlight)
+    moveHighlight.setTarget(highlightRight)
+    moveHighlight.addTransition('MortalityEveryone', 'MortalityEveryone').setLabel("Everyone")
+
+
     let morphDemographics = new MorphingGraph('highlight-demographics')
-    morphDemographics.setOrigin(highlight)
+    morphDemographics.setOrigin(highlightRight)
     morphDemographics.setTarget(graphs[1])
     morphDemographics.addTransition("MortalityEveryone", "popshare25")
     morphDemographics.addTransition("MortalityEveryone", "popshare25_44")
@@ -49,9 +58,11 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     // Storyboard
     d.addStep(-200, 50, graphs[0]) // gender
     d.addStep(-200, 20, scrollIndicator)
-    d.addStep(50, 300, morphHighlight) // highlight everyone
-    d.addStep(300, 500, morphDemographics) // fan out into demographics
-    d.addStep(500, 10000, graphs[1]) // demographics
+    d.addStep(20, 220, morphHighlight) // highlight everyone
+    d.addStep(200, 600, moveHighlight) // move highlight to the right
+    d.addStep(600, 1200, morphDemographics) // fan out into demographics
+    d.addStep(1200, 10000, graphs[1]) // demographics
+
 
     graphs[0].draw()
     scrollIndicator.draw()
