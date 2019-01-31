@@ -20,8 +20,8 @@ Promise.all([ageDifferencesGraph(), uptickGraph()]).then(graphs => {
 
     d.addStep(-200, 50, graphs[0])
     d.addStep(-200, 40, scrollIndicator)
-    d.addStep(50, 500, morph)
-    d.addStep(500, 10000, graphs[1])
+    d.addStep(40, 800, morph)
+    d.addStep(800, 10000, graphs[1])
 
     graphs[0].draw()
     scrollIndicator.draw()
