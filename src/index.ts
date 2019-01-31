@@ -2,35 +2,7 @@ import {genderGraph, demographicsGraph, ageDifferencesGraph, uptickGraph, aidsGr
 import {Director} from './Director'
 import {Graph} from './Graph'
 import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
-import {record, Replayer} from 'rrweb'
 
-
-let events = []
-const recorder = record({
-    emit(event) {
-        console.log(event)
-        events.push(event)
-    },
-});
-
-
-
-// this function will send events to the backend and reset the events array
-function save() {
-    console.log("Save")
-  const body = JSON.stringify({ events });
-  events = [];
-  fetch('http://localhost:5000', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'text/plain',
-    },
-    body,
-  });
-}
-
-// save events every 5 seconds
-setInterval(save, 5 * 1000);
 
 
 let graphPromises = []

@@ -5,6 +5,6 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
-    with open('logs/'+str(time.time())+'.log.json', 'w') as log:
+    with open('logs/'+str(time.time())+'.log.csv', 'w') as log:
         log.write(request.data)
     return 'OK'

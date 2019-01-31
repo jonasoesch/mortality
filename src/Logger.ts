@@ -65,7 +65,15 @@ export class Logger {
     }
 
     public send() {
-        console.log(this.toString())
+        const body = this.toString()
+        console.log(body)
+        fetch('http://localhost:5000', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body,
+        });
         this.messages = []
     }
 
