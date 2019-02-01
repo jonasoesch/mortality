@@ -104,7 +104,6 @@ export function demographicsGraph() {
 
 export function ageDifferencesGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
-        console.log(csv)
         let data:MortalityData[] = csv.map((d:any) => {
             return {
                 date: new Date(Date.parse(d["date"])),
