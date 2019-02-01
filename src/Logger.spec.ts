@@ -30,8 +30,5 @@ describe("create logger", () => {
 
 describe("log something", () => {
         it("saves a log-message", () => {
-            l.scroll(100)
-            let msg = l.messages[0]
-            expect(msg.position).toEqual(100)
         })
 })

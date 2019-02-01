@@ -12,12 +12,29 @@ export class Director {
 
     constructor() {
        this.lastScrollTop = window.scrollY;
-        this.logger = new Logger()
+       this.logger = new Logger()
         
         if (window.requestAnimationFrame) {
             let that = this
-            this.loop();
+            try {
+                this.loop();
+            } catch(e) {
+                this.logger
+            }
         }
+
+        // Send log every 5 seconds
+        setInterval(() => this.save(), 5 * 1000);
+        setInterval(() => this.alive(), 20 * 1000)
+    }
+
+    save() {
+        this.logger.send()
+    }
+
+    alive() {
+        this.logger.alive()
+        this.logger.send() 
     }
 
 
@@ -44,13 +61,6 @@ export class Director {
         // only execute if the last execution has been
         // been more than x ms ago
         if(difference<10) {return}
-
-        // Send logs every 1000ms
-        if(logTimerDiff>1000) {
-            this.logger.send()
-            this.logTimer = t
-        }
-        this.logger.scroll(scroll)
 
         this.timer = t
         this.drawAll(scroll)
@@ -91,6 +101,7 @@ export class Director {
 
 
     draw(graph:Graph, howFar:number) {
+        this.logger.animation(graph.name, howFar)
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
         } else {
