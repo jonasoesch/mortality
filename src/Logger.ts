@@ -1,3 +1,5 @@
+import {loggingUrl} from './config'
+
 export class Logger {
     messages:Message[]
     session:string
@@ -126,7 +128,7 @@ export class Logger {
         const body = this.toString()
         console.log(body)
         //fetch('https://www.jonasoesch.ch/mortality/', {
-        fetch('http://localhost:5000', {
+        fetch(loggingUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
