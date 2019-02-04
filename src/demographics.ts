@@ -2,6 +2,7 @@ import {genderGraph, demographicsGraph} from './graphs'
 import {Director} from './Director'
 import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
+import {Form} from './Form'
 
 Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     let d = new Director()
@@ -62,6 +63,15 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     d.addStep(200, 600, moveHighlight) // move highlight to the right
     d.addStep(600, 1200, morphDemographics) // fan out into demographics
     d.addStep(1200, 10000, graphs[1]) // demographics
+
+
+    let form = new Form("survey")
+    form.addQuestion("1. In your opinion, what efffect or relationship is shown in the data mini-story?")
+    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
+    form.setNextPage("absolute.html")
+    form.setLogger(d.logger)
+    form.draw()
+    
 
 
     graphs[0].draw()

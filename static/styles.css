@@ -4,7 +4,7 @@ body {
     background-color: black;
     font-family: "Fira Sans", sans-serif;
     line-height: 1.4em;
-    height: 6000px;
+    margin: 0;
 }
 h1 {
     text-align: center;
@@ -113,3 +113,93 @@ article {
     font-weight: Regular;
     color: white;
 }
+
+.survey {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: #343434;
+    z-index: 100;
+}
+
+
+.survey .form {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 30px;
+    margin-bottom: 50px;
+}
+
+.survey label {
+    display: block;
+    color: #fff;
+    letter-spacing: 0.4px;
+    text-shadow: 0 0 1px #000;
+    margin-bottom: 10px;
+}
+
+
+.survey textarea {
+    display: block;
+    width: 100%;
+    height: 180px;
+    background-color: #292929;
+    border: 1px solid #000;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    padding: 20px;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Fira Sans OT";
+    max-width: 1280px;
+}
+
+.survey button {
+    float: right;
+    position: relative;
+    width: 200px;
+    color: #fff;
+    font-size: 16px;
+    font-family: "Fira Sans OT";
+    padding: 10px; 20px;
+    border: none;
+    text-shadow:-1px -1px 0 #A84155;
+    border:1px solid #D25068;
+
+
+    /* https://1stwebdesigner.com/free-code-snippets-css-buttons/ */
+  text-shadow:-1px -1px 0 #2C7982;
+    background: #3EACBA;
+    border:1px solid #379AA4;
+    background-image:-webkit-linear-gradient(top, #48C6D4, #3EACBA);
+    background-image:-moz-linear-gradient(top, #48C6D4, #3EACBA);
+    background-image:-ms-linear-gradient(top, #48C6D4, #3EACBA);
+    background-image:-o-linear-gradient(top, #48C6D4, #3EACBA);
+    background-image:linear-gradient(top, #48C6D4, #3EACBA);
+    
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    
+    -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset, 0 4px 0 #338A94, 0 4px 2px rgba(0, 0, 0, .5);
+    -moz-box-shadow:0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset, 0 4px 0 #338A94, 0 4px 2px rgba(0, 0, 0, .5);
+    box-shadow:0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset, 0 4px 0 #338A94, 0 4px 2px rgba(0, 0, 0, .5);
+}
+
+
+.survey button:hover {
+ background: #48C6D4;
+    background-image:-webkit-linear-gradient(top, #3EACBA, #48C6D4);
+    background-image:-moz-linear-gradient(top, #3EACBA, #48C6D4);
+    background-image:-ms-linear-gradient(top, #3EACBA, #48C6D4);
+    background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
+    background-image:linear-gradient(top, #3EACBA, #48C6D4);
+}
+
+
+.survey button:active {
+    -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset;
+    top:5px;
+}
+
+

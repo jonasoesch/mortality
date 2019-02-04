@@ -17,7 +17,13 @@ graph.setData(data)
 ```
  **/
 
-export class Graph {
+export interface Drawable {
+    name:string // It's presumed that there is an element in the HTML with an id of name
+    draw():void
+    hide():void
+}
+
+export class Graph implements Drawable {
 
     /** 
      * Defines the HTMLElement where the chart should be
