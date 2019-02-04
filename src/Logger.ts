@@ -117,7 +117,7 @@ export class Logger {
     }
 
 
-    private wrap(str, into='"') {
+    public wrap(str, into='"') {
         return  into+str+into
     }
 
