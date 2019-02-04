@@ -92,6 +92,10 @@ We therefore decided to introduce staged transitions for "one-to-many* situation
 
 ![](design-decisions/89EC54E7-CFF4-424A-94A7-F4E9F7C5A877.png)
 
+
+### Variable scrolling speed
+Scrolling configurations can differ wildly. And some people even scroll with assistive technology or the keyboard.
+
 ### Axes
 
 Compared to the Bloomberg version, the y-axes consequently start at 0. It is quite well reasearched, that readers easily miss it when axes don't start at 0 and get the wrong impression of the data.
@@ -105,19 +109,19 @@ The same text has been used as in the Bloomberg version of the article. Axis lab
 
 ### Informal test of superposed transition
 
-Test subject: Simon Marcin
-Tag: test_1
-Scenario: Superposed
-Date: 14.01.2019
+Test subject: Simon Marcin   
+Tag: test_1   
+Scenario: Superposed   
+Date: 14.01.2019   
 
 The transition between "Mortality Everyone" and demographics over time is not clear. The reader didn't understand that the second graph showed in a way the composition of the line "Mortality Everyone". A proposed improvement was to show labels longer during transitions.
 
 ### Informal test of static and superposed scenarios
 
-Test subject: Simon Schubiger
-Tag: test_2
-Scenario: Static and Superposed
-Date: 15.01.2019
+Test subject: Simon Schubiger   
+Tag: test_2   
+Scenario: Static and Superposed   
+Date: 15.01.2019   
 
 The relationship between "Mortality Everyone" and demographics over time was not clear in both scenarios. The reader suspected that it was because the transition between "Deaths per 100'000" and the stacked area percentage chart was conceptually difficult. The proposition was to include an intermediary step. For example by moving the line "Mortality Everyone" to the top (representing 100%) and then extending it downwards.
 
@@ -139,14 +143,37 @@ See [[Javascript Performance]] for more info.
 The performance optimization also removed the third-party interpolate-path code. It took about 5ms to run on each draw call without any real use (as the morphing is now from area to area, the `d3.interpolate` function can be used)
 
 ### Informal testing
-Test subjects: Till Meyer zu Westram, Moritz Meyer zu Westram, Riccarda Jegi, Andrea Zirn
-Tag: test_3 (slower version) und tag_4 (faster version)
-Scenario: Superposed
+Test subjects: Till Meyer zu Westram, Moritz Meyer zu Westram, Riccarda Jegi, Andrea Zirn    
+Tag: test_3 (slower version) und tag_4 (faster version)   
+Scenario: Superposed  
 
 Both versions where presented to the subjects. They were asked which "felt" better to use.
 Two subjects selected the faster version only after trying each a few times. Two subjects said that they didn't experience any difference.
 
 We conclude that the speed improvements where perceptible but now disturbing. Still, we naturally selected the faster version.
+
+### Informal testing
+Test subjects: Jon Eh
+Tag: test_5   
+Scenario: Juxtaposed animated   
+Date: 30.1.2019   
+Questionnare: Q1   
+
+The subject was shown the "demographics" experiment. He first tried to understand the relationship between the two graphs and only later started to scroll. His first attempt was to scroll with the keyboard. This jumped "over" the animation. In a second attempt the subject scrolled with the trackpad. But as his scroll speed was configured to be very high, the animation just flickered over the screen. He interpreted the flicker as an error and never got to see the animation.
+
+Perceived the two visualizations as not related. Attention on *Men*, *Under 25*
+
+
+### Informal testing
+Test subjects: PH student   
+Tag: test_5   
+Scenario: Juxtaposed animated   
+Date: 30.1.2019   
+Questionnaire: Q1   
+
+The subject was shown the "demographics" experiment. His viewport was not large enough to accomodate the two graphs completely. He scrolled very quickly and missed the transition. After an explanation, he completed the test as intended.
+
+Perceived the visualizations as related and show "the life expectancy  and the effect it has on age of population". The attention was on "Everyone".
 
 ## Details
 ### Superposed
@@ -155,6 +182,13 @@ We conclude that the speed improvements where perceptible but now disturbing. St
 * The appeareance of the labels and the title should be smooth (because it looks better?)
 * A slight overlap in the interval removes the v
 
+
+
+## Questionnaires
+### Q1
+1. In your opinion, what efffect or relationship is shown in the data mini-story?
+2. Which group did you pay the most attention to in this data mini-story?
+3. Overall, was this data mini-story shown in a visuallly nice way?
 
 
 ## Sources

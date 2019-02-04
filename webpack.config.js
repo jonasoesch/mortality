@@ -1,5 +1,16 @@
 const path = require('path');
 
+// check environment mode
+var environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+
+function devProd(development, production) {
+    if(environment === "development") {
+        return development
+    } else {
+        return production 
+    }
+}
+
 module.exports = {
     entry: {
         'demographics': './src/demographics.ts',
@@ -7,8 +18,8 @@ module.exports = {
         'relative': './src/relative.ts',
         'causes': './src/causes.ts'
     },
-    devtool: 'inline-source-map',
-    mode: "development",
+    devtool: devProd('inline-source-map', false),
+    mode: devProd("development", "production"),
     // Typescript
     module: {
         rules: [
@@ -16,6 +27,14 @@ module.exports = {
                 test: /\.ts$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.ts$/,
+                loader: 'string-replace-loader',
+                options: {
+                    search: "__API_URL__",
+                    replace: devProd("http://localhost:5000/", "https://www.jonasoesch.ch/mortality/"),
+                }
             }
         ]
 
