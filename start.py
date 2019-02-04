@@ -12,7 +12,15 @@ def after_request(response):
   return response
 
 @app.route("/", methods=['GET', 'POST'])
-def hello():
+def log():
     with open('logs/'+str(time.time())+'.loggg.csv', 'w') as log:
         log.write(str(request.data))
+    return 'OK'
+
+
+
+@app.route("/form", methods=['GET', 'POST'])
+def form():
+    with open('responses/'+str(time.time())+'.form.csv', 'w') as response:
+        response.write(str(request.data))
     return 'OK'
