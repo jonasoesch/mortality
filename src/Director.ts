@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import {Graph} from './Graph'
+import {Graph, Drawable} from './Graph'
 import {MorphingGraph} from './MorphingGraph'
 import {Logger} from './Logger'
 
@@ -77,7 +77,7 @@ export class Director {
     }
 
 
-    addStep(start:number, end:number, graph:Graph) {
+    addStep(start:number, end:number, graph:Drawable) {
         this.storyboard.push(new Step(start, end, graph))
     }
 
@@ -100,7 +100,7 @@ export class Director {
     }
 
 
-    draw(graph:Graph, howFar:number) {
+    draw(graph:Drawable, howFar:number) {
         this.logger.animation(graph.name, howFar)
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
@@ -109,7 +109,7 @@ export class Director {
         }
     }
 
-    hide(graph:Graph) {
+    hide(graph:Drawable) {
         graph.hide() 
     }
 
@@ -130,9 +130,9 @@ export class Director {
 class Step {
     start:number
     end:number
-    graph:Graph
+    graph:Drawable
 
-    constructor(f:number, t:number, g:Graph) {
+    constructor(f:number, t:number, g:Drawable) {
         this.start = f
         this.end = t
         this.graph = g
