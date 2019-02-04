@@ -2,6 +2,7 @@ import {genderGraph, demographicsGraph, ageDifferencesGraph, uptickGraph, aidsGr
 import {Director} from './Director'
 import {Graph} from './Graph'
 import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
+import {Form} from './Form'
 
 
 let graphPromises = []
@@ -106,5 +107,11 @@ Promise.all(graphPromises).then( (graphs) => {
     d.addStep(2000, 2200, uptickAids)
 
     d.addStep(2200, 3000, graphs[4])
+
+    let form = new Form("survey")
+    form.addQuestion("1. In your opinion, what efffect or relationship is shown in the data mini-story?")
+    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
+    form.draw()
+    d.addStep(2200, 2600, graphs[4])
 
 })
