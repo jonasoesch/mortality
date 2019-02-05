@@ -34,8 +34,9 @@ Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
     
 
     let form = new Form("survey")
-    form.addQuestion("1. In your opinion, what efffect or relationship is shown in the data mini-story?")
+    form.addQuestion("1. In your opinion, what effect or relationship is shown in the data mini-story?")
     form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
+    form.addChoice("3. Overall, was this data mini-story shown in a visually nice way?", ["Yes", "No"])
     form.setNextPage("relative.html")
     form.setLogger(d.logger)
     form.draw()    
