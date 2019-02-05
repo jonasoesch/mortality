@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import {Graph} from './Graph';
 import {StackedGraph} from './StackedGraph';
+import {Form} from './Form'
 let l = console.log
 
 export function genderGraph() {
@@ -305,4 +306,15 @@ export function aidsGraph() {
         return graph
 
     })
+}
+
+
+export function questionnaire(d, nextPage):Form {
+    let form = new Form("survey")
+    form.addQuestion("1. In your opinion, what effect or relationship is shown in the data mini-story?")
+    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
+    form.addChoice("3. Overall, was this data mini-story shown in a visually nice way?", ["Yes", "No"])
+    form.setNextPage(nextPage)
+    form.setLogger(d.logger)
+    return form
 }

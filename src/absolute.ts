@@ -1,4 +1,5 @@
-import {demographicsGraph, ageDifferencesGraph} from './graphs'
+import {demographicsGraph, ageDifferencesGraph, questionnaire} from './graphs'
+import {SkelettonDecorator} from './Graph'
 import {Director} from './Director'
 import {MorphingGraph} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
@@ -8,12 +9,9 @@ import {Form} from './Form'
 Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
     const d = new Director()
 
-    let form = new Form("survey")
-    form.addQuestion("1. In your opinion, what efffect or relationship is shown in the data mini-story?")
-    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
-    form.setNextPage("relative.html")
-    form.setLogger(d.logger)
-    form.draw()    
+     questionnaire(d, "relative.html").draw() 
+
+    d.addStep(-200, 40, scrollIndicator)
 
     graphs[0].draw()
     graphs[1].draw()

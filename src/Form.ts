@@ -4,7 +4,7 @@ import {Logger} from "./Logger"
 
 export class Form implements Drawable {
     name:string
-    questions:string[]
+    questions:Question[]
     description:string
     nextPage:string
     logger:Logger
@@ -15,7 +15,13 @@ export class Form implements Drawable {
     }
 
     addQuestion(question:string) {
-        this.questions.push(question)
+        this.questions.push(new TextQuestion(question))
+    }
+
+    addChoice(question:string, options:string[]) {
+        let q = new ChoiceQuestion(question)
+        q.setOptions(options)
+        this.questions.push(q)
     }
 
     setNextPage(page:string) {
@@ -28,21 +34,9 @@ export class Form implements Drawable {
 
 
     draw() {
+        let form = d3.select(`#${this.name}`).append("div").attr("class", "form")
 
-        // Don't draw the form element multiple times
-        let container = d3.select(`#${this.name}`).style("opacity", 1)
-        if(container.select('textarea').size() > 0) {return}
-
-        let form = container.append("div").attr("class", "form")
-
-        this.questions.forEach( (q, i) => {
-            form.append("label")
-                .text(q)
-            form.append("textarea")
-                .attr("type" ,"text")
-                .attr("placeholder", "Your answer…")
-                .attr("name", "answer"+i.toString()) 
-        } )
+        this.questions.forEach( q => q.drawInto(form) )
 
         form.append("button")
             .text("Send answers")
@@ -57,10 +51,8 @@ export class Form implements Drawable {
 
 
     getAnswers():string[] {
-        let answers = []
-        d3.selectAll(`#${this.name} textarea`).each(function(textarea) {
-            answers.push((<HTMLTextAreaElement>this).value) 
-        })
+        let form = d3.select(`#${this.name}`)
+        let answers = this.questions.map( q => q.getAnswerFrom(form) )
         return answers
     }
 
@@ -93,13 +85,13 @@ export class Form implements Drawable {
         })
             .then( (response) => {
                 if (!response.ok) {
-                   throw new Error("The server is doing funny things. Please try again.") 
+                    throw new Error("The server is doing funny things. Please try again.") 
                 }
                 return response.text()
             })
             .then( (text) => {
                 if(text !== "OK") {
-                   throw new Error("The server is doing funny things. Please try again.") 
+                    throw new Error("The server is doing funny things. Please try again.") 
                 }
                 window.location.href = this.nextPage
             })
@@ -108,5 +100,66 @@ export class Form implements Drawable {
 
     hide() {
         d3.select(`#${this.name}`).style("opacity", 0)
+    }
+}
+
+
+
+abstract class Question {
+    label:string
+    constructor(label) {
+        this.label = label 
+    }
+    abstract drawInto(element:d3.Selection<any, any, any, any>):void
+        abstract getAnswerFrom(element:d3.Selection<any, any, any, any>):string
+    protected name() {
+        return this.esc(this.label)
+    }
+    private esc(str:string) {
+        return str.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '')
+    }
+}
+
+class TextQuestion extends Question {
+    drawInto(element) {
+        element.append("label")
+            .text(this.label)
+        element.append("textarea")
+            .attr("type" ,"text")
+            .attr("placeholder", "Your answer…")
+            .attr("name", this.name()) 
+    }
+
+    getAnswerFrom(element) {
+        return element.select(`textarea[name="${this.name()}"]`).node().value
+    }
+}
+
+class ChoiceQuestion extends Question {
+    options:string[]
+    setOptions(options:string[]) {
+        this.options = options 
+    }
+    drawInto(element) {
+        element.append("label")
+            .text(this.label)
+        this.options.forEach( o => {
+            element.append("input")  
+                .attr("type", "radio")
+                .attr("name", this.name())
+                .attr("value", o)
+            element.append("label")
+                .attr("class", "radio-label")
+                .text(o)
+        })
+    }
+    getAnswerFrom(element) {
+        let out = ""
+        element.selectAll(`input[name="${this.name()}"]`).each( function(el) {
+            if(this.checked) {
+                out =  this.value 
+            }   
+        })
+        return out
     }
 }
