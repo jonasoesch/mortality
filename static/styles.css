@@ -159,3 +159,13 @@ article {
 }
 
 
+.survey input[type=radio] {
+    margin: 10px;
+}
+
+
+.survey .radio-label {
+    display: inline-block;
+}
+
+
