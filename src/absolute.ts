@@ -1,4 +1,5 @@
 import {demographicsGraph, ageDifferencesGraph} from './graphs'
+import {SkelettonDecorator} from './Graph'
 import {Director} from './Director'
 import {MorphingGraph} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
@@ -19,9 +20,15 @@ Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
     morph.addTransition("popshare75", "Rate75_84")
     morph.addTransition("popshare75", "Rate85up")
 
+
+    let differencesEmpty = new SkelettonDecorator(
+        graphs[1].cloneWithNewName("differences-empty")
+    )
+
     // Storyboard
-    d.addStep(-200, 50, graphs[0])
+    d.addStep(-200, 10000, graphs[0])
     d.addStep(-200, 40, scrollIndicator)
+    d.addStep(-200, 800, differencesEmpty)
     d.addStep(40, 800, morph)
     d.addStep(800, 10000, graphs[1])
     
@@ -36,5 +43,5 @@ Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
 
     graphs[0].draw()
     scrollIndicator.draw()
-    graphs[1].draw()
+    differencesEmpty.draw()
 })

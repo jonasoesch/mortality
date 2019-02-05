@@ -1,13 +1,12 @@
 import {genderGraph, demographicsGraph} from './graphs'
 import {Director} from './Director'
+import {SkelettonDecorator} from './Graph'
 import {MorphingGraph, MorphingGraphWithLabels} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
 import {Form} from './Form'
 
 Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     let d = new Director()
-
-
 
     /*
      * Create the intermediate graph to hide
@@ -55,9 +54,14 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     morphDemographics.addTransition("MortalityEveryone", "popshare75")
 
 
+    let emptyDemographics = new SkelettonDecorator(
+        graphs[1].cloneWithNewName("empty-demographics")
+    )
+
 
     // Storyboard
-    d.addStep(-200, 50, graphs[0]) // gender
+    d.addStep(-200, 10000, graphs[0]) // gender
+    d.addStep(-200, 1200, emptyDemographics)
     d.addStep(-200, 20, scrollIndicator)
     d.addStep(20, 220, morphHighlight) // highlight everyone
     d.addStep(200, 600, moveHighlight) // move highlight to the right
@@ -71,10 +75,10 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     form.setNextPage("absolute.html")
     form.setLogger(d.logger)
     form.draw()
-    
+
 
 
     graphs[0].draw()
     scrollIndicator.draw()
-    graphs[1].draw()
+    emptyDemographics.draw()
 })

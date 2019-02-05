@@ -1,4 +1,5 @@
 import {uptickGraph, aidsGraph} from './graphs'
+import {SkelettonDecorator} from './Graph'
 import {Director} from './Director'
 import {MorphingGraphWithLabels, MorphingGraph} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
@@ -32,8 +33,13 @@ Promise.all([uptickGraph(), aidsGraph()]).then(graphs => {
     morph.addTransition("Rate25_44", "AIDS"               )
 
 
+    let aidsEmpty = new SkelettonDecorator(
+        graphs[1].cloneWithNewName("aids-empty")
+    )
+
     // Storyboard
-    d.addStep(-200, 50, graphs[0])
+    d.addStep(-200, 10000, graphs[0])
+    d.addStep(-200, 900, aidsEmpty)
     d.addStep(-200, 40, scrollIndicator)
     d.addStep(40, 450, move)
     d.addStep(450, 900, morph)
@@ -50,5 +56,5 @@ Promise.all([uptickGraph(), aidsGraph()]).then(graphs => {
 
     graphs[0].draw()
     scrollIndicator.draw()
-    graphs[1].draw()
+    aidsEmpty.draw()
 })

@@ -1,5 +1,6 @@
 import {ageDifferencesGraph, uptickGraph} from './graphs'
 import {Director} from './Director'
+import {SkelettonDecorator} from './Graph'
 import {MorphingGraphWithLabels} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
 import {Form} from './Form'
@@ -19,7 +20,13 @@ Promise.all([ageDifferencesGraph(), uptickGraph()]).then(graphs => {
     morph.addTransition("Rate75_84", "Rate75_84").setLabel("75–84")
     morph.addTransition("Rate85up" , "Rate85up" ).setLabel("Over 84")
 
-    d.addStep(-200, 50, graphs[0])
+    let uptickEmpty = new SkelettonDecorator(
+        graphs[1].cloneWithNewName("uptick-empty")
+    )
+
+
+    d.addStep(-200, 10000, graphs[0])
+    d.addStep(-200, 800, uptickEmpty)
     d.addStep(-200, 40, scrollIndicator)
     d.addStep(40, 800, morph)
     d.addStep(800, 10000, graphs[1])
@@ -34,5 +41,5 @@ Promise.all([ageDifferencesGraph(), uptickGraph()]).then(graphs => {
 
     graphs[0].draw()
     scrollIndicator.draw()
-    graphs[1].draw()
+    uptickEmpty.draw()
 })
