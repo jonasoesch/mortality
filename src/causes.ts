@@ -1,4 +1,4 @@
-import {uptickGraph, aidsGraph} from './graphs'
+import {uptickGraph, aidsGraph, questionnaire} from './graphs'
 import {SkelettonDecorator} from './Graph'
 import {Director} from './Director'
 import {MorphingGraphWithLabels, MorphingGraph} from './MorphingGraph'
@@ -46,14 +46,7 @@ Promise.all([uptickGraph(), aidsGraph()]).then(graphs => {
     d.addStep(900, 10000, graphs[1])
 
 
-    let form = new Form("survey")
-    form.addQuestion("1. In your opinion, what effect or relationship is shown in the data mini-story?")
-    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
-    form.addChoice("3. Overall, was this data mini-story shown in a visually nice way?", ["Yes", "No"])
-    form.setNextPage("demographics.html")
-    form.setLogger(d.logger)
-    form.draw()
-
+    questionnaire(d, "demographics.html").draw() 
 
     graphs[0].draw()
     scrollIndicator.draw()
