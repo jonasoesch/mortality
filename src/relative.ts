@@ -1,4 +1,4 @@
-import {ageDifferencesGraph, uptickGraph} from './graphs'
+import {ageDifferencesGraph, uptickGraph, questionnaire} from './graphs'
 import {Director} from './Director'
 import {MorphingGraphWithLabels} from './MorphingGraph'
 import {scrollIndicator} from './scrollIndicator'
@@ -13,13 +13,7 @@ Promise.all([ageDifferencesGraph(), uptickGraph()]).then(graphs => {
     d.addStep(50, 10000, graphs[1])
 
 
-    let form = new Form("survey")
-    form.addQuestion("1. In your opinion, what efffect or relationship is shown in the data mini-story?")
-    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
-    form.setNextPage("causes.html")
-    form.setLogger(d.logger)
-    form.draw()
-
+    questionnaire(d, "causes.html").draw() 
 
     d.drawAll(0)
 })
