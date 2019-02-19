@@ -5,6 +5,8 @@ import {Graph} from './Graph'
 import {Mark} from './Mark'
 
 
+
+
 let pathSelector = `body #A-B .paths path`
 d3.select(document).select("body").append("div").attr("id", "A").style("width", 1280).style("height", 720)
 d3.select(document).select("body").append("div").attr("id", "B").style("width", 1280).style("height", 720)
@@ -70,6 +72,8 @@ describe("initialize", () => {
 
 
 describe( "path drawing", () => {
+    // Mocking fetch
+const fetch = jest.fn(() => new Promise(resolve => resolve()));
 
     a.atPoint(0.5).draw()
 

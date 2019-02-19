@@ -3,6 +3,8 @@ declare module "*.json" {
     export default value;
 }
 
+declare var global: any;
+
 interface MortalityData {
     date: Date;
     MortalityEveryone: number;

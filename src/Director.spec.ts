@@ -5,6 +5,10 @@ import {MorphingGraph} from './MorphingGraph'
 import * as d3 from 'd3'
 
 
+// Mocking fetch
+global.fetch = jest.fn(() => new Promise(resolve => resolve()));
+
+
 d3.select(document).select("body").append("div").attr("id", "A").style("width", 1280).style("height", 720)
 d3.select(document).select("body").append("div").attr("id", "B").style("width", 1280).style("height", 720)
 d3.select(document).select("body").append("div").attr("id", "A-B").style("width", 1280).style("height", 720)
