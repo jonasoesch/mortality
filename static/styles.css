@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,700');
 
 body {
     background-color: black;
@@ -6,6 +6,7 @@ body {
     line-height: 1.4em;
     margin: 0;
 }
+
 h1 {
     text-align: center;
     font-size: 20px;
@@ -92,13 +93,6 @@ p {
     margin: 0 auto;
 }
 
-.author {
-    font: 20px "Adobe Text Pro, Times New Roman, Georgia, serif";
-    text-align: center;
-    margin-bottom: 140px;
-    font-style: italic;
-}
-
 .smallcaps {
     font-variant-caps: small-caps;
     -moz-font-feature-settings: "smcp";
@@ -150,7 +144,7 @@ article {
     padding: 20px;
     color: #fff;
     font-size: 16px;
-    font-family: "Fira Sans OT";
+    font-family: "Fira Sans";
     max-width: 1280px;
 }
 
@@ -160,7 +154,7 @@ article {
     width: 200px;
     color: #fff;
     font-size: 16px;
-    font-family: "Fira Sans OT";
+    font-family: "Fira Sans";
     padding: 10px; 20px;
     border: none;
     text-shadow:-1px -1px 0 #A84155;
