@@ -71,7 +71,7 @@ export class MorphingGraph extends Graph {
         let interpolator = d3.interpolate(start, end)
         console.log(this.chart)
         this.chart
-            .attr("transform", `translate(${interpolator(this.howFar)}, 0)`)
+            .style("transform", `translate3d(${interpolator(this.howFar)}px, 0, 0)`)
 
     }
 
@@ -149,7 +149,7 @@ export class MorphingGraphWithLabels extends MorphingGraph {
         let end = this.targetGraph.xPosition()
         let interpolator = d3.interpolate(start, end)
         this.chart
-            .attr("transform", `translate(${interpolator(this.howFar)}, 0)`)
+            .style("transform", `translate3d(${interpolator(this.howFar)}px, 0, 0)`)
     }
     
     public labelYPosition(mark:MorphingMark, offset=0) {
