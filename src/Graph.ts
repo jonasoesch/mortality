@@ -46,7 +46,7 @@ export class Graph implements Drawable {
 
 
     fontColor:string = "#fff"
-    font:string = "Fira Sans OT"
+    font:string = "Fira Sans"
     fontSizing = 1;
     lineWeight = 3
     margin = 80
