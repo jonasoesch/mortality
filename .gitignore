@@ -10,3 +10,4 @@ logs
 *.pyc
 responses
 logger/analysis/.ipynb_checkpoints
+logger/analysis/*.csv
