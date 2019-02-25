@@ -11,3 +11,4 @@ logs
 responses
 logger/analysis/.ipynb_checkpoints
 logger/analysis/*.csv
+deploy
