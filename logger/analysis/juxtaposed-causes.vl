@@ -1,0 +1,1 @@
+{"$schema":"https://vega.github.io/schema/vega-lite/v3.json","data":{"format":{"type":"csv"},"url":"juxtaposed-causes.csv"},"encoding":{"color":{"field":"graph","type":"nominal"},"row":{"field":"sessionDate","type":"ordinal"},"x":{"field":"timeDelta","type":"quantitative"},"y":{"field":"globalPosition","type":"quantitative"}},"mark":"circle","width":800}

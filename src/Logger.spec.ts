@@ -1,6 +1,10 @@
 import 'jest';
 import {Logger} from './Logger';
 
+
+// Mocking fetch
+ global.fetch = jest.fn(() => new Promise(resolve => resolve()));
+
 let l = new Logger()
 describe("create logger", () => { 
     it("exists", () => {
@@ -8,15 +12,6 @@ describe("create logger", () => {
     })
     it("saves the browsers name", () => {
         expect(l.ua).toEqual("Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0") 
-    })
-    it("should have a screen width and height", () => {
-        expect(l.screenWidth).toBe(0)
-        expect(l.screenHeight).toBe(0)
-    })
-
-    it("should have a window width and height", () => {
-        expect(l.windowWidth).toBe(1024)
-        expect(l.windowHeight).toBe(768)
     })
 
     it("should measure the pxiel ratio", () => {

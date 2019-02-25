@@ -45,19 +45,20 @@ The *scroll speed* depends the readers behavior and is controllable
 
 The *scroll distance* from start to end has been determined empirically to be 400px between two graphs.
 
-- [ ] Test other distances than 400px
+### Juxtaposed scenario
+A scroll distance of 400px has been shown to be to short (see informal tests from 31.1.2019). Therefore the distance is at least 800px in the juxtaposed scenarios so that readers don't "jump over" the transitions by scrolling quickly.
 
 The *easing function* has also been determined empirically to be a symmetric polynomial easing:
 
-![](design-decisions/248bac3b8e354a9103c4.png)
+![](Design-decisions/248bac3b8e354a9103c4.png)
 [^d3Ease]
 
 - [ ] Test other easing functions, especially linear
 
 ### Morphing
-![](design-decisions/A9384134-D524-4971-8F02-D310DFC2F697.png)
-![](design-decisions/F9B89CD1-3F45-4F70-8613-94F682A15ED2.png)
-![](design-decisions/E3F8E36E-18ED-46ED-AF11-3C84CEEE46FA.png)
+![](Design-decisions/A9384134-D524-4971-8F02-D310DFC2F697.png)
+![](Design-decisions/F9B89CD1-3F45-4F70-8613-94F682A15ED2.png)
+![](Design-decisions/E3F8E36E-18ED-46ED-AF11-3C84CEEE46FA.png)
 
 The states of the Morphing are calculated by interpolating between marks of the two graphs. The color-interpolation method is based on HCL-values.
 [^d3Interpolate]
@@ -82,15 +83,17 @@ The original version only shows the top three age groups (75+, 65-74 and 55-64).
 ### Staged transitions
 Already the first very informal tests have show, that it is very hard for readers to determine the origin of a transition. An example is the transition from the "Everyone"-mark to the demographics chart:
 
-![](design-decisions/F5FD18FA-8057-4B61-BD50-E1E76EC5AF41.png)
+![](Design-decisions/F5FD18FA-8057-4B61-BD50-E1E76EC5AF41.png)
 
-![](design-decisions/9A044876-0059-487D-B978-E56C29B8E019.png)
+![](Design-decisions/9A044876-0059-487D-B978-E56C29B8E019.png)
 
 The readers often missatributed the origin to be "Men". Even more so because the text talks about the improved survival prospects of men in particular.
 
 We therefore decided to introduce staged transitions for "one-to-many* situations. (a "granularity transition" per [^Hullman 13])
 
-![](design-decisions/89EC54E7-CFF4-424A-94A7-F4E9F7C5A877.png)
+![](Design-decisions/89EC54E7-CFF4-424A-94A7-F4E9F7C5A877.png)
+
+- [ ] What is the reasoning behind: Moving first to the right and only then fan out? ([this mail](https://app.smartmailcloud.com/web-share/NxdsD0Z1f46p8tGAZ4kUIJqLPN-ihkWKxDNWbbsd))
 
 
 ### Variable scrolling speed
@@ -153,7 +156,7 @@ Two subjects selected the faster version only after trying each a few times. Two
 We conclude that the speed improvements where perceptible but now disturbing. Still, we naturally selected the faster version.
 
 ### Informal testing
-Test subjects: Jon Eh
+Test subjects: Jon Eh    
 Tag: test_5   
 Scenario: Juxtaposed animated   
 Date: 30.1.2019   
