@@ -1,4 +1,4 @@
-# Redesigning the Bloomberg story on "How Americans Die"
+# Redesigning «How Americans Die»
 
 The [original story](https://www.bloomberg.com/graphics/dataview/how-americans-die/) is a beautiful example of storytelling through visualizations. The authors use a lot of animations to transition from one visualization to the next. This project intends to address some of the problems found in the transitions and to test what works best with users in order to explore design principles for animated transitions.
 
@@ -23,7 +23,7 @@ For each of the four scenarios, the same experiments have been implemented as se
 
 The code to make it all work as well as the tests can be found in `src`. the general structure is as follows:
 
-![Includes](/Users/jonas/Desktop/mortality/documentation/Includes.png)
+![Includes](documentation/Includes.png)
 
 This overview presents only the most important classes and files and omits some smaller ones for clarity. The general principle is as follows: Each entry point includes the visualizations it needs to render from `graphs.ts`. It creates instances of `MorphingGraph` to connect the graphs via animated transitions where necessary. In cases where staged animation is used, it derives a new visualization from one of the included visualizations. A new instance of `Director` is then created to define the sequence of visualizations. The minimum requirements for a valid visualization is defined in the `Drawable` interface. But typically, visualizations are derived from the `Graph` class. 
 
