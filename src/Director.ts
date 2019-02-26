@@ -3,6 +3,18 @@ import {Graph, Drawable} from './Graph'
 import {MorphingGraph} from './MorphingGraph'
 import {Logger} from './Logger'
 
+/**
+ * A director is responsible for drawing and hiding Drawables based on the current scroll position. The director will also instantiate a `Logger` object and add a new record everytime it redraws the view.
+ * It is used like this:
+ * ```javascript
+ *  // graph1, morphingGraph and graph2 are Drawables 
+ *  let director = new Director() 
+ *  director.addStep(graph1, 0, 500)
+ *  director.addStep(morphingGraph, 500, 1000)
+ *  director.addStep(graph2, 1000, 10000)
+ * ```
+ * With this code, the director will draw `graph1` from scroll position 0 to 500, `morphingGraph` from scroll position 500 to 1000 and `graph2` from scroll position 1000 to 10000.
+ **/
 export class Director {
     storyboard:Step[] = []
     timer:Date = new Date()
@@ -28,17 +40,18 @@ export class Director {
         setInterval(() => this.alive(), 20 * 1000)
     }
 
-    save() {
+    private save() {
         this.logger.send()
     }
 
-    alive() {
+    private alive() {
         this.logger.alive()
         this.logger.send() 
     }
 
 
-    loop() {
+    // It's faster to fire on each `animationFrame` instead of listening to the `onScroll`-event.
+    private loop() {
         var scrollTop = window.scrollY;
         if (this.lastScrollTop === scrollTop) {
             window.requestAnimationFrame(() => this.loop());
@@ -52,21 +65,29 @@ export class Director {
         }
     } 
 
-    scrolling(scroll:number) {
+    /**
+     * This method is called whenever a "scroll" is being detected and 
+     * the scroll position passed.
+     **/
+    public scrolling(scroll:number) {
 
         let t = new Date()
         let difference = t.getTime() - this.timer.getTime()
         let logTimerDiff = t.getTime() - this.logTimer.getTime()
 
-        // only execute if the last execution has been
+        // only execute if the last execution has
         // been more than x ms ago
-        if(difference<10) {return}
-
-        this.timer = t
-        this.drawAll(scroll)
+        if(difference>10) {
+            this.timer = t
+            this.drawAll(scroll)
+        }
     }
 
-    drawAll(offset:number) {
+    /**
+     * Draws every drawable in the storyboard that should
+     * currently be visible. Hides all the other.
+     **/
+    public drawAll(offset:number) {
     this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
@@ -77,10 +98,18 @@ export class Director {
     }
 
 
-    addStep(start:number, end:number, graph:Drawable) {
+    /**
+     *  Adding a new entry to the storyboard
+     **/
+    public addStep(start:number, end:number, graph:Drawable) {
         this.storyboard.push(new Step(start, end, graph))
     }
 
+    /**
+     * This method transforms the global scroll position
+     * to a percent value representing how far into the transition
+     * the reader is.
+     **/
     protected howFar(step:Step, offset:number):number {
         let total = step.end-step.start
         let position = offset - step.start
@@ -100,7 +129,12 @@ export class Director {
     }
 
 
-    draw(graph:Drawable, howFar:number) {
+    /**
+     * Checks if a Drawable is a MorphingGraph.
+     * If yes, calls `atPoint()` and passes the relative position (calculated in
+     * the `howFar()`-method). Then it draws the `Drawable`.
+     **/
+    private draw(graph:Drawable, howFar:number) {
         this.logger.animation(graph.name, howFar)
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
@@ -114,7 +148,10 @@ export class Director {
     }
 
 
-    toString():string {
+    /**
+     * Returns the storyboard in human-readable form
+     **/
+    public toString():string {
         let out = ""
         this.storyboard.forEach(step => {
             out = out + step.start + "–"
@@ -127,6 +164,9 @@ export class Director {
 }
 
 
+/**
+ * Helper class that defines the structure of a step in the storyboard.
+ **/
 class Step {
     start:number
     end:number

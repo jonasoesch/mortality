@@ -2,6 +2,22 @@ import * as d3 from 'd3';
 import {Graph} from './Graph';
 import {MorphingMark, Mark} from './Mark'
 
+
+
+    /**
+     * This chart needs no data but is based on two existing graphs. Example usage:
+     * ```javascript
+     * // g1 and g2 are Graphs
+     * // a and b are the names of marks from g1 and g2 respectively
+     * mg = new MorpingGraph("name")
+     * mg.setOrigin(g1)
+     * mg.setTarget(g2)
+     * mg.addTransition("a", "b")
+     * mg.atPoint(0.5).draw()
+     * ```
+    **/
+
+
 export class MorphingGraph extends Graph {
     name:string
     originGraph:Graph
@@ -12,16 +28,6 @@ export class MorphingGraph extends Graph {
 
 
     howFar:number
-
-    /*
-     * This chart needs no data but is based on two existing graphs
-     * mg = new MorpingGraph("name")
-     * mg.setOrigin(g1)
-     * mg.setTarget(g2)
-     * mg.addTransition("a", "b")
-     * mg.atPoint(0.5).draw()
-     */
-
 
     /**
      * Sets the graph from which the interpolation
@@ -50,8 +56,10 @@ export class MorphingGraph extends Graph {
 
     /**
      * Instead of adding marks as in a regular Graph
-     * transitions from on mark to another
-     * are defined on a MorphingGraph
+     * transitions from one mark to another
+     * are defined on a MorphingMark. The name of the MorphingMark
+     * is a combination of the names of the marks it interpolates
+     * between separated by "---"
      **/
     addTransition(from:string, to:string) {
         let mark = new MorphingMark(`${from}---${to}`)
@@ -82,6 +90,9 @@ export class MorphingGraph extends Graph {
     }
 
 
+    /**
+     * The interpolated path for the `MorphingMark` of a given name
+     **/
     public getPathFor(markName:string) {
         let from = this.fromToClasses(markName).from
         let to = this.fromToClasses(markName).to
@@ -111,6 +122,11 @@ export class MorphingGraph extends Graph {
         return this.formatLeftAxis(d3.axisLeft(yScale).tickSize(-this.w+2*this.margin).tickPadding(10))
     }
 
+
+    /**
+     * Extracting the names of the original marks from the
+     * name of a MorphingMark
+     **/
     private fromToClasses(markName:string) {
         let pair = markName.split("---") 
         if(pair.length !== 2) {throw new Error("Need two properties to interpolate between")}

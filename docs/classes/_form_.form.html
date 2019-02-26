@@ -69,6 +69,21 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This class creates a form that adheres to the <code>Drawable</code> interface.
+							It also contains the necessary methods to submit the answers to the server.
+						Example usage:</p>
+					</div>
+					<pre><code class="language-javascript"><span class="hljs-keyword">let</span> <span class="hljs-keyword">new</span> Form = <span class="hljs-keyword">new</span> Form(<span class="hljs-string">"survey"</span>)
+form.addQuestion(<span class="hljs-string">"Question 1"</span>)
+form.addChoice(<span class="hljs-string">"Question 2"</span>, [<span class="hljs-string">"Answer1"</span>, <span class="hljs-string">"Answer2"</span>])
+form.setNextPage(<span class="hljs-string">"http://google.ch"</span>) <span class="hljs-comment">// Where to redirect after submit</span>
+form.setLogger(logger) <span class="hljs-comment">//typically use the same logger as in the Director</span>
+form.draw()</code></pre>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -132,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L10">Form.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L24">Form.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -154,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L8">Form.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L22">Form.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="_logger_.logger.html" class="tsd-signature-type">Logger</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L10">Form.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L24">Form.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +190,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_graph_.drawable.html">Drawable</a>.<a href="../interfaces/_graph_.drawable.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L6">Form.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L20">Form.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -185,7 +200,7 @@
 					<div class="tsd-signature tsd-kind-icon">next<wbr>Page<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L9">Form.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L23">Form.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -195,7 +210,7 @@
 					<div class="tsd-signature tsd-kind-icon">questions<span class="tsd-signature-symbol">:</span> <a href="_form_.question.html" class="tsd-signature-type">Question</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L7">Form.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L21">Form.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -212,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L21">Form.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L35">Form.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -238,7 +253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L17">Form.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L31">Form.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -262,9 +277,16 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_graph_.drawable.html">Drawable</a>.<a href="../interfaces/_graph_.drawable.html#draw">draw</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L36">Form.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L55">Form.ts:55</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Renders all the questions and an submit-button that
+										will send the answers to the API and the reader to the next page
+									when clicked.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -279,9 +301,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L60">Form.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L89">Form.ts:89</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The answers are being stored in the following format:</p>
+								</div>
+								<table>
+									<thead>
+										<tr>
+											<th>Timestamp</th>
+											<th>URL</th>
+											<th>User ID from cookie</th>
+											<th>Session ID</th>
+											<th>Answer 1</th>
+											<th>Answer 2</th>
+											<th>…</th>
+										</tr>
+									</thead>
+									<tbody><tr>
+											<td>1549378636889</td>
+											<td><a href="http://localhost:8080/causes.html">http://localhost:8080/causes.html</a></td>
+											<td>1548336577427-0.vtnhnwsxab</td>
+											<td>1549378630957-0.eau30gzms7q</td>
+											<td>Yes</td>
+											<td>No</td>
+											<td>-</td>
+										</tr>
+								</tbody></table>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -302,9 +351,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L53">Form.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L75">Form.ts:75</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get answer texts/choices entered by the reader</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
@@ -320,7 +374,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_graph_.drawable.html">Drawable</a>.<a href="../interfaces/_graph_.drawable.html#hide">hide</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L101">Form.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L134">Form.ts:134</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -337,7 +391,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L31">Form.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L45">Form.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -360,7 +414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L27">Form.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L41">Form.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -383,9 +437,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Form.ts#L71">Form.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Form.ts#L104">Form.ts:104</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Send the answers to the API-Endpoint and redirect to the next page
+									But only if the transmission was successful.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>

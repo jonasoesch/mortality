@@ -94,6 +94,10 @@ export class Mark {
 }
 
 
+/**
+ * A MorphingMark interpolates between two marks based on the
+ * percentage value passed in `atPoint()`
+ **/
 export class MorphingMark extends Mark {
     from:Mark
     to:Mark

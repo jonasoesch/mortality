@@ -69,6 +69,20 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A director is responsible for drawing and hiding Drawables based on the current scroll position. The director will also instantiate a <code>Logger</code> object and add a new record everytime it redraws the view.
+						It is used like this:</p>
+						<pre><code class="language-javascript"> <span class="hljs-comment">// graph1, morphingGraph and graph2 are Drawables</span>
+ <span class="hljs-keyword">let</span> director = <span class="hljs-keyword">new</span> Director()
+ director.addStep(graph1, <span class="hljs-number">0</span>, <span class="hljs-number">500</span>)
+ director.addStep(morphingGraph, <span class="hljs-number">500</span>, <span class="hljs-number">1000</span>)
+ director.addStep(graph2, <span class="hljs-number">1000</span>, <span class="hljs-number">10000</span>)</code></pre>
+						<p>With this code, the director will draw <code>graph1</code> from scroll position 0 to 500, <code>morphingGraph</code> from scroll position 500 to 1000 and <code>graph2</code> from scroll position 1000 to 10000.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -101,14 +115,14 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#addstep" class="tsd-kind-icon">add<wbr>Step</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#alive" class="tsd-kind-icon">alive</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#draw" class="tsd-kind-icon">draw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_director_.director.html#alive" class="tsd-kind-icon">alive</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_director_.director.html#draw" class="tsd-kind-icon">draw</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#drawall" class="tsd-kind-icon">draw<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#easing" class="tsd-kind-icon">easing</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#hide" class="tsd-kind-icon">hide</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_director_.director.html#howfar" class="tsd-kind-icon">how<wbr>Far</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#loop" class="tsd-kind-icon">loop</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#save" class="tsd-kind-icon">save</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_director_.director.html#loop" class="tsd-kind-icon">loop</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_director_.director.html#save" class="tsd-kind-icon">save</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#scrolling" class="tsd-kind-icon">scrolling</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_director_.director.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 							</ul>
@@ -128,7 +142,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L11">Director.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L23">Director.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_director_.director.html" class="tsd-signature-type">Director</a></h4>
@@ -144,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">last<wbr>Scroll<wbr>Top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L10">Director.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L22">Director.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,7 +168,7 @@
 					<div class="tsd-signature tsd-kind-icon">log<wbr>Timer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol"> =&nbsp;new Date()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L9">Director.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L21">Director.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="_logger_.logger.html" class="tsd-signature-type">Logger</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L11">Director.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L23">Director.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">storyboard<span class="tsd-signature-symbol">:</span> <a href="_director_.step.html" class="tsd-signature-type">Step</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L7">Director.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L19">Director.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">timer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol"> =&nbsp;new Date()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L8">Director.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L20">Director.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,9 +215,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L80">Director.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L104">Director.ts:104</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p> Adding a new entry to the storyboard</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -220,36 +239,43 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="alive" class="tsd-anchor"></a>
-					<h3>alive</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> alive</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">alive<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L35">Director.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L47">Director.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="draw" class="tsd-anchor"></a>
-					<h3>draw</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> draw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">draw<span class="tsd-signature-symbol">(</span>graph<span class="tsd-signature-symbol">: </span><a href="../interfaces/_graph_.drawable.html" class="tsd-signature-type">Drawable</a>, howFar<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L103">Director.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L137">Director.ts:137</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if a Drawable is a MorphingGraph.
+										If yes, calls <code>atPoint()</code> and passes the relative position (calculated in
+									the <code>howFar()</code>-method). Then it draws the <code>Drawable</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -273,9 +299,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L69">Director.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L90">Director.ts:90</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Draws every drawable in the storyboard that should
+									currently be visible. Hides all the other.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -296,7 +328,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L98">Director.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L127">Director.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -325,7 +357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L112">Director.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L146">Director.ts:146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -348,9 +380,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L84">Director.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L113">Director.ts:113</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method transforms the global scroll position
+										to a percent value representing how far into the transition
+									the reader is.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -364,34 +403,34 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="loop" class="tsd-anchor"></a>
-					<h3>loop</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> loop</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">loop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L41">Director.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L54">Director.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="save" class="tsd-anchor"></a>
-					<h3>save</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> save</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
 						<li class="tsd-signature tsd-kind-icon">save<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L31">Director.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L43">Director.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -408,9 +447,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L55">Director.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L72">Director.ts:72</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method is called whenever a &quot;scroll&quot; is being detected and
+									the scroll position passed.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -431,9 +476,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/2172ef7/src/Director.ts#L117">Director.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/jonasoesch/mortality/blob/daffe07/src/Director.ts#L154">Director.ts:154</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the storyboard in human-readable form</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
@@ -518,10 +568,10 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_director_.director.html#addstep" class="tsd-kind-icon">add<wbr>Step</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_director_.director.html#alive" class="tsd-kind-icon">alive</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_director_.director.html#draw" class="tsd-kind-icon">draw</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -536,10 +586,10 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="_director_.director.html#howfar" class="tsd-kind-icon">how<wbr>Far</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_director_.director.html#loop" class="tsd-kind-icon">loop</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_director_.director.html#save" class="tsd-kind-icon">save</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">

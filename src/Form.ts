@@ -2,6 +2,20 @@ import * as d3 from 'd3'
 import {Drawable} from './Graph'
 import {Logger} from "./Logger"
 
+/**
+ * This class creates a form that adheres to the `Drawable` interface.
+ * It also contains the necessary methods to submit the answers to the server.
+ * Example usage:
+ *
+ * ```javascript
+ * let new Form = new Form("survey")
+ * form.addQuestion("Question 1")
+ * form.addChoice("Question 2", ["Answer1", "Answer2"])
+ * form.setNextPage("http://google.ch") // Where to redirect after submit 
+ * form.setLogger(logger) //typically use the same logger as in the Director
+ * form.draw()
+ * ```
+ **/
 export class Form implements Drawable {
     name:string
     questions:Question[]
@@ -33,6 +47,11 @@ export class Form implements Drawable {
     }
 
 
+    /**
+     * Renders all the questions and an submit-button that
+     * will send the answers to the API and the reader to the next page
+     * when clicked.
+     **/
     draw() {
         let form = d3.select(`#${this.name}`).append("div").attr("class", "form")
 
@@ -50,6 +69,9 @@ export class Form implements Drawable {
     }
 
 
+    /**
+     * Get answer texts/choices entered by the reader
+     **/
     getAnswers():string[] {
         let form = d3.select(`#${this.name}`)
         let answers = this.questions.map( q => q.getAnswerFrom(form) )
@@ -57,6 +79,13 @@ export class Form implements Drawable {
     }
 
 
+    /**
+     * The answers are being stored in the following format:
+     * 
+     * | Timestamp    | URL                               | User ID from cookie        | Session ID                  | Answer 1 | Answer 2 | … |
+     * | ------------ | --------------------------------- | -------------------------- | --------------------------- | -------- | -------- | - |
+     * | 1549378636889| http://localhost:8080/causes.html | 1548336577427-0.vtnhnwsxab | 1549378630957-0.eau30gzms7q | Yes      | No       | - |
+     **/
     format(answers:string[]):string {
         let out = ""
         out = out + this.logger.wrap( Date.now().toString()) + "," // Timestamp
@@ -68,6 +97,10 @@ export class Form implements Drawable {
     }
 
 
+    /**
+     * Send the answers to the API-Endpoint and redirect to the next page
+     * But only if the transmission was successful.
+     **/
     submit() {
         let answers = this.getAnswers()
         answers.forEach( a => { 
@@ -104,7 +137,9 @@ export class Form implements Drawable {
 }
 
 
-
+/**
+ * Defines the basic methods that should be implemented by all questions
+ **/
 abstract class Question {
     label:string
     constructor(label) {
@@ -120,6 +155,9 @@ abstract class Question {
     }
 }
 
+/**
+ * A free-form text question
+ **/
 class TextQuestion extends Question {
     drawInto(element) {
         element.append("label")
@@ -135,6 +173,9 @@ class TextQuestion extends Question {
     }
 }
 
+/**
+ * A multiple-choice question
+ **/
 class ChoiceQuestion extends Question {
     options:string[]
     setOptions(options:string[]) {

@@ -12,6 +12,11 @@ graphPromises.push(ageDifferencesGraph())
 graphPromises.push(uptickGraph())
 graphPromises.push(aidsGraph())
 
+/**
+ * * Instantiates a new `Director`
+ * * Creates the necessary `MorphingGraphs`
+ * * Defines the storyboard with the morphing and the regular graphs and the scroll positions they should be drawn at.
+ **/
 Promise.all(graphPromises).then( (graphs) => {
     let d = new Director()
     document.getElementsByTagName('body')[0].scrollBy(0, 2) // Initial drawing
