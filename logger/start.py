@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 import time
+import os
 app = Flask(__name__)
 
 
@@ -13,6 +14,7 @@ def after_request(response):
 
 @app.route("/", methods=['GET', 'POST'])
 def log():
+    os.makedirs("logs", exist_ok=True)
     with open('logs/'+str(time.time())+'.loggg.csv', 'w') as log:
         log.write(str(request.data))
     return 'OK'
@@ -21,6 +23,7 @@ def log():
 
 @app.route("/form", methods=['GET', 'POST'])
 def form():
+    os.makedirs("responses", exist_ok=True)
     with open('responses/'+str(time.time())+'.form.csv', 'w') as response:
         response.write(str(request.data))
     return 'OK'

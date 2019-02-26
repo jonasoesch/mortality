@@ -6,7 +6,7 @@ The [original story](https://www.bloomberg.com/graphics/dataview/how-americans-d
 
 ## Structure of the project
 
-The project explores the effects of different styles of animated and non-animated transitions of reader. We call these scenarios:
+The project explores the effects of different styles of animated and non-animated transitions of the reader. We call these scenarios:
 
 |                | Measure walk | Measure walk | Dialogue |
 | -------------- | ------------ | ------------ | -------- |
@@ -25,7 +25,7 @@ The code to make it all work as well as the tests can be found in `src`. the gen
 
 ![Includes](documentation/Includes.png)
 
-This overview presents only the most important classes and files and omits some smaller ones for clarity. The general principle is as follows: Each entry point includes the visualizations it needs to render from `graphs.ts`. It creates instances of `MorphingGraph` to connect the graphs via animated transitions where necessary. In cases where staged animation is used, it derives a new visualization from one of the included visualizations. A new instance of `Director` is then created to define the sequence of visualizations. The minimum requirements for a valid visualization is defined in the `Drawable` interface. But typically, visualizations are derived from the `Graph` class. 
+This overview presents only the most important classes and files and omits some smaller ones for clarity. The general principle is as follows: Each entry point includes the visualizations it needs to render from `graphs.ts`. It creates instances of `MorphingGraph` to connect the graphs via animated transitions where necessary. In cases where staged animation is used, it derives a new visualization from one of the included visualizations. A new instance of `Director` is then created to define the sequence of visualizations. The minimum requirements for a valid visualization are defined in the `Drawable` interface. But typically, visualizations are derived from the `Graph` class. 
 
 The questionnaire at the end of each experiment is also controlled through the director and adheres to the `Drawable` interface.
 
@@ -60,7 +60,7 @@ npm install
 npm run start
 ```
 
-### Installation of the logger
+### Installing the logger
 
 1. Change into the `logger` directory
 
@@ -76,9 +76,40 @@ pip install -r requirements.txt
 
 
 
-3. Run the webserver providing the API
+3. Run the web server providing the API.
 
 ```bash
-FLASK_APP=start.py flask run
+FLASK_APP=start.py python3 -m flask run
 ```
+
+
+
+## Logger
+
+The logger can be found in the `logger`-directory. The `start.py`-file implements two API-Endpoints `/` and `/form`. `/` is used to send records of the readers' scrolling behavior on each draw.  The records are saved as CSV-files into the `logs`-directory. `/form` is used to store participants answers to the survey at the end of each experiment. The responses are stored as CSV-files in the `responses`-directory.
+
+The logger contains a preliminary analysis in `log-analysis.ipynb`-file in the `analysis`-directory. To run the analysis, you need [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/) (which should already have been installed when installing the logger). Run
+
+```bash
+jupyter lab
+```
+
+To open a browser window and access the  `log-analysis.ipynb`-file as well as the different visualizations (the files ending in `.vl`).
+
+## Tests
+
+The project comes with a set of tests (which are by no means complete). Tests have the same name as the classes they test with an extension of `.spec.ts`. They can be run like this:
+
+```bash
+npm run test
+```
+
+
+
+## Documentation
+
+The complete documentation can be generated with 
+
+
+
 
