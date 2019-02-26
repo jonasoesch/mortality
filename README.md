@@ -108,8 +108,4 @@ npm run test
 
 ## Documentation
 
-The complete documentation can be generated with 
-
-
-
-
+The documentation generated from the source can be accessed in the `docs`-folder.
