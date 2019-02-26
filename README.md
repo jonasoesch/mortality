@@ -21,11 +21,15 @@ Each of the four different scenarios can be found in a separate branch: `juxtapo
 
 For each of the four scenarios, the same experiments have been implemented as separate websites. They can be found in the `static` folder.
 
-The code to make it all work as well as the tests can be found in `src`. the structure of includes is as follows:
+The code to make it all work as well as the tests can be found in `src`. the general structure is as follows:
 
+![Includes](/Users/jonas/Desktop/mortality/documentation/Includes.png)
 
+This overview presents only the most important classes and files and omits some smaller ones for clarity. The general principle is as follows: Each entry point includes the visualizations it needs to render from `graphs.ts`. It creates instances of `MorphingGraph` to connect the graphs via animated transitions where necessary. In cases where staged animation is used, it derives a new visualization from one of the included visualizations. A new instance of `Director` is then created to define the sequence of visualizations. The minimum requirements for a valid visualization is defined in the `Drawable` interface. But typically, visualizations are derived from the `Graph` class. 
 
+The questionnaire at the end of each experiment is also controlled through the director and adheres to the `Drawable` interface.
 
+Finally, the director includes a logger that is called each time a visualization is redrawn.
 
 ## Installation
 
