@@ -36,7 +36,7 @@ export class Mark {
     }
 
     /** This method can be chained like this `mark.setName('name').setColor('red')` etc. **/
-    setName(name):Mark {
+    setName(name:string):Mark {
         this.name = name
         return this
     }

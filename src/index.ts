@@ -27,9 +27,9 @@ Promise.all(graphPromises).then( (graphs) => {
     decreaseHighlight.removeMark("MortalityFemales")
     decreaseHighlight.removeMark("MortalityMales")
     decreaseHighlight.setData(
-        decreaseHighlight.data.map(d => { 
+        decreaseHighlight.data.map( (entry:any) => { 
             return {
-            date: d["date"],
+            date: entry["date"],
             MortalityEveryone: 1000,
             }
         })

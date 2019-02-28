@@ -93,6 +93,7 @@ export class Form implements Drawable {
         out = out + this.logger.wrap( this.logger.user ) + "," // User ID from cookie
         out = out + this.logger.wrap( this.logger.session ) + "," // Session ID
         answers.forEach( a => { out = out + this.logger.wrap(a) + "," } )
+        out = out + "\n"
         return out
     }
 
@@ -142,7 +143,7 @@ export class Form implements Drawable {
  **/
 abstract class Question {
     label:string
-    constructor(label) {
+    constructor(label:string) {
         this.label = label 
     }
     abstract drawInto(element:d3.Selection<any, any, any, any>):void
@@ -159,7 +160,7 @@ abstract class Question {
  * A free-form text question
  **/
 class TextQuestion extends Question {
-    drawInto(element) {
+    drawInto(element:d3.Selection<any,any,any,any>) {
         element.append("label")
             .text(this.label)
         element.append("textarea")
@@ -168,8 +169,13 @@ class TextQuestion extends Question {
             .attr("name", this.name()) 
     }
 
-    getAnswerFrom(element) {
-        return element.select(`textarea[name="${this.name()}"]`).node().value
+    getAnswerFrom(element:d3.Selection<any,any,any,any>) {
+        let el = element.select(`textarea[name="${this.name()}"]`)
+        let ret = el ? 
+            el!.node() ? 
+                (el!.node()! as HTMLTextAreaElement).value : 
+            "ERROR" : "ERROR"
+        return ret
     }
 }
 
@@ -181,7 +187,7 @@ class ChoiceQuestion extends Question {
     setOptions(options:string[]) {
         this.options = options 
     }
-    drawInto(element) {
+    drawInto(element:d3.Selection<any,any,any,any>) {
         element.append("label")
             .text(this.label)
         this.options.forEach( o => {
@@ -194,12 +200,13 @@ class ChoiceQuestion extends Question {
                 .text(o)
         })
     }
-    getAnswerFrom(element) {
+    getAnswerFrom(element:d3.Selection<any,any,any,any>) {
         let out = ""
         element.selectAll(`input[name="${this.name()}"]`).each( function(el) {
-            if(this.checked) {
-                out =  this.value 
-            }   
+            let inputElement = (this as HTMLInputElement)
+            if(inputElement && (inputElement as HTMLInputElement).checked) {
+                out = inputElement.value 
+            } 
         })
         return out
     }

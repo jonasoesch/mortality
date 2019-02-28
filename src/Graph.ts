@@ -130,7 +130,7 @@ export class Graph implements Drawable {
         this.description = description 
     }
 
-    public setAxisLabels(y) {
+    public setAxisLabels(y:string) {
         this.yAxisLabel = y
     }
 
@@ -158,9 +158,10 @@ export class Graph implements Drawable {
 
 
     /**
-     * Find a mark by its name
+     * Find a mark by its name. If the mark can't be found
+     * `undefined` will be returned.
      **/
-    public getMark(markName:string):Mark{
+    public getMark(markName:string):(Mark | undefined){
         let found = undefined
         this.marks.forEach( mark => {
             if(mark.name === markName) {
@@ -292,7 +293,7 @@ export class Graph implements Drawable {
     }
 
 
-    private fontSize(basesize) {
+    private fontSize(basesize:number) {
         return basesize * this.fontSizing
     }
 
@@ -356,7 +357,13 @@ export class Graph implements Drawable {
         if(this.data == null) {throw new Error("There is no data yet")}
         if(mark.pathGenerator === null) {throw new Error(`There is no pathGenerator for mark ${markName}`)}
 
-        return mark.pathGenerator(this.data)
+        let path =  mark.pathGenerator(this.data)
+
+        if(!path) {
+            throw new TypeError("The path that would be genereated is null") 
+        } else {
+            return path
+        }
     }
 
 
@@ -389,7 +396,7 @@ export class Graph implements Drawable {
  * Estimates the width of a given string at a given font size.
  * The estimates are for the font "Fira Sans" only.
  */
-private measureText(str, fontSize = 10) {
+private measureText(str:string, fontSize = 10) {
   const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0666656494140625,0.46666717529296875,0.6566665649414063,0.7,0.7033340454101562,1.05,0.976666259765625,0.475,0.525,0.525,0.6416671752929688,0.7,0.46666717529296875,0.6066665649414062,0.46666717529296875,0.7199996948242188,0.7600006103515625,0.6,0.7066665649414062,0.7033340454101562,0.723333740234375,0.7166671752929688,0.7350006103515625,0.6449996948242187,0.7566665649414063,0.7350006103515625,0.46666717529296875,0.46666717529296875,0.7,0.7,0.7,0.7066665649414062,1.2199996948242187,0.7783340454101563,0.8300003051757813,0.773333740234375,0.8566665649414062,0.7416671752929688,0.698333740234375,0.8383331298828125,0.8816665649414063,0.5066665649414063,0.5100006103515625,0.7949996948242187,0.7033340454101562,0.9966659545898438,0.8883331298828125,0.9,0.7883331298828125,0.9,0.8066665649414062,0.7449996948242188,0.7166671752929688,0.875,0.7850006103515625,1.0316665649414063,0.7566665649414063,0.75,0.723333740234375,0.525,0.7199996948242188,0.525,0.7199996948242188,0.7199996948242188,0.498333740234375,0.748333740234375,0.7916671752929687,0.6783340454101563,0.798333740234375,0.748333740234375,0.598333740234375,0.7283340454101562,0.7883331298828125,0.47833404541015623,0.48833465576171875,0.7166671752929688,0.49166717529296877,1.0633331298828126,0.7883331298828125,0.7850006103515625,0.7916671752929687,0.798333740234375,0.5850006103515625,0.673333740234375,0.5666671752929687,0.7816665649414063,0.6949996948242188,0.9316665649414062,0.6783340454101563,0.6916671752929687,0.6416671752929688,0.525,0.6033340454101562,0.525,0.7]
   const avg = 0.7047721140008222
   return str

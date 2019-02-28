@@ -54,7 +54,11 @@ export class Logger {
     }
 
 
-    private getCookie(name:string):string {
+    /**
+     * Gets the value for a cooke. Returns `null` if the name
+     * does not exist.
+     **/
+    private getCookie(name:string):(string | null) {
         var re = new RegExp(name + "=([^;]+)");
         var value = re.exec(document.cookie);
         return (value != null) ? unescape(value[1]) : null;
@@ -135,24 +139,24 @@ export class Logger {
         // timestamp, user, session, scroll 
         let out = ""
         this.messages.forEach( (m) => {
-            out = out + this.wrap( m.timestamp       ) + ","
-            out = out + this.wrap( this.url          ) + ","
-            out = out + this.wrap( this.user         ) + ","
-            out = out + this.wrap( this.session      ) + ","
-            out = out + this.wrap( this.ua           ) + ","
-            out = out + this.wrap( this.screenWidth  ) + ","
-            out = out + this.wrap( this.screenHeight ) + ","
-            out = out + this.wrap( m.windowWidth     ) + ","
-            out = out + this.wrap( m.windowHeight    ) + ","
-            out = out + this.wrap( this.pixelRatio   ) + ","
-            out = out + this.wrap( m.name           ) + ","
-            out = out + this.wrap( m.position        ) + "\n"
+            out = out + this.wrap( m.timestamp.toString()       ) + ","
+            out = out + this.wrap( this.url                     ) + ","
+            out = out + this.wrap( this.user                    ) + ","
+            out = out + this.wrap( this.session                 ) + ","
+            out = out + this.wrap( this.ua                      ) + ","
+            out = out + this.wrap( this.screenWidth.toString()  ) + ","
+            out = out + this.wrap( this.screenHeight.toString() ) + ","
+            out = out + this.wrap( m.windowWidth.toString()     ) + ","
+            out = out + this.wrap( m.windowHeight.toString()    ) + ","
+            out = out + this.wrap( this.pixelRatio.toString()   ) + ","
+            out = out + this.wrap( m.name                       ) + ","
+            out = out + this.wrap( m.position.toString()        ) + "\n"
         })
         return out
     }
 
 
-    public wrap(str, into='"') {
+    public wrap(str:string, into='"') {
         return  into+str+into
     }
 
