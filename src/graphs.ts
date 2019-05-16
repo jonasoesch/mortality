@@ -137,40 +137,40 @@ export function ageDifferencesGraph() {
         graph.setScales(d3.extent(data, d => d.date), [0, 20000])
 
 
-            graph.addMark("Rate85up")
-                .setColor("rgb(125, 75, 186)")
-                .setLabel("Over 84")
-                .setLabelOffsets([0, 3])
+        graph.addMark("Rate85up")
+            .setColor("rgb(125, 75, 186)")
+            .setLabel("Over 84")
+            .setLabelOffsets([0, 3])
 
-            graph.addMark("Rate75_84")
-                .setColor("rgb(154, 129, 232)")
-                .setLabel("75–84")
-                .setLabelOffsets([0, 3])
+        graph.addMark("Rate75_84")
+            .setColor("rgb(154, 129, 232)")
+            .setLabel("75–84")
+            .setLabelOffsets([0, 3])
 
-            graph.addMark("Rate65_74")
-                .setColor("rgb(47, 105, 160)")
-                .setLabel("65–74")
-                .setLabelOffsets([0, 0])
+        graph.addMark("Rate65_74")
+            .setColor("rgb(47, 105, 160)")
+            .setLabel("65–74")
+            .setLabelOffsets([0, 0])
 
-            graph.addMark("Rate55_64")
-                .setColor("rgb(38, 148, 222)")
-                .setLabel("55–64")
-                .setLabelOffsets([0, -5])
+        graph.addMark("Rate55_64")
+            .setColor("rgb(38, 148, 222)")
+            .setLabel("55–64")
+            .setLabelOffsets([0, -5])
 
-            graph.addMark("Rate45_54")
-                .setColor("rgb(26, 130, 140)")
-                .setLabel("45–54")
-                .setLabelOffsets([0, 0])
+        graph.addMark("Rate45_54")
+            .setColor("rgb(26, 130, 140)")
+            .setLabel("45–54")
+            .setLabelOffsets([0, 0])
 
-            graph.addMark("Rate25_44")
-                .setColor("rgb(60, 190, 203)")
-                .setLabel("25–44")
-                .setLabelOffsets([0, 8])
+        graph.addMark("Rate25_44")
+            .setColor("rgb(60, 190, 203)")
+            .setLabel("25–44")
+            .setLabelOffsets([0, 8])
 
-            graph.addMark("Rate_25")
-                .setColor("rgb(117, 212, 156)")
-                .setLabel("Under 25")
-                .setLabelOffsets([0, 25])
+        graph.addMark("Rate_25")
+            .setColor("rgb(117, 212, 156)")
+            .setLabel("Under 25")
+            .setLabelOffsets([0, 25])
 
         graph.setData(data)
 
@@ -204,40 +204,40 @@ export function uptickGraph() {
         graph.setScales(d3.extent(data, d => d.date), [0, 100])
 
 
-            graph.addMark("Rate85up")
-                .setColor("rgb(125, 75, 186)")
-                .setLabel("Over 84")
-                .setLabelOffsets([0, 0])
+        graph.addMark("Rate85up")
+            .setColor("rgb(125, 75, 186)")
+            .setLabel("Over 84")
+            .setLabelOffsets([0, 0])
 
-            graph.addMark("Rate75_84")
-                .setColor("rgb(154, 129, 232)")
-                .setLabel("75–84")
-                .setLabelOffsets([0, -17])
+        graph.addMark("Rate75_84")
+            .setColor("rgb(154, 129, 232)")
+            .setLabel("75–84")
+            .setLabelOffsets([0, -17])
 
-            graph.addMark("Rate65_74")
-                .setColor("rgb(47, 105, 160)")
-                .setLabel("65–74")
-                .setLabelOffsets([0, 8])
+        graph.addMark("Rate65_74")
+            .setColor("rgb(47, 105, 160)")
+            .setLabel("65–74")
+            .setLabelOffsets([0, 8])
 
-            graph.addMark("Rate55_64")
-                .setColor("rgb(38, 148, 222)")
-                .setLabel("55–64")
-                .setLabelOffsets([0, 28])
+        graph.addMark("Rate55_64")
+            .setColor("rgb(38, 148, 222)")
+            .setLabel("55–64")
+            .setLabelOffsets([0, 28])
 
-            graph.addMark("Rate45_54")
-                .setColor("rgb(26, 130, 140)")
-                .setLabel("45–54")
-                .setLabelOffsets([0, 7])
+        graph.addMark("Rate45_54")
+            .setColor("rgb(26, 130, 140)")
+            .setLabel("45–54")
+            .setLabelOffsets([0, 7])
 
-            graph.addMark("Rate25_44")
-                .setColor("rgb(60, 190, 203)")
-                .setLabel("25–44")
-                .setLabelOffsets([0, 3])
+        graph.addMark("Rate25_44")
+            .setColor("rgb(60, 190, 203)")
+            .setLabel("25–44")
+            .setLabelOffsets([0, 3])
 
-            graph.addMark("Rate_25")
-                .setColor("rgb(117, 212, 156)")
-                .setLabel("Under 25")
-                .setLabelOffsets([0, 5])
+        graph.addMark("Rate_25")
+            .setColor("rgb(117, 212, 156)")
+            .setLabel("Under 25")
+            .setLabelOffsets([0, 5])
 
         graph.setData(data)
 
@@ -328,12 +328,15 @@ export function aidsGraph() {
 }
 
 
-export function questionnaire(d, nextPage):Form {
-    let form = new Form("survey")
-    form.addQuestion("1. In your opinion, what effect or relationship is shown in the data mini-story?")
-    form.addQuestion("2. Which group did you pay the most attention to in this data mini-story?")
-    form.addChoice("3. Overall, was this data mini-story shown in a visually nice way?", ["Yes", "No"])
-    form.setNextPage(nextPage)
-    form.setLogger(d.logger)
-    return form
+export function questionnaire(d, top, nextPage):Form {
+    return  new Form({
+        name: "form",
+        nextPage: nextPage,
+        logger: d.logger,
+        top: top,
+        questions: [
+            {question: "In your opinion, what effect or relationship is shown in the data mini-story?",
+                kind: "text", name: "first"} 
+        ],
+    })
 }

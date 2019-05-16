@@ -69,7 +69,7 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     d.addStep(1200, 10000, graphs[1]) // demographics
 
 
-    questionnaire(d, "absolute.html").draw() 
+    questionnaire(d, 1400, "absolute.html").draw() 
 
     graphs[0].draw()
     scrollIndicator.draw()

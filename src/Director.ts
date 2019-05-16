@@ -13,9 +13,9 @@ export class Director {
     lastScroll:number = null
 
     constructor() {
-       this.lastScrollTop = window.scrollY;
-       this.logger = new Logger()
-        
+        this.lastScrollTop = window.scrollY;
+        this.logger = new Logger()
+
         if (window.requestAnimationFrame) {
             let that = this
             try {
@@ -70,7 +70,7 @@ export class Director {
     }
 
     drawAll(offset:number) {
-    this.storyboard.forEach( (step) => {
+        this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
             } else {
@@ -94,6 +94,19 @@ export class Director {
         return this.easing(position/total)
     }
 
+    get storyLength() {
+        let len =  this.storyboard[this.storyboard.length-1].start
+        if (len < 0) {
+            return 0
+        } else {
+            return len
+        }
+    }
+
+    get absolutePosition() {
+        return this.lastScrollTop / this.storyLength
+    }
+
     /**
      * The easing-method wraps `howFar` to allow the application of
      * different easing functions.
@@ -104,7 +117,7 @@ export class Director {
 
 
     draw(graph:Drawable, howFar:number) {
-        this.logger.animation(graph.name, howFar)
+        this.logger.animation(graph.name, howFar, this.absolutePosition)
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
         } else {
