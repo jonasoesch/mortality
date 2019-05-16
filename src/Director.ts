@@ -23,9 +23,9 @@ export class Director {
     logger:Logger
 
     constructor() {
-       this.lastScrollTop = window.scrollY;
-       this.logger = new Logger()
-        
+        this.lastScrollTop = window.scrollY;
+        this.logger = new Logger()
+
         if (window.requestAnimationFrame) {
             let that = this
             try {
@@ -47,6 +47,20 @@ export class Director {
     private alive() {
         this.logger.alive()
         this.logger.send() 
+    }
+
+
+    get storyLength() {
+        let len =  this.storyboard[this.storyboard.length-1].start
+        if (len < 0) {
+            return 0
+        } else {
+            return len
+        }
+    }
+
+    get absolutePosition() {
+        return this.lastScrollTop / this.storyLength
     }
 
 
@@ -88,7 +102,7 @@ export class Director {
      * currently be visible. Hides all the other.
      **/
     public drawAll(offset:number) {
-    this.storyboard.forEach( (step) => {
+        this.storyboard.forEach( (step) => {
             if (offset > step.start && offset <= step.end) {
                 this.draw(step.graph, this.howFar(step, offset)) 
             } else {
@@ -135,7 +149,7 @@ export class Director {
      * the `howFar()`-method). Then it draws the `Drawable`.
      **/
     private draw(graph:Drawable, howFar:number) {
-        this.logger.animation(graph.name, howFar)
+        this.logger.animation(graph.name, howFar, this.absolutePosition)
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
         } else {
