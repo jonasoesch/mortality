@@ -36,7 +36,7 @@ export class Mark {
     }
 
     /** This method can be chained like this `mark.setName('name').setColor('red')` etc. **/
-    setName(name):Mark {
+    setName(name:string):Mark {
         this.name = name
         return this
     }
@@ -94,6 +94,10 @@ export class Mark {
 }
 
 
+/**
+ * A MorphingMark interpolates between two marks based on the
+ * percentage value passed in `atPoint()`
+ **/
 export class MorphingMark extends Mark {
     from:Mark
     to:Mark

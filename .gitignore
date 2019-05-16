@@ -5,7 +5,6 @@ package-lock.json
 screen-dimensions.numbers
 src/__snapshots__
 overview.spec.sketch
-doc
 logs
 *.pyc
 responses

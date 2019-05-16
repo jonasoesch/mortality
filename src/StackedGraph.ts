@@ -22,12 +22,12 @@ export class StackedGraph extends Graph {
 
     protected pathGeneratorFor(markName:string) {
         return d3.area()
-                .x( d => this.xScale(d["data"]["date"]))
+                .x( d => this.xScale((d as any)["data"]["date"]))
                 .y1(d => this.yScale(d[1] || 1))
                 .y0(d => this.yScale(d[0]))
     }
     
-    public getPathFor(markName:string) {
+    public getPathFor(markName:string):string {
         let mark = this.getMark(markName)
 
         if(mark === undefined) {throw new Error(`There is no mark named ${markName}`)}
@@ -35,7 +35,12 @@ export class StackedGraph extends Graph {
         if(mark.pathGenerator === null) {throw new Error(`No pathGenerator mark ${markName}`)}
 
         let path = mark.pathGenerator(this.stackDataFor(mark))
-        return path
+       
+        if(!path) {
+            throw new TypeError("The path that would be genereated is null") 
+        } else {
+            return path
+        }
     }
 
 

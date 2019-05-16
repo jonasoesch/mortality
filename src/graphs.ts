@@ -4,6 +4,9 @@ import {StackedGraph} from './StackedGraph';
 import {Form} from './Form'
 let l = console.log
 
+/**
+ * A visualization displaying the mortality rate over time per gender
+ **/ 
 export function genderGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
@@ -44,12 +47,19 @@ export function genderGraph() {
 }
 
 
+/**
+ * demographicsGraph needs to format the y-axis values as percentage.
+ * This is the only change in this class from `StackedGraph`.
+ **/
 class OlderGraph extends StackedGraph {
     formatLeftAxis(axis:d3.Axis<any>)  {
         return axis.tickFormat(d3.format(".0%")) 
     }
 }
 
+/**
+ * A visualization showing the evolution of the demographics over time per age group.
+ **/
 export function demographicsGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
@@ -103,6 +113,9 @@ export function demographicsGraph() {
 }
 
 
+/**
+ * A visualization showing the absolute number of deaths per age group over time.
+ **/
 export function ageDifferencesGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
@@ -167,6 +180,9 @@ export function ageDifferencesGraph() {
 
 
 
+/**
+ * A visualization showing the relative number of deaths per age group over time.
+ **/
 export function uptickGraph() {
     return d3.csv("data/mortality-rate.csv").then((csv: any) => {
         let data:MortalityData[] = csv.map((d:any) => {
@@ -230,6 +246,9 @@ export function uptickGraph() {
 }
 
 
+/**
+ * A visualization showing the causes of death for 25–40 year olds over time.
+ **/
 export function aidsGraph() {
     return d3.csv("data/causes.csv").then((csv: any) => {
         let data:CausesData[] = csv.map((d:any) => {
