@@ -20,10 +20,10 @@ export class Form implements Drawable {
         this.top = definition.top
         definition.questions.forEach(qDef => {
             if(qDef.kind === "text") {
-                this.questions.push(new TextQuestion(qDef))
+                this.questions.push(new TextQuestion(qDef, this.logger))
             }
             if(qDef.kind === "choice") {
-                this.questions.push(new ChoiceQuestion(qDef))
+                this.questions.push(new ChoiceQuestion(qDef, this.logger))
             }
         })
     }
@@ -33,8 +33,6 @@ export class Form implements Drawable {
             .style("height", window.innerHeight * 2 / 3)
             .style("top", this.top + window.innerHeight)
             .append("div").attr("class", "form")
-
-        console.log(this.top)
 
         this.questions.forEach( q => q.drawInto(form) )
 
@@ -47,6 +45,7 @@ export class Form implements Drawable {
                     alert(e.message)
                 }
             })
+
     }
 
 
@@ -97,9 +96,11 @@ export class Form implements Drawable {
 abstract class Question {
     name:string
     question:string
-    constructor(definition:QuestionDefinition) {
+    logger:Logger
+    constructor(definition:QuestionDefinition, logger:Logger) {
         this.name = definition.name 
         this.question = definition.question
+        this.logger = logger
     }
     abstract drawInto(element:d3.Selection<any, any, any, any>):void
     abstract getAnswerFrom(element:d3.Selection<any, any, any, any>):string
@@ -107,12 +108,17 @@ abstract class Question {
 
 class TextQuestion extends Question {
     drawInto(element:d3.Selection<any, any, any, any>) {
+        let logger = this.logger
+
         element.append("label")
             .text(this.question)
         element.append("textarea")
             .attr("type" ,"text")
             .attr("placeholder", "Your answer…")
             .attr("name", this.name) 
+            .on("input", function() {
+                logger.typing(d3.select(this).node().value)
+            })
     }
 
     getAnswerFrom(element:d3.Selection<any, any, HTMLInputElement, any>) {
@@ -122,8 +128,8 @@ class TextQuestion extends Question {
 
 class ChoiceQuestion extends Question {
     answers:string[]
-    constructor(definition:QuestionDefinition) {
-        super(definition) 
+    constructor(definition:QuestionDefinition, logger:Logger) {
+        super(definition, logger) 
         this.answers = definition.answers
     }
     drawInto(element:d3.Selection<any, any, any, any>) {

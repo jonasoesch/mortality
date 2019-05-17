@@ -70,6 +70,17 @@ export class Logger {
         })) 
     }
 
+    public typing(text:string) {
+        this.waitIsOver()
+        this.messages.push(new Message({
+            user: this.user,
+            session: this.session,
+            name: `@typing: ${text}`,
+            relativePosition: -1,
+            absolutePosition: -1,
+        })) 
+    }
+
     /**
      * Records an "alive"-entry. These entries are generated periodically when the
      * reader does not scroll but still has the experiment open.

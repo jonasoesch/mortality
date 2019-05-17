@@ -36,7 +36,11 @@ export class Message {
     }
 
     public wrap(str:string, into='"') {
-        return  into+str+into
+        return  into+this.escape(str)+into
+    }
+
+    escape(str:string):string {
+        return str.replace("\n", " ").replace("\t", " ").replace(/"/g, "*")
     }
 
 
