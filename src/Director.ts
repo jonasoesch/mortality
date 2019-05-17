@@ -117,7 +117,9 @@ export class Director {
 
 
     draw(graph:Drawable, howFar:number) {
-        this.logger.animation(graph.name, howFar, this.absolutePosition)
+        if(graph.name !== undefined) {
+            this.logger.animation(graph.name, howFar, this.absolutePosition)
+        }
         if(graph instanceof MorphingGraph) {
             graph.atPoint(howFar).draw() 
         } else {

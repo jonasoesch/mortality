@@ -69,7 +69,6 @@ export class MorphingGraph extends Graph {
         let start = this.originGraph.xPosition()
         let end = this.targetGraph.xPosition()
         let interpolator = d3.interpolate(start, end)
-        console.log(this.chart)
         this.chart
             .style("transform", `translate3d(${interpolator(this.howFar)}px, 0, 0)`)
 
