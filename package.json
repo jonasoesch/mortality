@@ -22,7 +22,7 @@
     },
     "scripts": {
         "start": "NODE_ENV=development webpack-dev-server",
-        "build": "NODE_ENV=production webpack && cp -r static/* dist/ && ./deploy/juxtaposed-animated.sh",
+        "build": "NODE_ENV=production webpack && cp -r static/* dist/",
         "test": "NODE_ENV=development jest",
         "testWatch": "NODE_ENV=development jest --watch"
     }
