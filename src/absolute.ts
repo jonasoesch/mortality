@@ -32,7 +32,7 @@ Promise.all([demographicsGraph(), ageDifferencesGraph()]).then( graphs => {
     d.addStep(40, 800, morph)
     d.addStep(800, 10000, graphs[1])
     
-    questionnaire(d, 1200, "relative.html").draw() 
+    questionnaire(d, 1200, "https://www.cs.technik.fhnw.ch/lostintransition/").draw() 
 
     graphs[0].draw()
     scrollIndicator.draw()
