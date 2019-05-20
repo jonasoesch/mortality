@@ -47,7 +47,7 @@ a.setTarget(g2)
 a.addTransition("a", "b")
 
 
-let d = new Director()
+let d = new Director("test")
 
 describe("initialize director", () => {
     it("first", () => {

@@ -18,7 +18,7 @@ graphPromises.push(aidsGraph())
  * * Defines the storyboard with the morphing and the regular graphs and the scroll positions they should be drawn at.
  **/
 Promise.all(graphPromises).then( (graphs) => {
-    let d = new Director()
+    let d = new Director("Mdemo")
     document.getElementsByTagName('body')[0].scrollBy(0, 2) // Initial drawing
     d.addStep(-10, 200, graphs[0])
 
@@ -115,7 +115,7 @@ Promise.all(graphPromises).then( (graphs) => {
 
     let f = new Form({
         name: "form",
-        nextPage: "http://google.com",
+        currentPage: d.name,
         logger: d.logger,
         top: 400,
         questions: [

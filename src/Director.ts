@@ -21,10 +21,12 @@ export class Director {
     logTimer:Date = new Date()
     lastScrollTop:number
     logger:Logger
+    name:string
 
-    constructor() {
+    constructor(name:string) {
         this.lastScrollTop = window.scrollY;
         this.logger = new Logger()
+        this.name = name
 
         if (window.requestAnimationFrame) {
             let that = this
