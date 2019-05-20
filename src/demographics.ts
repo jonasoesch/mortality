@@ -6,7 +6,7 @@ import {scrollIndicator} from './scrollIndicator'
 import {Form} from './Form'
 
 Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
-    let d = new Director()
+    let d = new Director("MJAD")
 
     /*
      * Create the intermediate graph to hide
@@ -69,7 +69,7 @@ Promise.all([genderGraph(), demographicsGraph()]).then(graphs => {
     d.addStep(1200, 10000, graphs[1]) // demographics
 
 
-    questionnaire(d, 1400, "https://www.cs.technik.fhnw.ch/lostintransition/").draw() 
+    questionnaire(d, 1400, d.name).draw() 
 
     graphs[0].draw()
     scrollIndicator.draw()

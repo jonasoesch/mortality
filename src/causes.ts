@@ -7,9 +7,7 @@ import {Form} from './Form'
 
 Promise.all([uptickGraph(), aidsGraph()]).then(graphs => {
 
-    const d = new Director()
-
-
+    const d = new Director("MJAC")
     const linesRight = graphs[0].cloneWithNewName('lines-right')
 
     const move =  new MorphingGraphWithLabels("move-lines")
@@ -46,7 +44,7 @@ Promise.all([uptickGraph(), aidsGraph()]).then(graphs => {
     d.addStep(900, 10000, graphs[1])
 
 
-    questionnaire(d, 1200, "https://www.cs.technik.fhnw.ch/lostintransition/").draw() 
+    questionnaire(d, 1200, d.name).draw() 
 
     graphs[0].draw()
     scrollIndicator.draw()

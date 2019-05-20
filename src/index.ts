@@ -13,7 +13,7 @@ graphPromises.push(uptickGraph())
 graphPromises.push(aidsGraph())
 
 Promise.all(graphPromises).then( (graphs) => {
-    let d = new Director()
+    let d = new Director("Mdemo")
     graphs[0].draw()
     graphs[1].draw()
 
@@ -73,7 +73,7 @@ Promise.all(graphPromises).then( (graphs) => {
 
     let f = new Form({
         name: "form",
-        nextPage: "http://google.com",
+        currentPage: d.name,
         logger: d.logger,
         top: 400,
         questions: [

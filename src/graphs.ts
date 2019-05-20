@@ -328,10 +328,10 @@ export function aidsGraph() {
 }
 
 
-export function questionnaire(d, top, nextPage):Form {
+export function questionnaire(d, top, currentPage:string):Form {
     return  new Form({
         name: "form",
-        nextPage: nextPage,
+        currentPage: currentPage,
         logger: d.logger,
         top: top,
         questions: [

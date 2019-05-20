@@ -4,7 +4,7 @@ import {Logger} from "./Logger"
 export interface FormDefinition {
         name:string,
         questions:QuestionDefinition[]
-        nextPage:string
+        currentPage:string
         logger:Logger
         top:number
 }
