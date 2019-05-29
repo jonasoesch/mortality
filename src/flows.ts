@@ -1,5 +1,7 @@
 export const urlmap = {
     "home": "https://www.cs.technik.fhnw.ch/lostintransition/",
+    "start": "https://www.cs.technik.fhnw.ch/lostintransition/envelope/start/",
+    "end": "https://www.cs.technik.fhnw.ch/lostintransition/envelope/end/",
 
     "MSSD": "https://www.cs.technik.fhnw.ch/lostintransition/mortality/SS/demographics.html",
     "MSSA":	"https://www.cs.technik.fhnw.ch/lostintransition/mortality/SS/absolute.html",
@@ -44,8 +46,9 @@ export const urlmap = {
 
 
 export const flows = {
-    "subjType1": ["MSAD", "MSAA", "MSAR", "MSAC", "EJAA", "EJAB", "EJAC", "EJAD"],
-    "subjType2": ["MJSD", "MJSA", "MJSR", "MJSC", "ESSA", "ESSB", "ESSC", "ESSD"],
-    "subjType3": ["MSSD", "MSSA", "MSSR", "MSSC", "EJSA", "EJSB", "EJSC", "EJSD"],
-    "subjType4": ["MJAD", "MJAA", "MJAR", "MJAC", "EJAA", "EJAB", "EJAC", "EJAD"],
+    "subjType1": ["MSAD", "MSAA", "MSAR", "MSAC", "EJAA", "EJAB", "EJAC", "EJAD", "end"],
+    "subjType2": ["MJSD", "MJSA", "MJSR", "MJSC", "ESSA", "ESSB", "ESSC", "ESSD", "end"],
+    "subjType3": ["MSSD", "MSSA", "MSSR", "MSSC", "EJSA", "EJSB", "EJSC", "EJSD", "end"],
+    "subjType4": ["MJAD", "MJAA", "MJAR", "MJAC", "EJAA", "EJAB", "EJAC", "EJAD", "end"],
 }
+
